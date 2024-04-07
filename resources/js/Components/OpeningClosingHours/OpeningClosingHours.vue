@@ -28,7 +28,7 @@ const props = defineProps({
 const store = useStore();
 
 const openingHours = [
-    { id: 0, clock: "Select", value: null },
+    { id: 0, clock: "Closed", value: null },
     { id: 1, clock: "00:00:00", value: "00:00:00" },
     { id: 2, clock: "00:30:00", value: "00:30:00" },
     { id: 3, clock: "01:00:00", value: "01:00:00" },
@@ -79,7 +79,7 @@ const openingHours = [
     { id: 48, clock: "23:30:00", value: "23:30:00" },
 ];
 const closingHours = [
-    { id: 0, clock: "Select", value: null },
+    { id: 0, clock: "Closed", value: null },
     { id: 1, clock: "00:00:00", value: "00:00:00" },
     { id: 2, clock: "00:30:00", value: "00:30:00" },
     { id: 3, clock: "01:00:00", value: "01:00:00" },
@@ -266,22 +266,7 @@ onMounted(() => {
 
 <template>
     <div>
-        <p class="myPrimaryParagraph mb-2">
-            <span class="my-2 block">
-                resourceId:
-                <span class="font-medium">
-                    {{ resourceId }}
-                </span>
-            </span>
-            <span class="my-2 block">
-                weekday:
-                <span class="font-medium">
-                    {{ weekday.charAt(0).toUpperCase() + weekday.slice(1) }}
-                </span>
-            </span>
-        </p>
-
-        <div class="flex items-center justify-start myPrimaryGap">
+        <div class="pt-2 flex items-center justify-start myPrimaryGap">
             <!-- Opening hours # start -->
             <div class="w-full">
                 <Listbox as="div" v-model="selectedOpeningHours" class="w-full">

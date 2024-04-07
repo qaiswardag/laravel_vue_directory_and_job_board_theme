@@ -367,7 +367,7 @@ class StoreController extends Controller
             "title" => $title,
             "slug" => $slug,
 
-            "time_zone" => $request->time_zone,
+            "time_zone" => $request->time_zone ?? "Asia/Dubai",
             "use_team_opening_hours" => $request->use_team_opening_hours,
             "use_store_opening_hours" => $request->use_store_opening_hours,
 
@@ -381,6 +381,37 @@ class StoreController extends Controller
             "show_author" => $request->show_author,
         ]);
 
+        if ($request->use_store_opening_hours) {
+            $store->update([
+                "monday_opening_time" => $request->monday_opening_time_store,
+                "monday_closing_time" => $request->monday_closing_time_store,
+
+                "tuesday_opening_time" => $request->tuesday_opening_time_store,
+                "tuesday_closing_time" => $request->tuesday_closing_time_store,
+
+                "wednesday_opening_time" =>
+                    $request->wednesday_opening_time_store,
+                "wednesday_closing_time" =>
+                    $request->wednesday_closing_time_store,
+
+                "thursday_opening_time" =>
+                    $request->thursday_opening_time_store,
+                "thursday_closing_time" =>
+                    $request->thursday_closing_time_store,
+
+                "friday_opening_time" => $request->friday_opening_time_store,
+                "friday_closing_time" => $request->friday_closing_time_store,
+
+                "saturday_opening_time" =>
+                    $request->saturday_opening_time_store,
+                "saturday_closing_time" =>
+                    $request->saturday_closing_time_store,
+
+                "sunday_opening_time" => $request->sunday_opening_time_store,
+                "sunday_closing_time" => $request->sunday_closing_time_store,
+            ]);
+        }
+
         // set team address if team address is null
         if (!is_null($address)) {
             $team->update([
@@ -392,6 +423,33 @@ class StoreController extends Controller
         if (!is_null($contactPageUrl)) {
             $team->update([
                 "contact_page_url" => $contactPageUrl,
+            ]);
+        }
+
+        if ($request->use_team_opening_hours) {
+            $team->update([
+                "monday_opening_time" => $request->monday_opening_time_team,
+                "monday_closing_time" => $request->monday_closing_time_team,
+
+                "tuesday_opening_time" => $request->tuesday_opening_time_team,
+                "tuesday_closing_time" => $request->tuesday_closing_time_team,
+
+                "wednesday_opening_time" =>
+                    $request->wednesday_opening_time_team,
+                "wednesday_closing_time" =>
+                    $request->wednesday_closing_time_team,
+
+                "thursday_opening_time" => $request->thursday_opening_time_team,
+                "thursday_closing_time" => $request->thursday_closing_time_team,
+
+                "friday_opening_time" => $request->friday_opening_time_team,
+                "friday_closing_time" => $request->friday_closing_time_team,
+
+                "saturday_opening_time" => $request->saturday_opening_time_team,
+                "saturday_closing_time" => $request->saturday_closing_time_team,
+
+                "sunday_opening_time" => $request->sunday_opening_time_team,
+                "sunday_closing_time" => $request->sunday_closing_time_team,
             ]);
         }
 
@@ -1010,6 +1068,34 @@ class StoreController extends Controller
             ]);
         }
 
+        // set team opening hours
+        if ($request->use_team_opening_hours) {
+            $team->update([
+                "monday_opening_time" => $request->monday_opening_time_team,
+                "monday_closing_time" => $request->monday_closing_time_team,
+
+                "tuesday_opening_time" => $request->tuesday_opening_time_team,
+                "tuesday_closing_time" => $request->tuesday_closing_time_team,
+
+                "wednesday_opening_time" =>
+                    $request->wednesday_opening_time_team,
+                "wednesday_closing_time" =>
+                    $request->wednesday_closing_time_team,
+
+                "thursday_opening_time" => $request->thursday_opening_time_team,
+                "thursday_closing_time" => $request->thursday_closing_time_team,
+
+                "friday_opening_time" => $request->friday_opening_time_team,
+                "friday_closing_time" => $request->friday_closing_time_team,
+
+                "saturday_opening_time" => $request->saturday_opening_time_team,
+                "saturday_closing_time" => $request->saturday_closing_time_team,
+
+                "sunday_opening_time" => $request->sunday_opening_time_team,
+                "sunday_closing_time" => $request->sunday_closing_time_team,
+            ]);
+        }
+
         // set team contact page url if null
         if (!is_null($contactPageUrl)) {
             $team->update([
@@ -1027,7 +1113,7 @@ class StoreController extends Controller
             "title" => $title,
             "slug" => $slug,
 
-            "time_zone" => $request->time_zone,
+            "time_zone" => $request->time_zone ?? "Asia/Dubai",
             "use_team_opening_hours" => $request->use_team_opening_hours,
             "use_store_opening_hours" => $request->use_store_opening_hours,
 
@@ -1040,6 +1126,44 @@ class StoreController extends Controller
             "tags" => $request->tags,
             "show_author" => $request->show_author,
         ]);
+
+        if ($request->use_store_opening_hours) {
+            $store->update([
+                "monday_opening_time" =>
+                    $request->monday_opening_time_store === "closed"
+                        ? null
+                        : $request->monday_opening_time_store,
+
+                "monday_closing_time" =>
+                    $request->monday_closing_time_store === "closed"
+                        ? null
+                        : $request->monday_closing_time_store,
+
+                "tuesday_opening_time" => $request->tuesday_opening_time_store,
+                "tuesday_closing_time" => $request->tuesday_closing_time_store,
+
+                "wednesday_opening_time" =>
+                    $request->wednesday_opening_time_store,
+                "wednesday_closing_time" =>
+                    $request->wednesday_closing_time_store,
+
+                "thursday_opening_time" =>
+                    $request->thursday_opening_time_store,
+                "thursday_closing_time" =>
+                    $request->thursday_closing_time_store,
+
+                "friday_opening_time" => $request->friday_opening_time_store,
+                "friday_closing_time" => $request->friday_closing_time_store,
+
+                "saturday_opening_time" =>
+                    $request->saturday_opening_time_store,
+                "saturday_closing_time" =>
+                    $request->saturday_closing_time_store,
+
+                "sunday_opening_time" => $request->sunday_opening_time_store,
+                "sunday_closing_time" => $request->sunday_closing_time_store,
+            ]);
+        }
 
         // Get the store ID
         $storeId = $store->id;

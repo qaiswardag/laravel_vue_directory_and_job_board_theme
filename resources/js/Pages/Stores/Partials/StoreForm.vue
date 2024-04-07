@@ -885,6 +885,7 @@ const handleClearForm = function () {
 // end modal
 
 const clearTags = ref(0);
+
 // clear form
 const clearForm = function () {
     postForm.title = "";
@@ -918,29 +919,8 @@ const clearForm = function () {
 
     postForm.show_author = false;
 
-    postForm.use_team_opening_hours = null;
-    postForm.use_store_opening_hours = null;
-
-    postForm.monday_opening_time_store = null;
-    postForm.monday_closing_time_store = null;
-
-    postForm.tuesday_opening_time_store = null;
-    postForm.tuesday_closing_time_store = null;
-
-    postForm.wednesday_opening_time_store = null;
-    postForm.wednesday_closing_time_store = null;
-
-    postForm.thursday_opening_time_store = null;
-    postForm.thursday_closing_time_store = null;
-
-    postForm.friday_opening_time_store = null;
-    postForm.friday_closing_time_store = null;
-
-    postForm.saturday_opening_time_store = null;
-    postForm.saturday_closing_time_store = null;
-
-    postForm.sunday_opening_time_store = null;
-    postForm.sunday_closing_time_store = null;
+    postForm.use_team_opening_hours = false;
+    postForm.use_store_opening_hours = false;
 
     postForm.author = [];
     postForm.states = [];
@@ -1291,6 +1271,7 @@ onBeforeMount(async () => {
             // opening hours # end
 
             // store logic opening hours # start
+
             postForm.monday_opening_time_store =
                 formLocalStorage.monday_opening_time_store;
             postForm.monday_closing_time_store =
@@ -1325,10 +1306,10 @@ onBeforeMount(async () => {
                 formLocalStorage.sunday_opening_time_store;
             postForm.sunday_closing_time_store =
                 formLocalStorage.sunday_closing_time_store;
+
             // store logic opening hours # end
 
             // team opening hours team # start
-            //
 
             postForm.monday_opening_time_team =
                 formLocalStorage.monday_opening_time_team;
@@ -1365,7 +1346,6 @@ onBeforeMount(async () => {
             postForm.sunday_closing_time_team =
                 formLocalStorage.sunday_closing_time_team;
 
-            //
             // team opening hours team # end
 
             //
@@ -1531,78 +1511,65 @@ onBeforeMount(async () => {
 
         // team opening hours team # start
         postForm.monday_opening_time_team =
-            props.currentUserTeam.monday_opening_time_store;
+            props.currentUserTeam.monday_opening_time;
         postForm.monday_closing_time_team =
-            props.currentUserTeam.monday_closing_time_store;
+            props.currentUserTeam.monday_closing_time;
 
         postForm.tuesday_opening_time_team =
-            props.currentUserTeam.tuesday_opening_time_store;
+            props.currentUserTeam.tuesday_opening_time;
         postForm.tuesday_closing_time_team =
-            props.currentUserTeam.tuesday_closing_time_store;
+            props.currentUserTeam.tuesday_closing_time;
 
         postForm.wednesday_opening_time_team =
-            props.currentUserTeam.wednesday_opening_time_store;
+            props.currentUserTeam.wednesday_opening_time;
         postForm.wednesday_closing_time_team =
-            props.currentUserTeam.wednesday_closing_time_store;
+            props.currentUserTeam.wednesday_closing_time;
 
         postForm.thursday_opening_time_team =
-            props.currentUserTeam.thursday_opening_time_store;
+            props.currentUserTeam.thursday_opening_time;
         postForm.thursday_closing_time_team =
-            props.currentUserTeam.thursday_closing_time_store;
+            props.currentUserTeam.thursday_closing_time;
 
         postForm.friday_opening_time_team =
-            props.currentUserTeam.friday_opening_time_store;
+            props.currentUserTeam.friday_opening_time;
         postForm.friday_closing_time_team =
-            props.currentUserTeam.friday_closing_time_store;
+            props.currentUserTeam.friday_closing_time;
 
         postForm.saturday_opening_time_team =
-            props.currentUserTeam.saturday_opening_time_store;
+            props.currentUserTeam.saturday_opening_time;
         postForm.saturday_closing_time_team =
-            props.currentUserTeam.saturday_closing_time_store;
+            props.currentUserTeam.saturday_closing_time;
 
         postForm.sunday_opening_time_team =
-            props.currentUserTeam.sunday_opening_time_store;
+            props.currentUserTeam.sunday_opening_time;
         postForm.sunday_closing_time_team =
-            props.currentUserTeam.sunday_closing_time_store;
+            props.currentUserTeam.sunday_closing_time;
         // team opening hours team # end
 
-        // console.log(`postForm:`, postForm.monday_opening_time_store);
-
         // opening hours store # start
-        postForm.monday_opening_time_store =
-            props.post.monday_opening_time_store;
-        postForm.monday_closing_time_store =
-            props.post.monday_closing_time_store;
 
-        postForm.tuesday_opening_time_store =
-            props.post.tuesday_opening_time_store;
-        postForm.tuesday_closing_time_store =
-            props.post.tuesday_closing_time_store;
+        postForm.monday_opening_time_store = props.post.monday_opening_time;
+        postForm.monday_closing_time_store = props.post.monday_closing_time;
+
+        postForm.tuesday_opening_time_store = props.post.tuesday_opening_time;
+        postForm.tuesday_closing_time_store = props.post.tuesday_closing_time;
 
         postForm.wednesday_opening_time_store =
-            props.post.wednesday_opening_time_store;
+            props.post.wednesday_opening_time;
         postForm.wednesday_closing_time_store =
-            props.post.wednesday_closing_time_store;
+            props.post.wednesday_closing_time;
 
-        postForm.thursday_opening_time_store =
-            props.post.thursday_opening_time_store;
-        postForm.thursday_closing_time_store =
-            props.post.thursday_closing_time_store;
+        postForm.thursday_opening_time_store = props.post.thursday_opening_time;
+        postForm.thursday_closing_time_store = props.post.thursday_closing_time;
 
-        postForm.friday_opening_time_store =
-            props.post.friday_opening_time_store;
-        postForm.friday_closing_time_store =
-            props.post.friday_closing_time_store;
+        postForm.friday_opening_time_store = props.post.friday_opening_time;
+        postForm.friday_closing_time_store = props.post.friday_closing_time;
 
-        postForm.saturday_opening_time_store =
-            props.post.saturday_opening_time_store;
-        postForm.saturday_closing_time_store =
-            props.post.saturday_closing_time_store;
+        postForm.saturday_opening_time_store = props.post.saturday_opening_time;
+        postForm.saturday_closing_time_store = props.post.saturday_closing_time;
 
-        postForm.sunday_opening_time_store =
-            props.post.sunday_opening_time_store;
-        postForm.sunday_closing_time_store =
-            props.post.sunday_closing_time_store;
+        postForm.sunday_opening_time_store = props.post.sunday_opening_time;
+        postForm.sunday_closing_time_store = props.post.sunday_closing_time;
         // opening hours store # end
 
         postForm.title = props.post.title;
@@ -1954,6 +1921,9 @@ const pageBuilder = new PageBuilder(store);
                     <div class="myPrimaryFormOrganizationHeader">
                         Company or Mall website
                     </div>
+                    <p class="myPrimaryParagraph text-xs italic">
+                        Company or mall website updated with these changes.
+                    </p>
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
@@ -2009,6 +1979,11 @@ const pageBuilder = new PageBuilder(store);
                         Recommended for malls. Set once and reuse when creating
                         new stores.
                     </p>
+
+                    <p class="myPrimaryParagraph text-xs italic">
+                        Company opening hours will be updated with these
+                        changes.
+                    </p>
                     <InputError
                         :message="postForm.errors.use_team_opening_hours"
                     />
@@ -2040,43 +2015,26 @@ const pageBuilder = new PageBuilder(store);
                         :message="postForm.errors.use_store_opening_hours"
                     />
                 </div>
+                <template
+                    v-if="
+                        postForm.use_team_opening_hours &&
+                        postForm.use_store_opening_hours
+                    "
+                >
+                    <p class="myPrimaryInputError mt-2 mb-0 py-0 self-start">
+                        Select only one option.
+                    </p>
+                </template>
                 <!-- Check box Store Opening hours # end -->
-
-                <div class="border-t-2 border-red-200 pt-6"></div>
-
-                <div class="myInputGroup">
-                    time zone here
-                    <InputError :message="postForm.errors.time_zone" />
-                </div>
-
-                <div class="border-t-2 border-blue-200 pt-6"></div>
-
-                <div class="myInputGroup">
-                    here er team opening hours input
-                    <InputError :message="postForm.errors.team_opening_hours" />
-                </div>
-
-                <div class="border-t-2 border-green-200 pt-6"></div>
-
-                <div class="myInputGroup">
-                    here er store opening hours input
-                    <InputError
-                        :message="postForm.errors.store_opening_hours"
-                    />
-                </div>
-
-                <div class="border-t-4 border-indigo-700 pt-6"></div>
 
                 <template
                     v-if="
-                        true ||
-                        (postForm.use_store_opening_hours &&
-                            !postForm.use_team_opening_hours)
+                        postForm.use_store_opening_hours &&
+                        !postForm.use_team_opening_hours
                     "
                 >
-                    <!-- åå -->
                     <div
-                        class="py-4 px-2 border-2 border-red-400 rounded-2xl divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
+                        class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
                     >
                         <OpeningClosingHours
                             weekday="monday"
@@ -2148,17 +2106,19 @@ const pageBuilder = new PageBuilder(store);
                                 postForm.sunday_closing_time_store
                             "
                         ></OpeningClosingHours>
+                        <InputError
+                            :message="postForm.errors.store_opening_hours"
+                        />
                     </div>
                 </template>
                 <template
                     v-if="
-                        true ||
-                        (postForm.use_team_opening_hours &&
-                            !postForm.use_store_opening_hours)
+                        postForm.use_team_opening_hours &&
+                        !postForm.use_store_opening_hours
                     "
                 >
                     <div
-                        class="py-4 px-2 border-2 border-green-400 rounded-2xl divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
+                        class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
                     >
                         <OpeningClosingHours
                             weekday="monday"
@@ -2231,6 +2191,9 @@ const pageBuilder = new PageBuilder(store);
                                 postForm.sunday_closing_time_team
                             "
                         ></OpeningClosingHours>
+                        <InputError
+                            :message="postForm.errors.team_opening_hours"
+                        />
                     </div>
                 </template>
             </div>

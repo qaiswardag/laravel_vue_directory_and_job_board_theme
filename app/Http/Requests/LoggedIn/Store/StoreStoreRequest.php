@@ -26,8 +26,6 @@ class StoreStoreRequest extends FormRequest
     {
         $rules = [
             "published" => ["boolean"],
-            "use_team_opening_hours" => ["boolean"],
-            "use_store_opening_hours" => ["boolean"],
             "featured" => ["boolean", "nullable"],
             "show_author" => ["boolean"],
             // If you do not include the string validation rule for a text input like title.
@@ -83,6 +81,54 @@ class StoreStoreRequest extends FormRequest
             "content" => ["required", "string", "min:2", "max:65535"],
 
             "tags" => ["string", "max:255", "nullable"],
+
+            "use_team_opening_hours" => ["boolean"],
+
+            "use_store_opening_hours" => ["boolean"],
+
+            "time_zone" => ["string", "min:2", "max:255"],
+
+            "monday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+            "monday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+
+            "tuesday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+            "tuesday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+
+            "wednesday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+            "wednesday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+
+            "thursday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+            "thursday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+
+            "friday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+            "friday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+
+            "saturday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+            "saturday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+
+            "sunday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+            "sunday_opening_time_store" => ["nullable", "date_format:H:i:s"],
+
+            "monday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+            "monday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+
+            "tuesday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+            "tuesday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+
+            "wednesday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+            "wednesday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+
+            "thursday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+            "thursday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+
+            "friday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+            "friday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+
+            "saturday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+            "saturday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+
+            "sunday_opening_time_team" => ["nullable", "date_format:H:i:s"],
+            "sunday_opening_time_team" => ["nullable", "date_format:H:i:s"],
         ];
 
         return $rules;
@@ -117,14 +163,6 @@ class StoreStoreRequest extends FormRequest
             $minCoverImages,
             $maxCoverImages
         ) {
-            // logic for opening hours # start
-            // logic for opening hours # start
-            if (!$this->time_zone) {
-                $validator
-                    ->errors()
-                    ->add("time_zone", "Time zone can not be null.");
-            }
-
             // logic for opening hours # start
             // logic for opening hours # start
             if (
@@ -182,39 +220,37 @@ class StoreStoreRequest extends FormRequest
             if (
                 $this->use_team_opening_hours &&
                 !$this->use_store_opening_hours &&
-                //
-
-                //
                 $user->currentTeam &&
                 //
                 //
-                !$user->currentTeam->monday_opening_time &&
-                !$user->currentTeam->monday_closing_time &&
+                !$this->monday_opening_time_team &&
+                !$this->monday_closing_time_team &&
                 //
-                !$user->currentTeam->tuesday_opening_time &&
-                !$user->currentTeam->tuesday_closing_time &&
+                !$this->tuesday_opening_time_team &&
+                !$this->tuesday_closing_time_team &&
                 //
-                !$user->currentTeam->wednesday_opening_time &&
-                !$user->currentTeam->wednesday_closing_time &&
+                !$this->wednesday_opening_time_team &&
+                !$this->wednesday_closing_time_team &&
                 //
-                !$user->currentTeam->thursday_opening_time &&
-                !$user->currentTeam->thursday_closing_time &&
+                !$this->thursday_opening_time_team &&
+                !$this->thursday_closing_time_team &&
                 //
-                !$user->currentTeam->friday_opening_time &&
-                !$user->currentTeam->friday_closing_time &&
+                !$this->friday_opening_time_team &&
+                !$this->friday_closing_time_team &&
                 //
-                !$user->currentTeam->saturday_opening_time &&
-                !$user->currentTeam->saturday_closing_time &&
+                !$this->saturday_opening_time_team &&
+                !$this->saturday_closing_time_team &&
                 //
-                !$user->currentTeam->sunday_opening_time &&
-                !$user->currentTeam->sunday_closing_time
+                !$this->sunday_opening_time_team &&
+                !$this->sunday_closing_time_team
+                //
                 //
             ) {
                 $validator
                     ->errors()
                     ->add(
                         "team_opening_hours",
-                        "Team opening hours is required."
+                        "All opening and closing hours have been set to closed. At least some days have to be set to open."
                     );
             }
             // check if current team has null for opening hours for all days # end
@@ -230,33 +266,33 @@ class StoreStoreRequest extends FormRequest
                 $this->use_store_opening_hours &&
                 //
                 //
-                !$this->monday_opening_time &&
-                !$this->monday_closing_time &&
                 //
-                !$this->tuesday_opening_time &&
-                !$this->tuesday_closing_time &&
+                !$this->monday_opening_time_store &&
+                !$this->monday_closing_time_store &&
                 //
-                !$this->wednesday_opening_time &&
-                !$this->wednesday_closing_time &&
+                !$this->tuesday_opening_time_store &&
+                !$this->tuesday_closing_time_store &&
                 //
-                !$this->thursday_opening_time &&
-                !$this->thursday_closing_time &&
+                !$this->wednesday_opening_time_store &&
+                !$this->wednesday_closing_time_store &&
                 //
-                !$this->friday_opening_time &&
-                !$this->friday_closing_time &&
+                !$this->thursday_opening_time_store &&
+                !$this->thursday_closing_time_store &&
                 //
-                !$this->saturday_opening_time &&
-                !$this->saturday_closing_time &&
+                !$this->friday_opening_time_store &&
+                !$this->friday_closing_time_store &&
                 //
-                !$this->sunday_opening_time &&
-                !$this->sunday_closing_time
+                !$this->saturday_opening_time_store &&
+                !$this->saturday_closing_time_store &&
                 //
+                !$this->sunday_opening_time_store &&
+                !$this->sunday_closing_time_store
             ) {
                 $validator
                     ->errors()
                     ->add(
                         "store_opening_hours",
-                        "Store opening hours is required."
+                        "All opening and closing hours have been set to closed. At least some days have to be set to open."
                     );
             }
             // check if current store has null for opening hours # end
