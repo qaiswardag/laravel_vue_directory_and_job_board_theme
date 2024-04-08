@@ -28,7 +28,7 @@ const goToSinglePost = function (currentTeamId, postId, postSlug) {
         <ThumbnailSmallImageSlider
             :images="post.cover_images"
             imageSize="medium_path"
-            imageHeight="max-h-96"
+            imageHeight="max-h-64"
             imageWidth="w-full object-cover object-cover"
             :roundedFull="false"
             :squareButtons="true"
