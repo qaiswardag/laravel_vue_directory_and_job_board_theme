@@ -185,10 +185,10 @@ onMounted(() => {
                         class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
                     />
                 </div>
-                <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                <div class="w-max min-w-0 flex-1 text-xs">
                     <label
                         for="post_id"
-                        class="select-none font-medium text-gray-900"
+                        class="pl-2 select-none font-medium text-gray-900"
                         >ID
                     </label>
                 </div>
@@ -204,10 +204,10 @@ onMounted(() => {
                         class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
                     />
                 </div>
-                <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                <div class="w-max min-w-0 flex-1 text-xs">
                     <label
                         for="categories"
-                        class="select-none font-medium text-gray-900"
+                        class="pl-2 select-none font-medium text-gray-900"
                         >Categories
                     </label>
                 </div>
@@ -223,11 +223,11 @@ onMounted(() => {
                         class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
                     />
                 </div>
-                <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                <div class="w-max min-w-0 flex-1 text-xs">
                     <label
                         for="dates"
-                        class="select-none font-medium text-gray-900"
-                        >Updated & created
+                        class="pl-2 select-none font-medium text-gray-900"
+                        >Created and updated
                     </label>
                 </div>
             </div>
@@ -241,10 +241,10 @@ onMounted(() => {
                         class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
                     />
                 </div>
-                <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                <div class="w-max min-w-0 flex-1 text-xs">
                     <label
                         for="people"
-                        class="select-none font-medium text-gray-900"
+                        class="pl-2 select-none font-medium text-gray-900"
                         >People
                     </label>
                 </div>
