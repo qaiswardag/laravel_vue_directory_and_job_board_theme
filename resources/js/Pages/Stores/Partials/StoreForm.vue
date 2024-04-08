@@ -1368,131 +1368,86 @@ onBeforeMount(async () => {
             // team opening hours team # start
 
             // monday opening
-            if (formLocalStorage.monday_opening_time_team) {
+            if (formLocalStorage.monday_opening_time_team !== undefined) {
                 postForm.monday_opening_time_team =
                     formLocalStorage.monday_opening_time_team;
-            } else {
-                postForm.monday_opening_time_team =
-                    props.currentUserTeam.monday_opening_time;
             }
 
             // monday closing
-            if (formLocalStorage.monday_closing_time_team) {
+            if (formLocalStorage.monday_closing_time_team !== undefined) {
                 postForm.monday_closing_time_team =
                     formLocalStorage.monday_closing_time_team;
-            } else {
-                postForm.monday_closing_time_team =
-                    props.currentUserTeam.monday_closing_time;
             }
 
             // tuesday opening
-            if (formLocalStorage.tuesday_opening_time_team) {
+            if (formLocalStorage.tuesday_opening_time_team !== undefined) {
                 postForm.tuesday_opening_time_team =
                     formLocalStorage.tuesday_opening_time_team;
-            } else {
-                postForm.tuesday_opening_time_team =
-                    props.currentUserTeam.tuesday_opening_time;
             }
 
             // tuesday closing
-            if (formLocalStorage.tuesday_closing_time_team) {
+            if (formLocalStorage.tuesday_closing_time_team !== undefined) {
                 postForm.tuesday_closing_time_team =
                     formLocalStorage.tuesday_closing_time_team;
-            } else {
-                postForm.tuesday_closing_time_team =
-                    props.currentUserTeam.tuesday_closing_time;
             }
 
             // wednesday opening
-            if (formLocalStorage.wednesday_opening_time_team) {
+            if (formLocalStorage.wednesday_opening_time_team !== undefined) {
                 postForm.wednesday_opening_time_team =
                     formLocalStorage.wednesday_opening_time_team;
-            } else {
-                postForm.wednesday_opening_time_team =
-                    props.currentUserTeam.wednesday_opening_time;
             }
 
             // wednesday closing
-            if (formLocalStorage.wednesday_closing_time_team) {
+            if (formLocalStorage.wednesday_closing_time_team !== undefined) {
                 postForm.wednesday_closing_time_team =
                     formLocalStorage.wednesday_closing_time_team;
-            } else {
-                postForm.wednesday_closing_time_team =
-                    props.currentUserTeam.wednesday_closing_time;
             }
 
             // thursday opening
-            if (formLocalStorage.thursday_opening_time_team) {
+            if (formLocalStorage.thursday_opening_time_team !== undefined) {
                 postForm.thursday_opening_time_team =
                     formLocalStorage.thursday_opening_time_team;
-            } else {
-                postForm.thursday_opening_time_team =
-                    props.currentUserTeam.thursday_opening_time;
             }
 
             // thursday closing
-            if (formLocalStorage.thursday_closing_time_team) {
+            if (formLocalStorage.thursday_closing_time_team !== undefined) {
                 postForm.thursday_closing_time_team =
                     formLocalStorage.thursday_closing_time_team;
-            } else {
-                postForm.thursday_closing_time_team =
-                    props.currentUserTeam.thursday_closing_time;
             }
 
             // friday opening
-            if (formLocalStorage.friday_opening_time_team) {
+            if (formLocalStorage.friday_opening_time_team !== undefined) {
                 postForm.friday_opening_time_team =
                     formLocalStorage.friday_opening_time_team;
-            } else {
-                postForm.friday_opening_time_team =
-                    props.currentUserTeam.friday_opening_time;
             }
-
             // friday closing
-            if (formLocalStorage.friday_closing_time_team) {
+            if (formLocalStorage.friday_closing_time_team !== undefined) {
                 postForm.friday_closing_time_team =
                     formLocalStorage.friday_closing_time_team;
-            } else {
-                postForm.friday_closing_time_team =
-                    props.currentUserTeam.friday_closing_time;
             }
 
             // saturday opening
-            if (formLocalStorage.saturday_opening_time_team) {
+            if (formLocalStorage.saturday_opening_time_team !== undefined) {
                 postForm.saturday_opening_time_team =
                     formLocalStorage.saturday_opening_time_team;
-            } else {
-                postForm.saturday_opening_time_team =
-                    props.currentUserTeam.saturday_opening_time;
             }
-
             // saturday closing
-            if (formLocalStorage.saturday_closing_time_team) {
+            if (formLocalStorage.saturday_closing_time_team !== undefined) {
                 postForm.saturday_closing_time_team =
                     formLocalStorage.saturday_closing_time_team;
-            } else {
-                postForm.saturday_closing_time_team =
-                    props.currentUserTeam.saturday_closing_time;
             }
 
             // sunday opening
-            if (formLocalStorage.sunday_opening_time_team) {
+            if (formLocalStorage.sunday_opening_time_team !== undefined) {
                 postForm.sunday_opening_time_team =
                     formLocalStorage.sunday_opening_time_team;
-            } else {
-                postForm.sunday_opening_time_team =
-                    props.currentUserTeam.sunday_opening_time;
             }
 
             // sunday closing
-            if (formLocalStorage.sunday_closing_time_team) {
+            if (formLocalStorage.sunday_closing_time_team !== undefined) {
                 postForm.sunday_closing_time_team =
                     formLocalStorage.sunday_closing_time_team;
-            } else {
-                postForm.sunday_closing_time_team =
-                    props.currentUserTeam.sunday_closing_time;
             }
-
             // team opening hours team # end
 
             //
