@@ -395,7 +395,7 @@ onMounted(() => {
         >
             <p
                 @click="handleCreatePaymentMethod"
-                class="myPrimaryParagraph text-xs cursor-pointer font-semibold py-4"
+                class="myPrimaryParagraph text-xs cursor-pointer font-medium py-4"
             >
                 Add Payment Method
             </p>
