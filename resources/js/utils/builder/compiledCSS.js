@@ -2139,7 +2139,16 @@ const compiledCSS = {
         "auto-cols-[minmax(100px,_1fr)]",
     ],
     gridLg: ["lg:auto-cols-[minmax(100px,_4fr)]"],
-    image: ["aspect-square", "aspect-[4/3]", "aspect-[9/16]", "aspect-[16/9]"],
+    image: [
+        "aspect-square",
+        "aspect-[4/3]",
+        "aspect-[9/16]",
+        "aspect-[16/9]",
+        "object-top",
+        "object-center",
+        "object-right",
+        "object-left",
+    ],
 };
 
 export default compiledCSS;
