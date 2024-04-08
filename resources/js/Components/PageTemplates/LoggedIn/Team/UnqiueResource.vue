@@ -1541,11 +1541,11 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                                     class="overflow-x-scroll py-4 px-2 w-full rounded-md"
                                 >
                                     <ThumbnailSmallImageSlider
-                                        v-if="store.cover_images"
-                                        :images="store.cover_images"
-                                        imageSize="medium_path"
-                                        imageHeight="min-h-32 max-h-32"
-                                        imageWidth="w-32 min-w-32 max-w-32 mb-4 object-cover"
+                                        v-if="store.brand_logos"
+                                        :images="store.brand_logos"
+                                        imageSize="large_path"
+                                        imageHeight="min-h-28 max-h-28"
+                                        imageWidth="w-28 min-w-28 max-w-28 mb-4 object-cover"
                                         :roundedFull="true"
                                         :squareButtons="false"
                                         :imageClickable="true"
