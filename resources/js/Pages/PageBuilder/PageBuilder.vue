@@ -170,16 +170,6 @@ onMounted(async () => {
                 class="min-w-[3.5rem] py-2"
             >
                 <div class="mx-4 flex flex-col myPrimaryGap">
-                    <div>
-                        <div class="rounded-full mb-8">
-                            <img
-                                class="rounded-full mx-auto w-12"
-                                src="/logo/logo.svg"
-                                alt="Logo"
-                            />
-                        </div>
-                    </div>
-
                     <div class="flex gap-2 items-center justify-center">
                         <button
                             type="button"
