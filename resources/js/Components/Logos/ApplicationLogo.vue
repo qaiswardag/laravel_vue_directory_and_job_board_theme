@@ -23,7 +23,7 @@ const goToHome = function () {
     <img
         @click="goToHome"
         class="lg:w-28 w-24 cursor-pointer"
-        src="/logo/myself_text_logo_black.svg"
+        src="/logo/logo.svg"
         alt="Logo"
     />
 </template>
