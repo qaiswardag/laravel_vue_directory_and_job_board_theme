@@ -1,26 +1,29 @@
 ## Use of personal data
-The following information is provided by myself.ae to enable our online visitors to be fully informed of this Privacy Policy. We have adopted this corporate wide Privacy Policy that guides how we collect, store, and use the information that you provide us with. By visiting myself.ae, you accept the Privacy Policy and Terms & Conditions of this Website.
+
+The following information is provided by myissue.io to enable our online visitors to be fully informed of this Privacy Policy. We have adopted this corporate wide Privacy Policy that guides how we collect, store, and use the information that you provide us with. By visiting myissue.io, you accept the Privacy Policy and Terms & Conditions of this Website.
 <br>
 <br>
 <br>
 <br>
+
 ## Collection and use of information
-While visitors can make use of and search our site anonymously, we collect identifiable personal data from users who voluntarily register or otherwise subscribe to our Site’s services. The data collected includes name, address, telephone number and e-mail address. We may combine collected personal data from myself.ae with other information collected offline to tailor marketing or for other purposes, such as internal research.
+
+While visitors can make use of and search our site anonymously, we collect identifiable personal data from users who voluntarily register or otherwise subscribe to our Site’s services. The data collected includes name, address, telephone number and e-mail address. We may combine collected personal data from myissue.io with other information collected offline to tailor marketing or for other purposes, such as internal research.
 <br>
 <br>
-For companies that choose to create a store profile or choose to place a job advertisement on myself.ae, additional data is collected such as billing, credit card and/or payment information.
+For companies that choose to create a store profile or choose to place a job advertisement on myissue.io, additional data is collected such as billing, credit card and/or payment information.
 <br>
 <br>
 We collect certain aggregated and non-personal data when you visit our Sites. This data does not relate to a specific identifiable user. Aggregated and non-personal data provide us with information such as the number of visitors to our website, including pages visited. Collection of this information is used to optimize the site’s pages and content.
 <br>
 <br>
-When you visit myself.ae to search, read or download information and content, we automatically collect standard computer information that your browser sends to each site you visit. This information may include data such as your IP-address, type of browser, language, time of your visit to myself.ae, and referring URLs. Generally, we do not link standard computer information to anything that allows us to identify visitors, unless they violate our rules or terms of service, or in order to protect our services, websites, users and/or others.
+When you visit myissue.io to search, read or download information and content, we automatically collect standard computer information that your browser sends to each site you visit. This information may include data such as your IP-address, type of browser, language, time of your visit to myissue.io, and referring URLs. Generally, we do not link standard computer information to anything that allows us to identify visitors, unless they violate our rules or terms of service, or in order to protect our services, websites, users and/or others.
 <br>
 <br>
-When creating a profile on our Network Platform "The Lookbook", the information you have provided will be registered and stored. myself.ae processes your personal data such as name, telephone number, e-mail address, city, cookies and IP-address, etc. Sensitive personal data such as e-mail addresses and telephone numbers are treated confidentially and will not be disclosed to either companies, visitors/users and/or other parties.
+When creating a profile on our Network Platform "The Lookbook", the information you have provided will be registered and stored. myissue.io processes your personal data such as name, telephone number, e-mail address, city, cookies and IP-address, etc. Sensitive personal data such as e-mail addresses and telephone numbers are treated confidentially and will not be disclosed to either companies, visitors/users and/or other parties.
 <br>
 <br>
-Please note that when creating a profile (including portfolio) on myself.ae, your profile will be public. Thus, it will be available on search engines such as Google, Yahoo, Bing etc. If you want to make your profile private, please uncheck the box “public” at the bottom of the registration form. Please note that by unchecking the box, your profile will not be visible in our Lookbook.
+Please note that when creating a profile (including portfolio) on myissue.io, your profile will be public. Thus, it will be available on search engines such as Google, Yahoo, Bing etc. If you want to make your profile private, please uncheck the box “public” at the bottom of the registration form. Please note that by unchecking the box, your profile will not be visible in our Lookbook.
 <br>
 <br>
 We retain the right to delete non-personal profiles with commercial content as well as profiles that are not relevant to the fashion industry.
@@ -29,29 +32,30 @@ We retain the right to delete non-personal profiles with commercial content as w
 Your right to withdraw consent
 <br>
 <br>
-If you have given us your consent to use your personal data, you have the right to change your mind and withdraw that consent at any time. To withdraw consent, please delete your profile and/or subscription to myself.ae.
+If you have given us your consent to use your personal data, you have the right to change your mind and withdraw that consent at any time. To withdraw consent, please delete your profile and/or subscription to myissue.io.
 <br>
 <br>
-Please note that in case of your withdrawal of consent, we will delete all data and information collected or provided by you, including your profile information and portfolio. myself.ae cannot restore this information or be held responsible for lost data and materials uploaded by you to our Website.
+Please note that in case of your withdrawal of consent, we will delete all data and information collected or provided by you, including your profile information and portfolio. myissue.io cannot restore this information or be held responsible for lost data and materials uploaded by you to our Website.
 <br>
 <br>
 <br>
 <br>
 
 ## Cookies
+
 We collect aggregated and non-personal data through “cookies”.
 <br>
 <br>
 Cookies are very small files that are sent by us to your computer, tablet, smartphone or other access device, which we can access when you visit our site.
 <br>
 <br>
-Cookies can tell us whether a user is a first-time visitor or whether he or she has visited myself.ae before. Cookies also tell us which areas, services and functions of the website that are of greatest interest to the visitor. Depositing of cookies can enhance your online experience as it allows us to save your preferences for your next visit to our website.
+Cookies can tell us whether a user is a first-time visitor or whether he or she has visited myissue.io before. Cookies also tell us which areas, services and functions of the website that are of greatest interest to the visitor. Depositing of cookies can enhance your online experience as it allows us to save your preferences for your next visit to our website.
 <br>
 <br>
-We use cookies to improve and optimize pages and content on myself.ae.
+We use cookies to improve and optimize pages and content on myissue.io.
 <br>
 <br>
-By using myself.ae you agree that we can place these types of cookies on your device and access them when you visit the website in the future.
+By using myissue.io you agree that we can place these types of cookies on your device and access them when you visit the website in the future.
 <br>
 <br>
 If you want to delete any cookies that are already on your computer, please refer to the help and support area on your internet browser for instructions on how to locate the file or directory that stores cookies.
@@ -61,6 +65,7 @@ If you want to delete any cookies that are already on your computer, please refe
 <br>
 
 ## Sharing of personal data
+
 With reservation of the following we will not disclose or sell information about you to a third party not associated with us unless:
 <br>
 <br>
@@ -70,7 +75,7 @@ With reservation of the following we will not disclose or sell information about
 (ii) it is required by law enforcement or state authorities
 <br>
 <br>
-(iii) we believe that disclosure is necessary or appropriate to prevent physical damage, financial loss, violation of the 'Terms and Conditions' that secure the individual user, abuse of myself.ae and/or in connection with investigation of suspected or actual illegal activity.
+(iii) we believe that disclosure is necessary or appropriate to prevent physical damage, financial loss, violation of the 'Terms and Conditions' that secure the individual user, abuse of myissue.io and/or in connection with investigation of suspected or actual illegal activity.
 <br>
 <br>
 (iv) we have reason to believe that you have used information from our Sites to commit illegal acts or actions that could threaten the health and / or safety of the public.
@@ -92,13 +97,14 @@ Personal information collected through the site may be further transferred as pa
 <br>
 
 ## Account & Password
-This section applies to all profiles (private, store and/or employer) signed up to myself.ae.
+
+This section applies to all profiles (private, store and/or employer) signed up to myissue.io.
 <br>
 <br>
-The first time you sign in to or create a private, store and/or employer profile on myself.ae you have to enter a personal password. You must use the password along with your myself.ae username to log in to your profile. Please be aware that myself.ae may require a password for any inquiry due to security.
+The first time you sign in to or create a private, store and/or employer profile on myissue.io you have to enter a personal password. You must use the password along with your myissue.io username to log in to your profile. Please be aware that myissue.io may require a password for any inquiry due to security.
 <br>
 <br>
 The password can be changed on the user's or the company's private page (settings). If you have forgotten your password a new can be acquired by entering your registered e-mail address under “forgotten password”.
 <br>
 <br>
-The password belongs to the person or company who created the profile. Please be aware that the person or company who created the profile are responsible for storing their e-mail address, user name and password information in a secure place. Myself.ae cannot be held liable if you have lost your password or if you have given third parties access to your password.
+The password belongs to the person or company who created the profile. Please be aware that the person or company who created the profile are responsible for storing their e-mail address, user name and password information in a secure place. MyISSUE cannot be held liable if you have lost your password or if you have given third parties access to your password.

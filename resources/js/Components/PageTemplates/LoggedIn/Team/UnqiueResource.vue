@@ -71,7 +71,7 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
         usePage().props &&
         usePage().props.environment !== "local"
     ) {
-        window.open(`https://www.myself.ae/${routePath}`, "_blank");
+        window.open(`https://www.myissue.io/${routePath}`, "_blank");
     }
 };
 </script>
@@ -1529,7 +1529,7 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                 </div>
                 <!-- categories # end -->
 
-                <!-- Running campaigns - stores # start -->
+                <!-- Running posts - stores # start -->
                 <div
                     v-if="
                         stores && Array.isArray(stores) && stores.length !== 0
@@ -1653,7 +1653,7 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                         </div>
                     </div>
                 </div>
-                <!-- Running campaigns - stores # end -->
+                <!-- Running posts - stores # end -->
 
                 <!-- tags # start -->
                 <template v-if="post.tags">

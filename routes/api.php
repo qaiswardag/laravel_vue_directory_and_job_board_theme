@@ -27,7 +27,7 @@ use App\Http\Controllers\Guests\User\UserController;
 */
 
 // index
-Route::get("/guest/campaigns/index", [
+Route::get("/guest/posts/index", [
     PostsGuestIndexController::class,
     "index",
 ])->name("api.guest.posts.index");

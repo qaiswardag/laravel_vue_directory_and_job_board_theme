@@ -174,7 +174,7 @@ onMounted(async () => {
                         <div class="rounded-full mb-8">
                             <img
                                 class="rounded-full mx-auto w-12"
-                                src="/logo/myself_text_logo_white_bg_black.svg"
+                                src="/logo/logo.svg"
                                 alt="Logo"
                             />
                         </div>

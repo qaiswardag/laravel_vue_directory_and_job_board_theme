@@ -593,26 +593,25 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/team/campaigns/{teamId}", [
-        PostController::class,
-        "index",
-    ])->name("team.posts.index");
+    Route::get("/team/posts/{teamId}", [PostController::class, "index"])->name(
+        "team.posts.index"
+    );
 
-    Route::get("/team/campaigns/expired/{teamId}", [
+    Route::get("/team/posts/expired/{teamId}", [
         PostExpiredController::class,
         "index",
     ])->name("team.posts.index.expired");
 
-    Route::get("/team/campaigns/draft/{teamId}", [
+    Route::get("/team/posts/draft/{teamId}", [
         PostDraftController::class,
         "index",
     ])->name("team.posts.index.draft");
-    Route::get("/team/campaigns/trash/{teamId}", [
+    Route::get("/team/posts/trash/{teamId}", [
         PostDeletedController::class,
         "index",
     ])->name("team.posts.index.trash");
     // unique post
-    Route::get("/team/{teamId}/campaigns/{slug}/view{postId}/", [
+    Route::get("/team/{teamId}/posts/{slug}/view{postId}/", [
         PostController::class,
         "show",
     ])->name("team.posts.post.show");
@@ -714,13 +713,13 @@ Route::middleware([
     ])->name("attach.component.categories.index");
 
     // POST CATEGORIES
-    Route::get("/team/attach/campaigns/categories/index/{team}", [
+    Route::get("/team/attach/posts/categories/index/{team}", [
         AttachPostCategoriesController::class,
         "index",
     ])->name("attach.post.categories.index");
 
     // POST STORES
-    Route::get("/team/attach/campaigns/stores/index/{team}", [
+    Route::get("/team/attach/posts/stores/index/{team}", [
         AttachPostStoresController::class,
         "index",
     ])->name("attach.post.stores.index");
@@ -858,32 +857,32 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/team/campaigns/sale/{teamId}/{post}", [
+    Route::get("/team/posts/sale/{teamId}/{post}", [
         PostController::class,
         "edit",
     ])->name("team.posts.post.edit");
 
-    Route::post("/team/campaigns/sale/update/{post}", [
+    Route::post("/team/posts/sale/update/{post}", [
         PostController::class,
         "update",
     ])->name("team.posts.update");
 
-    Route::get("/team/campaigns/create/{teamId}", [
+    Route::get("/team/posts/create/{teamId}", [
         PostController::class,
         "create",
     ])->name("team.posts.create");
 
-    Route::post("/team/campaigns/sale/store", [
+    Route::post("/team/posts/sale/store", [
         PostController::class,
         "store",
     ])->name("team.posts.store");
 
-    Route::post("/team/campaigns/sale/restore/{postId}/{team}", [
+    Route::post("/team/posts/sale/restore/{postId}/{team}", [
         PostDeletedController::class,
         "restore",
     ])->name("team.posts.restore");
 
-    Route::post("/team/campaigns/duplicate", [
+    Route::post("/team/posts/duplicate", [
         PostController::class,
         "duplicate",
     ])->name("team.posts.duplicate");
@@ -1079,12 +1078,12 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::delete("/team/campaigns/sale/{post}/{team}", [
+    Route::delete("/team/posts/sale/{post}/{team}", [
         PostController::class,
         "destroy",
     ])->name("team.posts.post.destroy");
 
-    Route::delete("/team/campaigns/trash/{post}/{team}", [
+    Route::delete("/team/posts/trash/{post}/{team}", [
         PostDeletedController::class,
         "destroy",
     ])->name("team.posts.post.destroy.force");

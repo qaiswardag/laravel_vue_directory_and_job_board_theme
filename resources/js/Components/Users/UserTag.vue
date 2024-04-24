@@ -42,7 +42,7 @@ const goToUser = function () {
         usePage().props.environment !== "local"
     ) {
         window.open(
-            `https://www.myself.ae/me/${props.user.username}`,
+            `https://www.myissue.io/me/${props.user.username}`,
             "_blank"
         );
     }

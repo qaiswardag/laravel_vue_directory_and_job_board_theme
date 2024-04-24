@@ -4,7 +4,7 @@
 
 # Intro
 
-myself fashion & jobs الموضة ووظائف | All rights reserved.
+Laravel and Vue Directory & Job Board Theme
 
 # Technologies and Frameworks
 

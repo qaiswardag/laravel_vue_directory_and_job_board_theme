@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia>{{ config('app.name', 'myself') }}</title>
+        <title inertia>{{ config('app.name', 'MyISSUE') }}</title>
         
         <script src="https://js.stripe.com/v3/"></script>        
         <!-- Fonts -->

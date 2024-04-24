@@ -67,7 +67,7 @@ const goToStores = function () {
         usePage().props &&
         usePage().props.environment !== "local"
     ) {
-        window.location.href = "https://www.myself.ae/stores";
+        window.location.href = "https://www.myissue.io/stores";
     }
 };
 const goToJobs = function () {
@@ -83,7 +83,7 @@ const goToJobs = function () {
         usePage().props &&
         usePage().props.environment !== "local"
     ) {
-        window.location.href = "https://www.myself.ae/jobs";
+        window.location.href = "https://www.myissue.io/jobs";
     }
 };
 const goToCampaigns = function () {
@@ -99,7 +99,7 @@ const goToCampaigns = function () {
         usePage().props &&
         usePage().props.environment !== "local"
     ) {
-        window.location.href = "https://www.myself.ae/campaigns";
+        window.location.href = "https://www.myissue.io/campaigns";
     }
 };
 </script>

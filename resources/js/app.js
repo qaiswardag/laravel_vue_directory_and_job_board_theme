@@ -9,7 +9,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
 const appName =
-    window.document.getElementsByTagName("title")[0]?.innerText || "myself";
+    window.document.getElementsByTagName("title")[0]?.innerText || "MyISSUE";
 createInertiaApp({
     title: (title) => `${appName} | ${title}`,
     // Disable or enable Inertia's default loading indicato

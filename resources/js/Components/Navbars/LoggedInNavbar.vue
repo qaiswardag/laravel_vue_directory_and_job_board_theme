@@ -84,7 +84,7 @@ const goToHome = function () {
         usePage().props &&
         usePage().props.environment !== "local"
     ) {
-        window.location.href = "https://www.myself.ae";
+        window.location.href = "https://www.myissue.io"; https://www.myissue.io Laravel and Vue Directory & Job Board Theme
     }
 };
 </script>

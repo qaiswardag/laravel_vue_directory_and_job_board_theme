@@ -50,7 +50,7 @@ const store = useStore();
 
 const breadcrumbsLinks = [
     {
-        label: "Running campaigns",
+        label: "Running posts",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -60,7 +60,7 @@ const breadcrumbsLinks = [
 
 const linksTopMenu = [
     {
-        label: "Running Campaigns",
+        label: "Running posts",
         icon: "campaign",
         route: {
             name: "team.posts.index",

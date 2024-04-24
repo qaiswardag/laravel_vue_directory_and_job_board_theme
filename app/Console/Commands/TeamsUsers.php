@@ -51,7 +51,7 @@ class TeamsUsers extends Command
                 "id" => 1,
                 "first_name" => "Qais",
                 "last_name" => "Wardag",
-                "email" => "qw@myself.ae",
+                "email" => "qw@myissue.io",
                 "public" => true,
                 "current_team_id" => 2,
                 "password" => Hash::make("123456"),
@@ -68,7 +68,7 @@ class TeamsUsers extends Command
                 "id" => 2,
                 "first_name" => "Mie",
                 "last_name" => "Mortensen",
-                "email" => "mm@myself.ae",
+                "email" => "mm@myissue.io",
 
                 "public" => true,
                 "current_team_id" => 2,
@@ -86,8 +86,8 @@ class TeamsUsers extends Command
             Team::factory()->create([
                 "id" => 1,
                 "user_id" => User::find(1)->id,
-                "name" => "myself",
-                "slug" => "myself",
+                "name" => "MyISSUE",
+                "slug" => "MyISSUE",
                 "public" => true,
                 "personal_team" => false,
 
@@ -156,7 +156,7 @@ class TeamsUsers extends Command
                 "id" => 3,
                 "first_name" => "Eliza",
                 "last_name" => "Stoenescu",
-                "email" => "es@myself.ae",
+                "email" => "es@myissue.io",
                 "public" => true,
                 "current_team_id" => 2,
                 "password" => Hash::make("123456"),
