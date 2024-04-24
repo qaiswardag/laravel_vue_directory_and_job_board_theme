@@ -252,9 +252,9 @@ import {
             >
                 <span class="material-symbols-outlined"> campaign </span>
                 <div class="flex flex-col gap-2">
-                    <span class="block"> Campaigns </span>
+                    <span class="block"> Posts </span>
                     <span class="block text-xs font-normal">
-                        Manage or create new in-store campaigns
+                        Manage or create new posts
                     </span>
                 </div>
             </SideBarLink>
@@ -284,7 +284,12 @@ import {
                 <span class="myMediumIcon material-symbols-outlined">
                     work
                 </span>
-                Jobs
+                <div class="flex flex-col gap-2">
+                    <span class="block"> Jobs </span>
+                    <span class="block text-xs font-normal">
+                        Manage or create new jobs
+                    </span>
+                </div>
             </SideBarLink>
         </template>
         <template

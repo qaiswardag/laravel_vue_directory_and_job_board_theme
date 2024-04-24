@@ -86,20 +86,20 @@ const goToJobs = function () {
         window.location.href = "https://www.myissue.io/jobs";
     }
 };
-const goToCampaigns = function () {
+const goToPosts = function () {
     if (
         usePage() &&
         usePage().props &&
         usePage().props.environment === "local"
     ) {
-        window.location.href = "http://localhost:3000/campaigns";
+        window.location.href = "http://localhost:3000/posts";
     }
     if (
         usePage() &&
         usePage().props &&
         usePage().props.environment !== "local"
     ) {
-        window.location.href = "https://www.myissue.io/campaigns";
+        window.location.href = "https://www.myissue.io/posts";
     }
 };
 </script>
@@ -199,13 +199,11 @@ const goToCampaigns = function () {
                                                         class="block w-full hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                     >
                                                         <button
-                                                            @click="
-                                                                goToCampaigns
-                                                            "
+                                                            @click="goToPosts"
                                                             type="button"
                                                             class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                         >
-                                                            Campaigns
+                                                            Posts
                                                         </button>
                                                     </li>
                                                     <li>

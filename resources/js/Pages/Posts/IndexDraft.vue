@@ -50,7 +50,7 @@ const store = useStore();
 
 const breadcrumbsLinks = [
     {
-        label: "Running campaigns",
+        label: "Running posts",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -60,7 +60,7 @@ const breadcrumbsLinks = [
 
 const linksTopMenu = [
     {
-        label: "Running Campaigns",
+        label: "Running Posts",
         icon: "campaign",
         route: {
             name: "team.posts.index",
@@ -76,7 +76,7 @@ const linksTopMenu = [
         },
     },
     {
-        label: "Expired Campaigns",
+        label: "Expired Posts",
         icon: "schedule",
         route: {
             name: "team.posts.index.expired",
@@ -95,7 +95,7 @@ const linksTopMenu = [
 
 const routesArray = [
     {
-        label: "All Running campaigns",
+        label: "All Running posts",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -240,7 +240,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head title="Campaigns" />
+    <Head title="Posts" />
 
     <MainLayout>
         <LoggedInLayout>
@@ -263,7 +263,7 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
             <template #header>
-                Campaigns
+                Posts
                 {{ $page.props.user && $page.props.currentUserTeam.name }}
             </template>
             <template #breadcrumbs>
@@ -272,7 +272,7 @@ onMounted(() => {
 
             <CardHeadings :routesArray="routesArray">
                 <template #title>
-                    Campaigns
+                    Posts
                     {{ $page.props.user && $page.props.user.current_team.name }}
                 </template>
                 <template #buttons>
@@ -322,10 +322,8 @@ onMounted(() => {
             </form>
 
             <template v-if="posts && posts.data.length <= 0">
-                <h1 class="myQuaternaryHeader">No Campaigns</h1>
-                <p class="myPrimaryParagraph">
-                    Looks like there are no campaigns!
-                </p>
+                <h1 class="myQuaternaryHeader">No Posts</h1>
+                <p class="myPrimaryParagraph">Looks like there are no Posts!</p>
             </template>
 
             <!-- table start -->

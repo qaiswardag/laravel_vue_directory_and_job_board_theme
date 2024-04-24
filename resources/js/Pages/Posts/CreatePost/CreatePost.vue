@@ -18,7 +18,7 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Running campaigns",
+        label: "All Running posts",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
