@@ -14,9 +14,13 @@ defineProps({
         </div>
 
         <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white mx.32 border border-gray-100 overflow-hidden rounded opacity-95"
+            class="w-full sm:max-w-md mt-6 bg-white mx.32 overflow-hidden rounded-md opacity-95 p-2"
         >
-            <slot />
+            <div
+                class="border border-myPrimaryMediumGrayColor py-4 px-6 rounded-md"
+            >
+                <slot />
+            </div>
         </div>
     </div>
 </template>

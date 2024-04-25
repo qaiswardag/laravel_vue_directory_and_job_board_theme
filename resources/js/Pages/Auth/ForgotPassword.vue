@@ -36,7 +36,7 @@ const submit = () => {
     </Head>
 
     <MainLayout>
-        <div class="bg-gradient-to-t from-red-50 via-pink-100 to-pink-50">
+        <div class="bg-gradient-to-t from-red-50 via-gray-200 to-pink-50">
             <GuestsLayout>
                 <template #header>
                     <PageHeader title="Forgot password"></PageHeader>
