@@ -114,7 +114,7 @@ const submit = () => {
                                 <div class="flex items-center justify-end mt-4">
                                     <SubmitButton
                                         :disabled="form.processing"
-                                        buttonText="Log in"
+                                        buttonText="Login"
                                     >
                                     </SubmitButton>
                                 </div>

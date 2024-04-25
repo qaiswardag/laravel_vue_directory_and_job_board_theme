@@ -101,7 +101,7 @@ Personal information collected through the site may be further transferred as pa
 This section applies to all profiles (private, store and/or employer) signed up to myissue.io.
 <br>
 <br>
-The first time you sign in to or create a private, store and/or employer profile on myissue.io you have to enter a personal password. You must use the password along with your myissue.io username to log in to your profile. Please be aware that myissue.io may require a password for any inquiry due to security.
+The first time you sign in to or create a private, store and/or employer profile on myissue.io you have to enter a personal password. You must use the password along with your myissue.io username to login to your profile. Please be aware that myissue.io may require a password for any inquiry due to security.
 <br>
 <br>
 The password can be changed on the user's or the company's private page (settings). If you have forgotten your password a new can be acquired by entering your registered e-mail address under “forgotten password”.
