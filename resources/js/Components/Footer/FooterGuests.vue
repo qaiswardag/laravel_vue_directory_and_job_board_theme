@@ -15,6 +15,14 @@
                     GitHub
                 </a>
             </p>
+            <p class="myPrimaryParagraph lg:text-sm text-xs">
+                <a
+                    href="https://www.linkedin.com/in/qaiswardag/"
+                    target="_blank"
+                >
+                    LinkedIn
+                </a>
+            </p>
         </div>
     </footer>
 </template>
