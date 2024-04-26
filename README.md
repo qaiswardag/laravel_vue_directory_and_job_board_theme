@@ -4,7 +4,13 @@
 
 # Intro
 
-Laravel and Vue Directory & Job Board Theme
+Laravel, Vue & Nuxt, a Listing Directory & Job Board Theme
+
+## About and demo
+
+This app was born out of my desire to create a minimalist Listing Directory & Job Board Theme.
+
+[Play around with the demo app](https://www.myissue.io)
 
 # Technologies and Frameworks
 
