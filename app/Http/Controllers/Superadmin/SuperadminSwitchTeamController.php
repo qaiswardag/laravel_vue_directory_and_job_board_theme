@@ -56,7 +56,7 @@ class SuperadminSwitchTeamController extends Controller
      */
     public function update(Request $request)
     {
-        $this->authorize("superadmin-can-create-and-update");
+        $this->authorize("superadmin-can-read");
 
         $validator = Validator::make($request->all(), [
             "team_id" => ["required", "Integer", "max:255"],
