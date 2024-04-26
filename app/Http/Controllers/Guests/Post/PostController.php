@@ -69,7 +69,7 @@ class PostController extends Controller
         // Render
         return [
             "post" => $post,
-            "postType" => "Campaign",
+            "postType" => "Post",
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,

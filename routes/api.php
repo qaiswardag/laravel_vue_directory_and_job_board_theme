@@ -37,7 +37,7 @@ Route::get("/guest/jobs/index", [JobsGuestIndexController::class, "index"]);
 Route::get("/guest/stores/index", [StoresGuestIndexController::class, "index"]);
 
 // single
-Route::get("{teamSlug}/campaign/{postSlug}/view/{postId}/", [
+Route::get("{teamSlug}/post/{postSlug}/view/{postId}/", [
     PostPostController::class,
     "showAPI",
 ]);
