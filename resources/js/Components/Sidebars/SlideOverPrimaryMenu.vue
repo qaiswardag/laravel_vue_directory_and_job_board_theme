@@ -60,7 +60,7 @@ const goToStores = function () {
         usePage().props &&
         usePage().props.environment === "local"
     ) {
-        window.location.href = "http://localhost:3000/stores";
+        window.location.href = "http://localhost:4000/stores";
     }
     if (
         usePage() &&
@@ -76,7 +76,7 @@ const goToJobs = function () {
         usePage().props &&
         usePage().props.environment === "local"
     ) {
-        window.location.href = "http://localhost:3000/jobs";
+        window.location.href = "http://localhost:4/jobs";
     }
     if (
         usePage() &&
@@ -92,7 +92,7 @@ const goToPosts = function () {
         usePage().props &&
         usePage().props.environment === "local"
     ) {
-        window.location.href = "http://localhost:3000/posts";
+        window.location.href = "http://localhost:4000/posts";
     }
     if (
         usePage() &&

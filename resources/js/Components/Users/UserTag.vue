@@ -32,7 +32,7 @@ const goToUser = function () {
         usePage().props.environment === "local"
     ) {
         window.open(
-            `http://localhost:3000/me/${props.user.username}`,
+            `http://localhost:4000/me/${props.user.username}`,
             "_blank"
         );
     }

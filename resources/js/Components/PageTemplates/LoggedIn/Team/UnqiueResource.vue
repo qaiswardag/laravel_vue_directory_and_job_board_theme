@@ -64,7 +64,7 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
         usePage().props &&
         usePage().props.environment === "local"
     ) {
-        window.open(`http://localhost:3000/${routePath}`, "_blank");
+        window.open(`http://localhost:4000/${routePath}`, "_blank");
     }
     if (
         usePage() &&
