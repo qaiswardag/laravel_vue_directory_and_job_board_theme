@@ -54,6 +54,8 @@ class StoreController extends Controller
             ]);
         }
 
+        $this->authorize("can-read", $team);
+
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array
@@ -215,7 +217,7 @@ class StoreController extends Controller
             ]);
         }
 
-        $this->authorize("can-create-and-update", $team);
+        $this->authorize("can-read", $team);
 
         $user = Auth::user();
 
@@ -691,8 +693,7 @@ class StoreController extends Controller
             ]);
         }
 
-        // Authorize the team that the user has selected to store the store for, rather than the team that the user is currently on.
-        $this->authorize("can-create-and-update", $team);
+        $this->authorize("can-read", $team);
 
         $user = Auth::user();
 

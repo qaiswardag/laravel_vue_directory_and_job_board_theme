@@ -46,6 +46,8 @@ class PostController extends Controller
             ]);
         }
 
+        $this->authorize("can-read", $team);
+
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array
@@ -126,7 +128,7 @@ class PostController extends Controller
             ]);
         }
 
-        $this->authorize("can-create-and-update", $team);
+        $this->authorize("can-read", $team);
 
         return Inertia::render("Posts/CreatePost/CreatePost");
     }
@@ -345,8 +347,7 @@ class PostController extends Controller
             ]);
         }
 
-        // Authorize the team that the user has selected to store the post for, rather than the team that the user is currently on.
-        $this->authorize("can-create-and-update", $team);
+        $this->authorize("can-read", $team);
 
         $coverImages = $post->coverImages;
         $categories = $post->categories;

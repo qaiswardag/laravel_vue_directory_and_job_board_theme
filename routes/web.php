@@ -90,112 +90,13 @@ Route::middleware([
 // users
 Route::get("/loggedin-user", [LoggedInUser::class, "show"]);
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
-// GUESTS ONLY # START
 // GUESTS ONLY # START
 Route::middleware([])->group(function () {
     // USERS #START
-    // USERS #START
-    // USERS #START
-    // USERS #START
-
-    // unique user
 
     // USERS #END
-    // USERS #END
-    // USERS #END
-    // USERS #END
-
-    // POSTS #START
-    // POSTS #START
-    // POSTS #START
-    // POSTS #START
-
-    //
-    //
-
-    // POSTS #END
-    // POSTS #END
-    // POSTS #END
-    // POSTS #END
-
-    // JOBS #START
-    // JOBS #START
-    // JOBS #START
-    // JOBS #START
-    //
-    //
-
-    // JOBS #END
-    // JOBS #END
-    // JOBS #END
 
     // STORES #START
-    // STORES #START
-    // STORES #START
-    // STORES #START
-
-    // CREATE NEW TEAM # START
     // CREATE NEW TEAM # START
     if (Jetstream::hasTeamFeatures()) {
         Route::get("/teams/team/create", [
@@ -209,88 +110,9 @@ Route::middleware([])->group(function () {
         ])->name("teams.store.team");
     }
     // CREATE NEW TEAM # END
-    // CREATE NEW TEAM # END
 });
+
 // GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-// GUESTS ONLY # END
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
-// AUTH ONLY # START
 // AUTH ONLY # START
 Route::middleware([
     "auth:sanctum",
@@ -383,11 +205,6 @@ Route::middleware([
     // Fetch All Users Teams # end
 
     // single charge
-    // single charge
-    // single charge
-    // single charge
-    // single charge
-    // single charge
     Route::get("/single-charge/create/{job}", [
         SingleChargeJobController::class,
         "create",
@@ -398,14 +215,6 @@ Route::middleware([
         "store",
     ])->name("stripe.single.charge.job.store");
 
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
     // Auth only media library # start
     // Auth only media library # start
 
@@ -413,27 +222,12 @@ Route::middleware([
         UserMediaLibraryUserController::class,
         "index",
     ])->name("user.media.index");
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
+
     Route::post("/media/user/store", [
         MediaLibraryUserController::class,
         "store",
     ])->name("user.media.store");
-    //
-    //
-    //
+
     Route::get("/media/user/internal/api/edit/{mediaLibraryUser}", [
         UserMediaLibraryUserController::class,
         "edit",
@@ -450,108 +244,16 @@ Route::middleware([
     ])->name("media.user.destroy");
 
     // Auth only media library # end
-    // Auth only media library # end
 
-    //
-    //
-    //
-    //
-    //
-    // PAGE BUILDER #START
-    // PAGE BUILDER #START
-    // PAGE BUILDER #START
     // PAGE BUILDER #START
     Route::get("/components/index", [
         PageBuilderComponentsController::class,
         "index",
     ])->name("components.index");
     // PAGE BUILDER #END
-    // PAGE BUILDER #END
-    // PAGE BUILDER #END
-    // PAGE BUILDER #END
 });
 // AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-// AUTH ONLY # END
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
-// AUTH & THIER TEAM -> CAN READ ONLY # START
+
 // AUTH & THIER TEAM -> CAN READ ONLY # START
 Route::middleware([
     "auth:sanctum",
@@ -560,9 +262,7 @@ Route::middleware([
     // "ensure.can.read", // reader, editor, owner, administrator
 ])->group(function () {
     // USER & DASHBOARD #START
-    // USER & DASHBOARD #START
-    // USER & DASHBOARD #START
-    // USER & DASHBOARD #START
+
     Route::get("/dashboard/stats/{teamId?}", [
         DashboardStatsController::class,
         "show",
@@ -585,13 +285,7 @@ Route::middleware([
         "show",
     ])->name("user.profile.security");
     // USER & DASHBOARD #END
-    // USER & DASHBOARD #END
-    // USER & DASHBOARD #END
-    // USER & DASHBOARD #END
 
-    // POSTS #START
-    // POSTS #START
-    // POSTS #START
     // POSTS #START
     Route::get("/team/posts/{teamId}", [PostController::class, "index"])->name(
         "team.posts.index"
@@ -616,13 +310,7 @@ Route::middleware([
         "show",
     ])->name("team.posts.post.show");
     // POSTS #END
-    // POSTS #END
-    // POSTS #END
-    // POSTS #END
 
-    // JOBS #START
-    // JOBS #START
-    // JOBS #START
     // JOBS #START
     Route::get("/team/jobs/{teamId}", [JobController::class, "index"])->name(
         "team.jobs.index"
@@ -645,13 +333,7 @@ Route::middleware([
         "show",
     ])->name("team.jobs.job.show");
     // JOBS #END
-    // JOBS #END
-    // JOBS #END
-    // JOBS #END
 
-    // STORE #START
-    // STORE #START
-    // STORE #START
     // STORE #START
     Route::get("/team/stores/{teamId}", [
         StoreController::class,
@@ -674,13 +356,7 @@ Route::middleware([
         "show",
     ])->name("team.stores.store.show");
     // STORE #END
-    // STORE #END
-    // STORE #END
-    // STORE #END
 
-    // MEDIA #START
-    // MEDIA #START
-    // MEDIA #START
     // MEDIA #START
     Route::get("/team/media/index/{team}", [
         LoggedInMediaLibraryController::class,
@@ -692,13 +368,9 @@ Route::middleware([
         "index",
     ])->name("media.index");
     // MEDIA #END
-    // MEDIA #END
-    // MEDIA #END
-    // MEDIA #END
 
     // ATTACH USER, POST CATEGORIES, POST TYPES, JOB CATEGORIES, STORE CATEGORIES #START
-    // ATTACH USER #START
-    // ATTACH USER #START
+
     // ATTACH USER #START
     // USERS
     Route::get("/team/attach/users/index/{team}", [
@@ -762,89 +434,10 @@ Route::middleware([
         "index",
     ])->name("attach.store.categories.index");
     // ATTACH USER #END
-    // ATTACH USER #END
-    // ATTACH USER #END
-    // ATTACH USER #END
 });
+
 // AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-// AUTH & THIER TEAM -> CAN READ ONLY # END
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+
 // AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
 Route::middleware([
     "auth:sanctum",
@@ -853,9 +446,6 @@ Route::middleware([
     // "ensure.can.create.and.update", // editor, owner, administrator
 ])->group(function () {
     //
-    // POSTS #START
-    // POSTS #START
-    // POSTS #START
     // POSTS #START
     Route::get("/team/posts/sale/{teamId}/{post}", [
         PostController::class,
@@ -887,13 +477,7 @@ Route::middleware([
         "duplicate",
     ])->name("team.posts.duplicate");
     // POSTS #END
-    // POSTS #END
-    // POSTS #END
-    // POSTS #END
 
-    // JOBS #START
-    // JOBS #START
-    // JOBS #START
     // JOBS #START
     Route::get("/team/jobs/job/{teamId}/{job}", [
         JobController::class,
@@ -929,15 +513,8 @@ Route::middleware([
         "duplicate",
     ])->name("team.jobs.duplicate");
     // JOBS #END
-    // JOBS #END
-    // JOBS #END
-    // JOBS #END
 
     // STORES #START
-    // STORES #START
-    // STORES #START
-    // STORES #START
-
     Route::get("/team/stores/store/{teamId}/{store}", [
         StoreController::class,
         "edit",
@@ -969,9 +546,6 @@ Route::middleware([
     ])->name("team.stores.duplicate");
 
     // MEDIA #START
-    // MEDIA #START
-    // MEDIA #START
-    // MEDIA #START
     Route::get("/team/media/edit/{mediaLibrary}/{team}", [
         LoggedInMediaLibraryController::class,
         "edit",
@@ -986,87 +560,9 @@ Route::middleware([
         "store",
     ])->name("media.store");
     // MEDIA #END
-    // MEDIA #END
-    // MEDIA #END
-    // MEDIA #END
 });
 // AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+
 // AUTH & THIER TEAM -> CAN DESTROY ONLY # START
 Route::middleware([
     "auth:sanctum",
@@ -1074,9 +570,6 @@ Route::middleware([
     "verified",
     // "ensure.can.destroy", // owner, administrator
 ])->group(function () {
-    // POSTS #START
-    // POSTS #START
-    // POSTS #START
     // POSTS #START
     Route::delete("/team/posts/sale/{post}/{team}", [
         PostController::class,
@@ -1088,13 +581,7 @@ Route::middleware([
         "destroy",
     ])->name("team.posts.post.destroy.force");
     // POSTS #END
-    // POSTS #END
-    // POSTS #END
-    // POSTS #END
 
-    // JOBS #START
-    // JOBS #START
-    // JOBS #START
     // JOBS #START
     Route::delete("/team/jobs/job/{job}/{team}", [
         JobController::class,
@@ -1106,13 +593,7 @@ Route::middleware([
         "destroy",
     ])->name("team.jobs.job.destroy.force");
     // JOBS #END
-    // JOBS #END
-    // JOBS #END
-    // JOBS #END
 
-    // STORES #START
-    // STORES #START
-    // STORES #START
     // STORES #START
     Route::delete("/team/stores/store/{store}/{team}", [
         StoreController::class,
@@ -1124,97 +605,16 @@ Route::middleware([
         "destroy",
     ])->name("team.stores.store.destroy.force");
     // STORES #END
-    // STORES #END
-    // STORES #END
-    // STORES #END
 
-    // MEDIA #START
-    // MEDIA #START
-    // MEDIA #START
     // MEDIA #START
     Route::post("/team/media/image/destroy/{team}", [
         MediaLibraryController::class,
         "destroy",
     ])->name("media.destroy");
     // MEDIA #END
-    // MEDIA #END
-    // MEDIA #END
-    // MEDIA #END
 });
 // AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
-// ADMIN ONLY -> # START
+
 // ADMIN ONLY -> # START
 Route::middleware([
     "auth:sanctum",
@@ -1225,9 +625,6 @@ Route::middleware([
         "admin.dashboard"
     );
 
-    // ADMIN FETCH ALL USERS # START
-    // ADMIN FETCH ALL USERS # START
-    // ADMIN FETCH ALL USERS # START
     // ADMIN FETCH ALL USERS # START
     Route::get("/admin/users", [
         SuperadminUserController::class,
@@ -1252,13 +649,7 @@ Route::middleware([
         "destroy",
     ])->name("admin.users.user.remove.superadmin");
     // ADMIN FETCH ALL USERS # END
-    // ADMIN FETCH ALL USERS # END
-    // ADMIN FETCH ALL USERS # END
-    // ADMIN FETCH ALL USERS # END
 
-    // ADMIN FETCH ALL TEAMS # START
-    // ADMIN FETCH ALL TEAMS # START
-    // ADMIN FETCH ALL TEAMS # START
     // ADMIN FETCH ALL TEAMS # START
     // Fetch all Teams # start
     Route::get("/superadmin/api/internal/teams/index", [
@@ -1272,13 +663,7 @@ Route::middleware([
     ])->name("superadmin.switch.team");
     // Fetch all Teams # end
     // ADMIN FETCH ALL TEAMS # END
-    // ADMIN FETCH ALL TEAMS # END
-    // ADMIN FETCH ALL TEAMS # END
-    // ADMIN FETCH ALL TEAMS # END
 
-    // ADMIN ONLY #PAGE BUILDER #START
-    // ADMIN ONLY #PAGE BUILDER #START
-    // ADMIN ONLY #PAGE BUILDER #START
     // ADMIN ONLY #PAGE BUILDER #START
     Route::get("/admin/components", [
         PageBuilderController::class,
@@ -1317,24 +702,7 @@ Route::middleware([
         PageBuilderController::class,
         "destroy",
     ])->name("admin.components.component.destroy");
-    // ADMIN ONLY #PAGE BUILDER # END
-    // ADMIN ONLY #PAGE BUILDER # END
-    // ADMIN ONLY #PAGE BUILDER # END
+
     // ADMIN ONLY #PAGE BUILDER # END
 });
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
-// ADMIN ONLY -> # END
 // ADMIN ONLY -> # END

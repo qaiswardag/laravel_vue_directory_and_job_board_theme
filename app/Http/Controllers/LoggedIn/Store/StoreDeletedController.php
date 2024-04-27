@@ -49,6 +49,8 @@ class StoreDeletedController extends Controller
             ]);
         }
 
+        $this->authorize("can-read", $team);
+
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array

@@ -90,18 +90,17 @@ class DatabaseSeeder extends Seeder
         Team::factory()->create([
             "id" => 2,
             "user_id" => User::find(1)->id,
-            "name" => "Noma",
-            "slug" => "Noma",
+            "name" => "Hermès",
+            "slug" => "hermes",
             "public" => true,
             "personal_team" => false,
         ]);
 
-        // Shaun Pelling
         User::factory()->create([
             "id" => 3,
-            "first_name" => "Shaun",
-            "last_name" => "Pelling",
-            "email" => "sp@myissue.io",
+            "first_name" => "John",
+            "last_name" => "Doe",
+            "email" => "jd@myissue.io",
 
             "public" => false,
             "current_team_id" => 3,
@@ -109,7 +108,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Superadmin::factory()->create([
-            "user_id" => 3, // Shaun Pelling
+            "user_id" => 3, // John Doe
             "role" => "editor", // reader, editor or admin
         ]);
 
@@ -233,7 +232,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Pending invitations
-        // Users Pending Team Invitations for Shaun Pelling team
+        // Users Pending Team Invitations
         TeamInvitation::factory()->create([
             "team_id" => 2,
             "email" => "join_Johns_team_2@outlook.com",
@@ -259,7 +258,7 @@ class DatabaseSeeder extends Seeder
         // Create 100 users from id 101 to 201 as user with id 101 is already created
         User::factory(100)->create();
 
-        // add users to Shaun Pellings Team
+        // add users to John Does Team
         foreach (range(10, 100) as $num) {
             $user = User::find($num);
 
