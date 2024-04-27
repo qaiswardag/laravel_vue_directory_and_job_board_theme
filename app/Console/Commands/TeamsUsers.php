@@ -189,6 +189,12 @@ class TeamsUsers extends Command
 
         TeamUser::factory()->create([
             "user_id" => User::find(3)->id,
+            "team_id" => Team::find(1)->id,
+            "role" => "reader",
+        ]);
+
+        TeamUser::factory()->create([
+            "user_id" => User::find(3)->id,
             "team_id" => Team::find(2)->id,
             "role" => "editor",
         ]);
