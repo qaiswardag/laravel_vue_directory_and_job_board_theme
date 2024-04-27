@@ -1741,18 +1741,18 @@ const pageBuilder = new PageBuilder(store);
     </PageBuilderModal>
 
     <FormSection @submitted="handleCreatePost">
-        <template #title> Store details</template>
-        <template #description> Create a new Store. </template>
+        <template #title> Listing details</template>
+        <template #description> Create a new Listing. </template>
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Store name & description
+                        Listing name & description
                     </div>
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="title" value="Store name" />
+                    <InputLabel for="title" value="Listing name" />
                     <TextInput
                         placeholder="Enter your title.."
                         id="title"
@@ -1820,7 +1820,7 @@ const pageBuilder = new PageBuilder(store);
                 <!-- post address and floor start -->
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup md:w-2/3">
-                        <InputLabel for="address" value="Store address" />
+                        <InputLabel for="address" value="Listing address" />
                         <input
                             placeholder="Enter store address.."
                             id="address"
@@ -2079,7 +2079,7 @@ const pageBuilder = new PageBuilder(store);
                     </div>
                     <p class="myPrimaryParagraph mt-4">
                         Recommended for malls. Set once and reuse when creating
-                        new stores.
+                        new listings.
                     </p>
 
                     <p class="myPrimaryParagraph text-xs italic">

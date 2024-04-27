@@ -284,7 +284,7 @@ defineProps({
                 <!-- countries # end -->
 
                 <!-- opening hours # start -->
-                <template v-if="postType === 'Store'">
+                <template v-if="postType === 'Listing'">
                     <div class="myPrimaryWidget">
                         <h4 class="myQuaternaryHeader">Opening hours</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
@@ -1550,7 +1550,7 @@ defineProps({
                                 Show Job Recruiters
                             </h4>
                         </template>
-                        <template v-if="postType === 'Store'">
+                        <template v-if="postType === 'Listing'">
                             <h4 class="myQuaternaryHeader">
                                 Show Store Staff Members
                             </h4>
@@ -1568,7 +1568,7 @@ defineProps({
                                 Show Job Recruiters
                             </h4>
                         </template>
-                        <template v-if="postType === 'Store'">
+                        <template v-if="postType === 'Listing'">
                             <h4 class="myQuaternaryHeader">
                                 Show Store Staff Members
                             </h4>
@@ -1595,7 +1595,7 @@ defineProps({
                     <template v-if="postType === 'Job'">
                         <h4 class="myQuaternaryHeader">Job Recruiters</h4>
                     </template>
-                    <template v-if="postType === 'Store'">
+                    <template v-if="postType === 'Listing'">
                         <h4 class="myQuaternaryHeader">Store Staff Members</h4>
                     </template>
                     <WidgetSectionBorder></WidgetSectionBorder>

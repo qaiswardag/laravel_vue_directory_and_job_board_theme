@@ -57,7 +57,7 @@ class StoreController extends Controller
 
         // Render
         return [
-            "postType" => "Store",
+            "postType" => "Listing",
             "post" => $store,
             "authors" => $authors,
             "states" => $states,

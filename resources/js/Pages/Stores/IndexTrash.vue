@@ -109,7 +109,7 @@ const routesArray = [
         },
     },
     {
-        label: "Create Store",
+        label: "Create Listing",
         route: {
             name: "team.stores.create",
             parameters: [props.currentUserTeam.id],
@@ -318,7 +318,7 @@ onMounted(() => {
             </template>
 
             <template #header>
-                Stores for
+                Listings for
                 {{ $page.props.user && $page.props.currentUserTeam.name }}
             </template>
 
@@ -335,7 +335,7 @@ onMounted(() => {
             >
                 <CardHeadings :routesArray="routesArray">
                     <template #title
-                        >Stores for
+                        >Listings for
                         {{
                             $page.props.user &&
                             $page.props.user.current_team.name
@@ -350,7 +350,7 @@ onMounted(() => {
                             "
                         >
                             <span class="material-symbols-outlined"> add </span>
-                            Create Store
+                            Create Listing
                         </Link>
                     </template>
                 </CardHeadings>

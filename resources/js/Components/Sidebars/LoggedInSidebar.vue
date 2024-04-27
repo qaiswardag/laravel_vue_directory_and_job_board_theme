@@ -313,9 +313,9 @@ import {
             >
                 <span class="material-symbols-outlined"> local_mall </span>
                 <div class="flex flex-col gap-2">
-                    <span class="block"> Stores </span>
+                    <span class="block"> Listings </span>
                     <span class="block text-xs font-normal">
-                        Manage or create stores
+                        Manage or create listings
                     </span>
                 </div>
             </SideBarLink>
