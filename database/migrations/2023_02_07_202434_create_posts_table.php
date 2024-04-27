@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -25,14 +24,6 @@ return new class extends Migration
                 ->onDelete("cascade")
                 ->constrained();
 
-            //
-            //
-            $table->timestamp("started_at")->nullable()->index();
-            $table->timestamp("ended_at")->nullable()->index();
-
-            $table->string("days_before_campaign_visibility");
-            $table->boolean("is_paid")->nullable();
-            $table->timestamp("paid_at")->nullable();
             //
             //
             $table->string("title")->index();

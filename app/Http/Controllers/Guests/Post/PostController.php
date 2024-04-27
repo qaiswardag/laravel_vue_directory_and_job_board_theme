@@ -57,14 +57,9 @@ class PostController extends Controller
     public function showAPI($teamSlug, $postSlug, $postId)
     {
         // Call the getShow method and store its return values
-        list(
-            $post,
-            $authors,
-            $categories,
-            $states,
-            $stores,
-            $postTeam,
-        ) = $this->getShow($postId);
+        list($post, $authors, $categories, $states, $postTeam) = $this->getShow(
+            $postId
+        );
 
         // Render
         return [
@@ -73,7 +68,6 @@ class PostController extends Controller
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,
-            "stores" => $stores,
             "team" => $postTeam,
         ];
     }
@@ -83,36 +77,15 @@ class PostController extends Controller
         $postRenderView = "Guests/Items/SingleItem";
 
         $post = Post::findOrFail($postId);
-        $startCampaignVisibility = $post->days_before_campaign_visibility;
 
         $post = Post::where("id", $postId)
             ->where("published", true)
             ->with("coverImages")
-            ->where(function ($query) use ($startCampaignVisibility) {
-                $query
-                    ->whereNotNull("started_at")
-                    ->whereNotNull("ended_at")
-                    ->whereNotNull("days_before_campaign_visibility")
-                    ->where(
-                        "started_at",
-                        "<=",
-                        now()->addDays($startCampaignVisibility)
-                    )
-                    ->where("ended_at", ">=", now());
-            })
             ->firstOrFail();
 
         $authors = $post->authors;
         $categories = $post->categories;
         $states = $post->states;
-
-        $stores = $post
-            ->stores()
-            ->with("states")
-            ->with("team")
-            ->with("coverImages")
-            ->with("brandLogos")
-            ->get();
 
         $postTeam = Team::find($post->team_id);
 
@@ -122,7 +95,6 @@ class PostController extends Controller
             $authors,
             $categories,
             $states,
-            $stores,
             $postTeam,
             $postRenderView,
         ];

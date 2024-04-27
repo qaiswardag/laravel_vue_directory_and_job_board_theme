@@ -48,32 +48,11 @@ defineProps({
     categories: {
         required: false,
     },
-    stores: {
-        required: false,
-    },
+
     postType: {
         required: true,
     },
 });
-
-const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
-    const routePath = `${storeTeamSlug}/store/${storeSlug}/view/${storeId}`;
-
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment === "local"
-    ) {
-        window.open(`http://localhost:4000/${routePath}`, "_blank");
-    }
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment !== "local"
-    ) {
-        window.open(`https://www.myissue.io/${routePath}`, "_blank");
-    }
-};
 </script>
 <template>
     <div class="my-0 py-0"></div>
@@ -1529,132 +1508,6 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                 </div>
                 <!-- categories # end -->
 
-                <!-- Running posts - stores # start -->
-                <div
-                    v-if="
-                        stores && Array.isArray(stores) && stores.length !== 0
-                    "
-                    class="myPrimaryWidget"
-                >
-                    <h4 class="myQuaternaryHeader">Applies for Stores</h4>
-                    <WidgetSectionBorder></WidgetSectionBorder>
-
-                    <div
-                        class="min-h-[4rem] max-h-[40rem] flex flex-col gap-4 w-full overflow-y-scroll"
-                    >
-                        <div v-for="store in stores && stores" :key="store.id">
-                            <!-- store cover image -->
-                            <div
-                                class="flex justify-center items-center gap-2 border-b border-gray-200 pb-4 bg-gray-100 rounded-lg"
-                            >
-                                <div
-                                    class="overflow-x-scroll py-4 px-2 w-full rounded-md"
-                                >
-                                    <ThumbnailSmallImageSlider
-                                        v-if="store.brand_logos"
-                                        :images="store.brand_logos"
-                                        imageSize="large_path"
-                                        imageHeight="min-h-28 max-h-28"
-                                        imageWidth="w-28 min-w-28 max-w-28 mb-4 object-cover"
-                                        :roundedFull="true"
-                                        :squareButtons="false"
-                                        :imageClickable="true"
-                                        @firstButtonClick="
-                                            goToSingleStoreFromInSale(
-                                                store.team.slug,
-                                                store.slug,
-                                                store.id
-                                            )
-                                        "
-                                    >
-                                    </ThumbnailSmallImageSlider>
-
-                                    <div class="flex flex-col gap-2">
-                                        <div
-                                            @click="
-                                                goToSingleStoreFromInSale(
-                                                    store.team.slug,
-                                                    store.slug,
-                                                    store.id
-                                                )
-                                            "
-                                            class="myPrimaryParagraph font-medium cursor-pointer mb-0 mt-4"
-                                        >
-                                            {{ store.title }}
-                                        </div>
-
-                                        <div class="flex flex-col gap-2">
-                                            <div
-                                                class="flex flex-wrap justify-start items-center gap-2 myPrimaryTag w-max"
-                                            >
-                                                <div
-                                                    v-for="state in store.states"
-                                                    :key="state.id"
-                                                >
-                                                    <div
-                                                        class="flex items-center gap-2"
-                                                    >
-                                                        <div>
-                                                            <span
-                                                                class="myMediumIcon material-symbols-outlined"
-                                                            >
-                                                                location_on
-                                                            </span>
-                                                        </div>
-                                                        <div>
-                                                            <span>
-                                                                {{ state.name
-                                                                }}{{
-                                                                    store.address
-                                                                        ? ", "
-                                                                        : ""
-                                                                }}
-                                                            </span>
-
-                                                            <span
-                                                                v-if="
-                                                                    store.address
-                                                                "
-                                                            >
-                                                                <span>
-                                                                    {{
-                                                                        store.address
-                                                                    }}</span
-                                                                >
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                v-if="store.floor"
-                                                class="flex items-center gap-2 myPrimaryTag w-max"
-                                            >
-                                                <span
-                                                    class="myMediumIcon material-symbols-outlined"
-                                                >
-                                                    floor
-                                                </span>
-                                                <span>
-                                                    {{
-                                                        store.floor === 0 ||
-                                                        store.floor === "0"
-                                                            ? "Ground floor"
-                                                            : `Floor ${store.floor}`
-                                                    }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- address -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Running posts - stores # end -->
-
                 <!-- tags # start -->
                 <template v-if="post.tags">
                     <div class="myPrimaryWidget">
@@ -1690,7 +1543,7 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                 <!-- tags # end -->
 
                 <!-- show authors # start -->
-                <template v-if="onlyForCurrentTeam && postType !== 'Campaign'">
+                <template v-if="onlyForCurrentTeam && postType !== 'Post'">
                     <div v-if="post.show_author" class="myPrimaryWidget">
                         <template v-if="postType === 'Job'">
                             <h4 class="myQuaternaryHeader">

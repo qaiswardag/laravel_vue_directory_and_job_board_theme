@@ -61,26 +61,12 @@ class PostDraftController extends Controller
             ->posts()
             ->with("coverImages")
             ->with("categories")
-            ->with([
-                "stores" => function ($query) {
-                    $query->with("states");
-                },
-            ])
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            ->where(function ($query) {
-                $query
-                    ->where(function ($query) {
-                        $query
-                            ->where("ended_at", ">=", Carbon::now())
-                            ->orWhereNull("ended_at");
-                    })
-                    ->where("published", false)
-                    ->orWhereNull("published");
-            })
+            ->where("published", false)
             ->orderBy("updated_at", "desc")
             ->paginate(12);
 

@@ -20,9 +20,7 @@ import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { delay } from "@/helpers/delay";
-import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import { parseISO, formatISO, format } from "date-fns";
 
 import {
     Listbox,
@@ -67,10 +65,7 @@ const props = defineProps({
         default: null,
         required: false,
     },
-    stores: {
-        default: null,
-        required: false,
-    },
+
     coverImages: {
         default: null,
         required: false,
@@ -105,10 +100,6 @@ const getCurrentAttachedPostCategories = computed(() => {
     return store.getters[
         "attachedUsersOrItems/getCurrentAttachedPostCategories"
     ];
-});
-
-const getCurrentAttachedPostStores = computed(() => {
-    return store.getters["attachedUsersOrItems/getCurrentAttachedPostStores"];
 });
 
 const formType = ref("create");
@@ -214,7 +205,6 @@ const handleRemoveCoverImage = function (imageId) {
     );
 };
 
-const showSearchUserModal = ref(false);
 const showSearchPostCategoriesModal = ref(false);
 
 // modal content
@@ -260,40 +250,6 @@ const handleAddCategories = function () {
     // end modal
 };
 
-const showSearchPostStoresModal = ref();
-
-const handleAddStores = function () {
-    // handle show modal for unique content
-    showSearchPostStoresModal.value = true;
-    // set modal standards
-    titleModalSearchItems.value = "Add Post Stores";
-    descriptionModalSearchItems.value = "Add Post Stores";
-    firstButtonModalSearchItems.value = "Close";
-    secondButtonModalSearchItems.value = "Save";
-    // handle click
-    firstModalButtonSearchItemsFunction.value = function () {
-        // handle show modal for unique content
-        showSearchPostStoresModal.value = false;
-    };
-    // handle click
-    secondModalButtonSearchItemsFunction.value = function () {
-        const currentAttachedPostStores = [
-            ...getCurrentAttachedPostStores.value,
-        ];
-        // Set post form to the non-reactive copy
-        postForm.stores = currentAttachedPostStores;
-
-        // handle show modal for unique content
-        showSearchPostStoresModal.value = false;
-    };
-
-    // end modal
-};
-
-const handleRemoveAttachedStores = function (itemId) {
-    // filter the array to exclude item with matching ID
-    postForm.stores = postForm.stores.filter((item) => item.id !== itemId);
-};
 const showErrorNotifications = ref(false);
 
 const notificationsModalButton = function () {
@@ -307,9 +263,6 @@ const slugValueCustom = ref("");
 const postForm = useForm({
     title: "",
     slug: "",
-    started_at: "",
-    ended_at: "",
-    days_before_campaign_visibility: "30",
     content: "",
     published: true,
     team: props.currentUserTeam,
@@ -317,7 +270,6 @@ const postForm = useForm({
 
     tags: "",
     categories: [],
-    stores: [],
     cover_image: [],
 });
 
@@ -376,12 +328,6 @@ const handleCreatePost = function () {
 
 const submittedOnUpdate = ref(true);
 
-const postStartedAt = ref(formatISO(new Date()));
-
-const postEndedAt = ref(
-    formatISO(new Date(new Date().getTime() + 24 * 60 * 60 * 10000))
-);
-
 const createPost = () => {
     if (formType.value === "create") {
         postForm.post(route("team.posts.store"), {
@@ -435,19 +381,13 @@ const handleClearForm = function () {
 const clearTags = ref(0);
 // clear form
 const clearForm = function () {
-    postStartedAt.value = formatISO(new Date());
-    postEndedAt.value = formatISO(
-        new Date(new Date().getTime() + 24 * 60 * 60 * 10000)
-    );
     //
     //
     //
     postForm.title = "";
     // slug
     postForm.slug = "";
-    postForm.started_at = null;
-    postForm.ended_at = null;
-    postForm.days_before_campaign_visibility = 30;
+
     isSlugEditable.value = false;
     slugValueTitle.value = "";
     slugValueCustom.value = "";
@@ -464,63 +404,12 @@ const clearForm = function () {
     //
     //
     postForm.categories = [];
-    postForm.stores = [];
     postForm.cover_image = [];
 
     localStorage.removeItem(pathLocalStorage);
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
     store.commit("pageBuilderState/setComponents", []);
 };
-
-// started at
-const setStartedAtDate = function () {
-    if (props.post) {
-        postStartedAt.value = props.post?.started_at;
-    }
-    if (!props.post) {
-        postStartedAt.value = formatISO(new Date());
-    }
-};
-watch(
-    () => postStartedAt.value,
-    (newValue) => {
-        if (newValue) {
-            const parsedDate = new Date(newValue);
-            const formattedDate = format(parsedDate, "yyyy-MM-dd HH:mm:ss");
-            postForm.started_at = formattedDate;
-        }
-        if (newValue === null) {
-            postForm.started_at = null;
-        }
-    },
-    { immediate: true }
-);
-
-// ended at
-const setEndedAtDate = function () {
-    if (props.post) {
-        postEndedAt.value = props.post?.ended_at;
-    }
-    if (!props.post) {
-        postEndedAt.value = formatISO(
-            new Date(new Date().getTime() + 24 * 60 * 60 * 10000)
-        );
-    }
-};
-watch(
-    () => postEndedAt.value,
-    (newValue) => {
-        if (newValue) {
-            const parsedDate = new Date(newValue);
-            const formattedDate = format(parsedDate, "yyyy-MM-dd HH:mm:ss");
-            postForm.ended_at = formattedDate;
-        }
-        if (newValue === null) {
-            postForm.ended_at = null;
-        }
-    },
-    { immediate: true }
-);
 
 const clearPageBuilderOnSuccessUpdate = function () {
     pageBuilder.removeItemComponentsLocalStorageUpdate();
@@ -604,32 +493,7 @@ const categoriesSorted = computed(() => {
         }
     });
 });
-const storesSorted = computed(() => {
-    return postForm.stores.sort((a, b) => {
-        const nameA = a.title;
-        const nameB = b.title;
 
-        if (nameA < nameB) {
-            return -1;
-        } else if (nameA > nameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-});
-//
-//
-const dp1 = ref();
-const dp2 = ref();
-
-const selectStartDate = function () {
-    dp1.value.selectDate();
-};
-const selectEndDate = function () {
-    dp2.value.selectDate();
-};
-//
 // Builder # Start
 const getComponents = computed(() => {
     return store.getters["pageBuilderState/getComponents"];
@@ -654,50 +518,6 @@ const handleDraftForUpdate = async function () {
     }
 };
 
-//
-//
-const addToCampaignVisibilitySubDays = function () {
-    postForm.days_before_campaign_visibility = Number(
-        postForm.days_before_campaign_visibility
-    );
-    if (isNaN(postForm.days_before_campaign_visibility)) {
-        postForm.days_before_campaign_visibility = 0;
-    }
-
-    if (typeof postForm.days_before_campaign_visibility !== "number") {
-        postForm.days_before_campaign_visibility = 0;
-    }
-    if (
-        typeof postForm.days_before_campaign_visibility === "number" &&
-        postForm.days_before_campaign_visibility < 1
-    ) {
-        postForm.days_before_campaign_visibility = 0;
-    }
-    postForm.days_before_campaign_visibility++;
-};
-
-const removeFromCampaignVisibilitySubDays = function () {
-    postForm.days_before_campaign_visibility = Number(
-        postForm.days_before_campaign_visibility
-    );
-    if (isNaN(postForm.days_before_campaign_visibility)) {
-        postForm.days_before_campaign_visibility = 1;
-    }
-
-    if (typeof postForm.days_before_campaign_visibility !== "number") {
-        postForm.days_before_campaign_visibility = 1;
-    }
-
-    if (
-        typeof postForm.days_before_campaign_visibility === "number" &&
-        postForm.days_before_campaign_visibility < 1
-    ) {
-        postForm.days_before_campaign_visibility = 1;
-    }
-    postForm.days_before_campaign_visibility--;
-};
-//
-//
 const handlePageBuilder = async function () {
     // set modal standards
     store.commit("user/setIsLoading", true);
@@ -813,20 +633,6 @@ onBeforeMount(() => {
             //
             postForm.title = formLocalStorage.title;
 
-            if (formLocalStorage.started_at) {
-                postStartedAt.value = formLocalStorage.started_at;
-            }
-
-            if (formLocalStorage.ended_at) {
-                postEndedAt.value = formLocalStorage.ended_at;
-            }
-            if (formLocalStorage.days_before_campaign_visibility) {
-                postForm.value =
-                    formLocalStorage.days_before_campaign_visibility;
-            } else {
-                postForm.days_before_campaign_visibility = 30;
-            }
-
             postForm.content = formLocalStorage.content;
 
             postForm.published = formLocalStorage.published;
@@ -884,33 +690,6 @@ onBeforeMount(() => {
                     postForm.categories = formLocalStorage.categories;
                 }
             }
-            // Stores
-            if (
-                formLocalStorage.stores === undefined ||
-                formLocalStorage.stores === null
-            ) {
-                postForm.stores = [];
-            }
-            if (
-                formLocalStorage.stores !== undefined ||
-                formLocalStorage.stores !== null
-            ) {
-                // Determine whether all elements in an array are null.
-                // Checks if each element is equal to null.
-                // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.stores?.every(
-                    (element) => {
-                        return element === null;
-                    }
-                );
-
-                if (arrayContainsOnlyNull === true) {
-                    postForm.stores = [];
-                }
-                if (arrayContainsOnlyNull === false) {
-                    postForm.stores = formLocalStorage.stores;
-                }
-            }
         }
     }
 
@@ -944,11 +723,6 @@ onBeforeMount(() => {
 
         postForm.title = props.post.title;
 
-        postStartedAt.value = props.post.started_at;
-        postEndedAt.value = props.post.ended_at;
-        postForm.days_before_campaign_visibility =
-            props.post.days_before_campaign_visibility;
-
         // slug logic
         // slug is editable when editing an existing post
         isSlugEditable.value = true;
@@ -960,7 +734,6 @@ onBeforeMount(() => {
         postForm.tags = props.post.tags;
 
         postForm.categories = props.categories;
-        postForm.stores = props.stores;
         postForm.cover_image = props.coverImages;
     }
 
@@ -997,8 +770,8 @@ const pageBuilder = new PageBuilder(store);
         ></PageBuilderView>
     </PageBuilderModal>
     <FormSection @submitted="handleCreatePost">
-        <template #title> Campaign details</template>
-        <template #description> Create campaign. </template>
+        <template #title> Post details</template>
+        <template #description> Create post. </template>
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -1008,7 +781,7 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="title" value="Campaign title" />
+                    <InputLabel for="title" value="Post title" />
                     <TextInput
                         placeholder="Enter your title.."
                         id="title"
@@ -1090,7 +863,7 @@ const pageBuilder = new PageBuilder(store);
                         </span>
                     </button>
                     <h3 class="mt-2 text-sm font-medium text-gray-900">
-                        Build your Campaign by adding Components
+                        Build your Post by adding Components
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">
                         Get started by adding components using the drag & drop
@@ -1208,142 +981,6 @@ const pageBuilder = new PageBuilder(store);
                 <InputError :message="postForm.errors.published" />
             </div>
             <!-- post status - end -->
-
-            <!-- started at - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Campaign start date
-                    </div>
-                </div>
-                <!-- select - start -->
-
-                <div class="flex items-center gap-2">
-                    <VueDatePicker
-                        :enable-time-picker="false"
-                        v-model="postStartedAt"
-                        ref="dp"
-                    >
-                        <template #calendar-icon> Back </template>
-                    </VueDatePicker>
-
-                    <template v-if="postForm.errors.started_at">
-                        <button
-                            type="button"
-                            @click="setStartedAtDate"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                        >
-                            <span class="material-symbols-outlined">
-                                undo
-                            </span>
-                        </button>
-                    </template>
-                </div>
-
-                <InputError :message="postForm.errors.started_at" />
-
-                <!-- days before campaign visibility # start -->
-                <div class="myInputGroup mt-8">
-                    <div
-                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
-                    >
-                        <div class="myPrimaryFormOrganizationHeader">
-                            <p class="myPrimaryParagraph">
-                                Days before campaign visibility. We recommend 30
-                                days prior to the campaign start date.
-                            </p>
-                        </div>
-                    </div>
-                    <InputLabel
-                        for="days_before_campaign_visibility"
-                        value="Days before campaign visibility"
-                    />
-                    <!-- Input Number -->
-                    <div class="myPrimaryInput p-0">
-                        <div
-                            class="w-full flex gap-2 justify-between items-center"
-                        >
-                            <input
-                                placeholder="Days.."
-                                id="days_before_campaign_visibility"
-                                v-model="
-                                    postForm.days_before_campaign_visibility
-                                "
-                                class="myPrimaryInputNoBorder mt-0"
-                                autocomplete="off"
-                            />
-                            <div class="flex items-center">
-                                <button
-                                    @click="removeFromCampaignVisibilitySubDays"
-                                    øø
-                                    type="button"
-                                    class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
-                                >
-                                    <span
-                                        class="myMediumIcon material-symbols-outlined"
-                                    >
-                                        remove
-                                    </span>
-                                </button>
-                                <button
-                                    @click="addToCampaignVisibilitySubDays"
-                                    type="button"
-                                    class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
-                                >
-                                    <span
-                                        class="myMediumIcon material-symbols-outlined"
-                                    >
-                                        add
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Input Number -->
-                    <InputError
-                        :message="
-                            postForm.errors.days_before_campaign_visibility
-                        "
-                    />
-                </div>
-                <!-- days before campaign visibility # end -->
-            </div>
-            <!-- started at - end -->
-
-            <!-- ended at - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Campaign end date
-                    </div>
-                </div>
-                <!-- select - start -->
-
-                <div class="flex items-center gap-2">
-                    <VueDatePicker
-                        :enable-time-picker="false"
-                        v-model="postEndedAt"
-                        ref="dp"
-                    >
-                        <template #calendar-icon> Back </template>
-                    </VueDatePicker>
-
-                    <template v-if="postForm.errors.ended_at">
-                        <button
-                            type="button"
-                            @click="setEndedAtDate"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                        >
-                            <span class="material-symbols-outlined">
-                                undo
-                            </span>
-                        </button>
-                    </template>
-                </div>
-
-                <InputError :message="postForm.errors.ended_at" />
-            </div>
-            <!-- ended at - end -->
 
             <!-- cover image - start -->
             <div class="myInputsOrganization">
@@ -1637,176 +1274,6 @@ const pageBuilder = new PageBuilder(store);
             </div>
             <!-- post categories - end -->
 
-            <!-- post stores - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Stores</div>
-                    <template
-                        v-if="
-                            $page.props.user.all_teams.length > 0 &&
-                            $page.props.user.current_team &&
-                            $page.props.jetstream.hasTeamFeatures
-                        "
-                    >
-                        <p class="myPrimaryParagraph">
-                            At least one
-                            <Link
-                                :href="
-                                    route(
-                                        'team.stores.index',
-                                        $page.props.user.current_team.id
-                                    )
-                                "
-                            >
-                                store
-                            </Link>
-                            is needed for creating in-store campaigns
-                        </p>
-                    </template>
-                </div>
-                <!-- select - start -->
-                <div @click="handleAddStores" class="myPrimaryFakeSelect">
-                    <div class="relative flex items-center w-full py-0 p-0">
-                        <span>
-                            {{
-                                postForm.stores && postForm.stores?.length === 0
-                                    ? "Select Store"
-                                    : "Update Store"
-                            }}
-                        </span>
-                    </div>
-                    <div
-                        class="border-none rounded flex items-center justify-center h-full w-8"
-                    >
-                        <span class="material-symbols-outlined">
-                            unfold_more
-                        </span>
-                    </div>
-                </div>
-                <!-- select - end -->
-
-                <div
-                    v-if="postForm.stores && postForm.stores?.length === 0"
-                    class="space-y-6 mt-2"
-                >
-                    <p class="myPrimaryParagraph">No items selected.</p>
-                </div>
-
-                <div>
-                    <p
-                        v-if="postForm.stores && postForm.stores?.length !== 0"
-                        class="py-4"
-                    >
-                        Added
-                        {{ postForm.stores && postForm.stores?.length }}
-                        {{
-                            postForm.stores && postForm.stores?.length === 1
-                                ? "Item"
-                                : "Items"
-                        }}
-                    </p>
-
-                    <div
-                        v-if="postForm.stores && postForm.stores?.length !== 0"
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
-                    >
-                        <div
-                            v-for="store in Array.isArray(storesSorted) &&
-                            storesSorted"
-                            :key="store.id"
-                        >
-                            <div
-                                class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
-                            >
-                                <div
-                                    @click="handleAddStores"
-                                    class="flex items-center gap-4 my-2 cursor-pointer font-medium"
-                                >
-                                    <button
-                                        type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                    >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            local_mall
-                                        </span>
-                                    </button>
-                                    <div class="flex flex-col gap-1">
-                                        <span class="font-medium">
-                                            {{ store?.title }}
-                                        </span>
-                                        <div
-                                            v-if="store.states"
-                                            class="flex flex-wrap justify-start items-center gap-2 w-max"
-                                        >
-                                            <div
-                                                v-for="state in store?.states"
-                                                :key="state.id"
-                                            >
-                                                <div
-                                                    class="flex items-center gap-2"
-                                                >
-                                                    <div>
-                                                        <span>
-                                                            {{ state.name
-                                                            }}{{
-                                                                store.address
-                                                                    ? ", "
-                                                                    : ""
-                                                            }}
-                                                        </span>
-
-                                                        <span
-                                                            v-if="store.address"
-                                                        >
-                                                            <span>
-                                                                {{
-                                                                    store.address
-                                                                }}</span
-                                                            >
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            v-if="store.floor"
-                                            class="flex stores-center gap-2 w-max"
-                                        >
-                                            <span>
-                                                {{
-                                                    store.floor === 0 ||
-                                                    store.floor === "0"
-                                                        ? "Ground floor"
-                                                        : `Floor ${store.floor}`
-                                                }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    @click="
-                                        handleRemoveAttachedStores(store?.id)
-                                    "
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                >
-                                    <span
-                                        class="myMediumIcon material-symbols-outlined"
-                                    >
-                                        delete
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <InputError :message="postForm.errors.stores" />
-            </div>
-            <!-- post stores - end -->
-
             <!-- tags - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -1936,34 +1403,6 @@ const pageBuilder = new PageBuilder(store);
                 :displayIcon="true"
                 icon="interests"
                 :show="showSearchPostCategoriesModal"
-            >
-            </SearchUsersOrItems>
-
-            <SearchUsersOrItems
-                v-if="showSearchPostStoresModal"
-                apiUrlRouteName="attach.post.stores.index"
-                :existingItems="postForm.stores"
-                vuexActionMethod="attachedUsersOrItems/fetchPostStores"
-                vuexGetCurrentItems="attachedUsersOrItems/getCurrentPostStores"
-                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedPostStores"
-                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedPostStores"
-                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedPostStores"
-                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedPostStoresToEmptyArray"
-                :user="user"
-                :team="postForm.team"
-                :title="titleModalSearchItems"
-                :description="descriptionModalSearchItems"
-                :firstButtonText="firstButtonModalSearchItems"
-                :secondButtonText="secondButtonModalSearchItems"
-                @firstModalButtonSearchItemsFunction="
-                    firstModalButtonSearchItemsFunction
-                "
-                @secondModalButtonSearchItemsFunction="
-                    secondModalButtonSearchItemsFunction
-                "
-                :displayIcon="true"
-                icon="local_mall"
-                :show="showSearchPostStoresModal"
             >
             </SearchUsersOrItems>
 

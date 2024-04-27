@@ -29,11 +29,11 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <Head title=" Create Campaign" />
+    <Head title=" Create Post" />
 
     <MainLayout>
         <LoggedInLayout>
-            <template #header> Create Campaign </template>
+            <template #header> Create Post </template>
 
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

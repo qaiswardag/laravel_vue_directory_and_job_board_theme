@@ -20,9 +20,6 @@ const props = defineProps({
     categories: {
         required: true,
     },
-    stores: {
-        required: true,
-    },
 });
 
 const breadcrumbsLinks = [
@@ -36,11 +33,11 @@ const breadcrumbsLinks = [
 ];
 </script>
 <template>
-    <Head :title="`Campaign | ${post.title}`"> </Head>
+    <Head :title="`Post | ${post.title}`"> </Head>
 
     <MainLayout>
         <LoggedInLayout>
-            <template #header> Campaign </template>
+            <template #header> Post </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
@@ -50,9 +47,8 @@ const breadcrumbsLinks = [
                 :post="post"
                 :team="team"
                 :categories="categories"
-                :stores="stores"
                 :onlyForCurrentTeam="true"
-                postType="Campaign"
+                postType="Post"
             ></UnqiueResource>
             <!-- Show Unique Post - end -->
         </LoggedInLayout>

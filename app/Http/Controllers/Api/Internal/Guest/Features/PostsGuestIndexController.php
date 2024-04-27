@@ -49,19 +49,8 @@ class PostsGuestIndexController extends Controller
             $query = Post::latest()
                 ->with("team")
                 ->with("categories")
-                ->with("stores")
                 ->with("coverImages")
                 ->where("published", true)
-                ->where(function ($query) {
-                    $query
-                        ->whereNotNull("started_at")
-                        ->whereNotNull("ended_at")
-                        ->whereNotNull("days_before_campaign_visibility");
-                })
-                ->where("ended_at", ">=", now())
-                ->whereRaw(
-                    "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
-                )
 
                 // categories filter logic # start
                 ->when(!empty($categoryIDs), function ($query) use (
@@ -105,19 +94,8 @@ class PostsGuestIndexController extends Controller
             $query = Post::latest()
                 ->with("team")
                 ->with("categories")
-                ->with("stores")
                 ->with("coverImages")
                 ->where("published", true)
-                ->where(function ($query) {
-                    $query
-                        ->whereNotNull("started_at")
-                        ->whereNotNull("ended_at")
-                        ->whereNotNull("days_before_campaign_visibility");
-                })
-                ->where("ended_at", ">=", now())
-                ->whereRaw(
-                    "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
-                )
 
                 // categories filter logic # start
                 ->when(!empty($categoryIDs), function ($query) use (

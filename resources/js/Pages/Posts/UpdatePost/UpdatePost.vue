@@ -17,9 +17,7 @@ const props = defineProps({
     categories: {
         required: true,
     },
-    stores: {
-        required: true,
-    },
+
     coverImages: {
         required: true,
     },
@@ -33,16 +31,16 @@ const breadcrumbsLinks = [
             parameters: [props.currentUserTeam.id],
         },
     },
-    { label: "Update Campaign" },
+    { label: "Update Post" },
 ];
 </script>
 
 <template>
-    <Head title="Update Campaign" />
+    <Head title="Update Post" />
 
     <MainLayout>
         <LoggedInLayout>
-            <template #header> Update Campaign </template>
+            <template #header> Update Post </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
@@ -51,7 +49,6 @@ const breadcrumbsLinks = [
                 :user="user"
                 :post="post"
                 :categories="categories"
-                :stores="stores"
                 :coverImages="coverImages"
             ></PostForm>
         </LoggedInLayout>

@@ -59,11 +59,6 @@ class PostDeletedController extends Controller
             ->onlyTrashed()
             ->with("coverImages")
             ->with("categories")
-            ->with([
-                "stores" => function ($query) {
-                    $query->with("states");
-                },
-            ])
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")

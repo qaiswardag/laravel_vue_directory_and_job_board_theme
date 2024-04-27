@@ -82,14 +82,7 @@ const linksTopMenu = [
             parameters: [props.currentUserTeam.id],
         },
     },
-    {
-        label: "Expired Posts",
-        icon: "schedule",
-        route: {
-            name: "team.posts.index.expired",
-            parameters: [props.currentUserTeam.id],
-        },
-    },
+
     {
         label: "Trash",
         icon: "delete",
@@ -108,7 +101,7 @@ const routesArray = [
         },
     },
     {
-        label: " Create Campaign",
+        label: " Create Post",
         route: {
             name: "team.posts.create",
             parameters: [props.currentUserTeam.id],
@@ -336,7 +329,7 @@ onMounted(() => {
                         :href="route('team.posts.create', currentUserTeam.id)"
                     >
                         <span class="material-symbols-outlined"> add </span>
-                        Create Campaign
+                        Create Post
                     </Link>
                 </template>
             </CardHeadings>
@@ -429,13 +422,6 @@ onMounted(() => {
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Status
-                                    </th>
-
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Campaign start date
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Campaign end date
                                     </th>
 
                                     <template
@@ -568,29 +554,6 @@ onMounted(() => {
                                                         : "Unpublished"
                                                 }}
                                             </div>
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <template v-if="post.started_at">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.started_at
-                                                        ),
-                                                        "dd. MMMM yyyy"
-                                                    )
-                                                }}
-                                            </template>
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <template v-if="post.ended_at">
-                                                {{
-                                                    format(
-                                                        parseISO(post.ended_at),
-                                                        "dd. MMMM yyyy"
-                                                    )
-                                                }}
-                                            </template>
                                         </td>
 
                                         <template

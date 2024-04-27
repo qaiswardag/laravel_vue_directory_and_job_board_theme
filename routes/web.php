@@ -10,7 +10,6 @@ use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCountriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobStatesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobTypesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachPostCategoriesController;
-use App\Http\Controllers\Api\Internal\LoggedIn\AttachPostStoresController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachStoreCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachStoreStatesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
@@ -39,7 +38,6 @@ use App\Http\Controllers\LoggedIn\Job\JobExpiredController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Post\PostDeletedController;
 use App\Http\Controllers\LoggedIn\Post\PostDraftController;
-use App\Http\Controllers\LoggedIn\Post\PostExpiredController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
 use App\Http\Controllers\LoggedIn\Store\StoreDeletedController;
 use App\Http\Controllers\LoggedIn\Team\TeamController as TeamTeamController;
@@ -291,11 +289,6 @@ Route::middleware([
         "team.posts.index"
     );
 
-    Route::get("/team/posts/expired/{teamId}", [
-        PostExpiredController::class,
-        "index",
-    ])->name("team.posts.index.expired");
-
     Route::get("/team/posts/draft/{teamId}", [
         PostDraftController::class,
         "index",
@@ -389,12 +382,6 @@ Route::middleware([
         AttachPostCategoriesController::class,
         "index",
     ])->name("attach.post.categories.index");
-
-    // POST STORES
-    Route::get("/team/attach/posts/stores/index/{team}", [
-        AttachPostStoresController::class,
-        "index",
-    ])->name("attach.post.stores.index");
 
     // JOB COUNTRIES
     Route::get("/team/attach/job/countries/index/{team}", [

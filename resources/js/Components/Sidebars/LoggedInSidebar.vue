@@ -243,14 +243,13 @@ import {
                 :active="
                     route().current('team.posts.index') ||
                     route().current('team.posts.index.trash') ||
-                    route().current('team.posts.index.expired') ||
                     route().current('team.posts.index.draft') ||
                     route().current('team.posts.create') ||
                     route().current('team.posts.post.edit') ||
                     route().current('team.posts.post.show')
                 "
             >
-                <span class="material-symbols-outlined"> campaign </span>
+                <span class="material-symbols-outlined"> post </span>
                 <div class="flex flex-col gap-2">
                     <span class="block"> Posts </span>
                     <span class="block text-xs font-normal">

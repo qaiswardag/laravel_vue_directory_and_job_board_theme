@@ -68,29 +68,6 @@ class StorePostRequest extends FormRequest
             "content" => ["required", "string", "min:2", "max:65535"],
 
             "tags" => ["string", "max:255", "nullable"],
-
-            //
-            //
-            //
-            //
-            // started_at
-            // ended_at
-            // is_paid
-            // paid_at
-            //
-            //
-            "started_at" => ["required", "date_format:Y-m-d H:i:s"],
-            "ended_at" => ["required", "date_format:Y-m-d H:i:s"],
-            //
-            "paid_at" => ["date_format:Y-m-d H:i:s", "nullable"],
-            "is_paid" => ["boolean", "nullable"],
-
-            "days_before_campaign_visibility" => [
-                "required",
-                "integer",
-                "digits_between:1,2",
-                "nullable",
-            ],
         ];
 
         return $rules;
@@ -104,17 +81,11 @@ class StorePostRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $user = Auth::user();
-        $maxStores = 200;
-        $minStores = 1;
         $maxCategories = 2;
         $minCoverImages = 1;
         $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (
-            $user,
-            $maxStores,
-            $minStores,
             $maxCategories,
             $minCoverImages,
             $maxCoverImages
@@ -126,117 +97,6 @@ class StorePostRequest extends FormRequest
             }
 
             $this->validateProperties($validator);
-
-            // Startet at date validation # start
-
-            // The Started at date must be in the future
-            if (
-                !$this->post &&
-                $this->started_at &&
-                Carbon::parse($this->started_at)->isValid() &&
-                Carbon::parse($this->started_at)->isPast() &&
-                !Carbon::parse($this->started_at)
-                    ->addDays(1)
-                    ->isFuture()
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "started_at",
-                        "The started at date must be from today and in the future."
-                    );
-            }
-            //
-            //
-            //
-            // The started at date must be in the past and can be up to 30 days old from today.
-            if (
-                $this->post &&
-                $this->post->id &&
-                $this->started_at &&
-                Carbon::parse($this->started_at)->isValid() &&
-                Carbon::parse($this->started_at)->isPast() &&
-                Carbon::parse($this->started_at)->diffInDays(Carbon::now()) > 29
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "started_at",
-                        "The started at date must be in the past and can be up to 30 days old from today."
-                    );
-            }
-
-            // The started at date must not be more than 1 year in the future.
-            if (
-                $this->started_at &&
-                Carbon::parse($this->started_at)->isFuture() &&
-                Carbon::parse($this->started_at)->diffInDays(Carbon::now()) >
-                    365
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "started_at",
-                        "The started at date must not be more than 1 year in the future."
-                    );
-            }
-            // Startet at date validation # end
-
-            // Ended at date validation # start
-
-            // The Started at date must be in the future
-            if (
-                !$this->post &&
-                $this->started_at &&
-                Carbon::parse($this->ended_at)->isValid() &&
-                Carbon::parse($this->ended_at)->isPast() &&
-                !Carbon::parse($this->ended_at)
-                    ->addDays(1)
-                    ->isFuture()
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "ended_at",
-                        "The started at date must be from today and in the future."
-                    );
-            }
-
-            //
-            //
-            //
-            // The started at date must be in the past and can be up to 30 days old from today.
-            if (
-                $this->post &&
-                $this->post->id &&
-                $this->ended_at &&
-                Carbon::parse($this->ended_at)->isValid() &&
-                Carbon::parse($this->ended_at)->isPast() &&
-                Carbon::parse($this->ended_at)->diffInDays(Carbon::now()) > 29
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "ended_at",
-                        "The started at date must be in the past and can be up to 30 days old from today."
-                    );
-            }
-
-            // The ended at date must not be more than 1 year in the future.
-            if (
-                !$user->superadmin &&
-                $this->ended_at &&
-                Carbon::parse($this->ended_at)->isFuture() &&
-                Carbon::parse($this->ended_at)->diffInDays(Carbon::now()) > 365
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "ended_at",
-                        "The ended at date must not be more than 1 year in the future."
-                    );
-            }
-            // Ended at date validation # end
 
             // validation for cover image # start
             if (
@@ -366,35 +226,6 @@ class StorePostRequest extends FormRequest
                     );
             }
             // validation for categories # end
-
-            // validation for stores # start
-            if (
-                $this->stores === null ||
-                (gettype($this->stores) === "array" &&
-                    count($this->stores) === 0)
-            ) {
-                $validator
-                    ->errors()
-                    ->add("stores", "The stores field is required.");
-            }
-
-            if (gettype($this->stores) !== "array") {
-                $validator
-                    ->errors()
-                    ->add("stores", "stores field must be an array.");
-            }
-            if (
-                gettype($this->stores) === "array" &&
-                count($this->stores) > $maxStores
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "stores",
-                        "Stores field is limited to a maximum of {$maxStores} selection(s)."
-                    );
-            }
-            // validation for stores # end
         });
 
         // if validator fails
@@ -444,19 +275,6 @@ class StorePostRequest extends FormRequest
                         ->add(
                             "categories",
                             "The 'ID' for at least one selected category is missing. To resolve this issue, please click the 'Clear form' button and then try again."
-                        );
-                }
-            }
-        }
-        // stores
-        if (gettype($this->stores) === "array") {
-            foreach ($this->stores as $item) {
-                if (isset($item["id"]) === false) {
-                    $validator
-                        ->errors()
-                        ->add(
-                            "stores",
-                            "The 'ID' for at least one selected store is missing. To resolve this issue, please click the 'Clear form' button and then try again."
                         );
                 }
             }

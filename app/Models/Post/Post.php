@@ -27,11 +27,6 @@ class Post extends Model
         "featured",
         "tags",
         "trash",
-        "started_at",
-        "ended_at",
-        "days_before_campaign_visibility",
-        "is_paid",
-        "paid_at"
     ];
 
     // Define the relationship with the Team model
@@ -43,12 +38,6 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, "user_id");
     }
-
-    public function stores()
-    {
-        return $this->belongsToMany(Store::class, "post_store_relations");
-    }
-
 
     public function categories()
     {

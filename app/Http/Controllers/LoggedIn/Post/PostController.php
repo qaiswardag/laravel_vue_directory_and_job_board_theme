@@ -63,23 +63,12 @@ class PostController extends Controller
             ->posts()
             ->with("coverImages")
             ->with("categories")
-            ->with([
-                "stores" => function ($query) {
-                    $query->with("states");
-                },
-            ])
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            ->where(function ($query) {
-                $query->where("published", true)->where(function ($query) {
-                    $query
-                        ->where("ended_at", ">=", Carbon::now())
-                        ->orWhereNull("ended_at");
-                });
-            })
+            ->where("published", true)
             ->orderBy("updated_at", "desc")
             ->paginate(12);
 
@@ -146,8 +135,6 @@ class PostController extends Controller
         $this->authorize("can-create-and-update", $team);
 
         $title = $request->title;
-        $startedAt = $request->started_at;
-        $endedAt = $request->ended_at;
         $content = $request->content;
         $userId = $request->user_id;
 
@@ -161,10 +148,6 @@ class PostController extends Controller
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,
-            "started_at" => $startedAt,
-            "ended_at" => $endedAt,
-            "days_before_campaign_visibility" =>
-                $request->days_before_campaign_visibility,
             "content" => $content,
             "tags" => $request->tags,
         ]);
@@ -221,32 +204,6 @@ class PostController extends Controller
                         // Create a new record in the PostCategoryRelation table
                         PostCategoryRelation::create([
                             "category_id" => $categoryId,
-                            "post_id" => $postId,
-                        ]);
-                    }
-                }
-            }
-        }
-
-        // stores
-        if (
-            $request->stores !== null &&
-            is_array($request->stores) &&
-            count($request->stores) !== 0
-        ) {
-            // Loop through the stores array and attach each store to the post
-            foreach ($request->stores as $store) {
-                // Check if the "id" key exists in the $store array
-                if (array_key_exists("id", $store)) {
-                    $storeId = $store["id"];
-
-                    // Check if a store record with this ID exists
-                    $storeModel = Store::find($storeId);
-
-                    if ($storeModel) {
-                        // Create a new record in the table
-                        PostStoreRelation::create([
-                            "store_id" => $storeId,
                             "post_id" => $postId,
                         ]);
                     }
@@ -311,21 +268,12 @@ class PostController extends Controller
 
         $categories = $post->categories;
 
-        $stores = $post
-            ->stores()
-            ->with("states")
-            ->with("team")
-            ->with("coverImages")
-            ->with("brandLogos")
-            ->get();
-
         $postTeam = Team::find($post->team_id);
 
         // Render the post
         return Inertia::render($postRenderView, [
             "post" => $post,
             "categories" => $categories,
-            "stores" => $stores,
             "team" => $postTeam,
         ]);
     }
@@ -351,13 +299,11 @@ class PostController extends Controller
 
         $coverImages = $post->coverImages;
         $categories = $post->categories;
-        $stores = $post->stores;
 
         return Inertia::render("Posts/UpdatePost/UpdatePost", [
             "post" => $post,
             "coverImages" => $coverImages,
             "categories" => $categories,
-            "stores" => $stores,
         ]);
     }
 
@@ -416,21 +362,6 @@ class PostController extends Controller
                 }
                 // replicate new categories # end
 
-                // replicate new stores # start
-                if ($post->stores !== null) {
-                    foreach ($post->stores as $store) {
-                        // Create a new instance of the pivot model
-                        $newStoresPivotData = new PostStoreRelation([
-                            "post_id" => $newPost->id,
-                            "store_id" => $store->id,
-                            // Add any other attributes if needed
-                        ]);
-                        // Save the new pivot data
-                        $newStoresPivotData->save();
-                    }
-                }
-                // replicate new stores # end
-
                 // replicate new cover images # start
                 if ($post->coverImages !== null) {
                     foreach ($post->coverImages as $coverImage) {
@@ -488,17 +419,10 @@ class PostController extends Controller
         $teamId = $request->team["id"];
         $userId = $request->user_id;
 
-        $startedAt = $request->started_at;
-        $endedAt = $request->ended_at;
-
         // Create the post and store it in a variable
         $post->update([
             "user_id" => $userId,
             "team_id" => $teamId,
-            "started_at" => $startedAt,
-            "ended_at" => $endedAt,
-            "days_before_campaign_visibility" =>
-                $request->days_before_campaign_visibility,
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,
@@ -592,40 +516,6 @@ class PostController extends Controller
             );
             PostCategoryRelation::where("post_id", $postId)
                 ->whereIn("category_id", $resourcesToDelete)
-                ->delete();
-        }
-        // Update stores relations
-        if (
-            $request->stores !== null &&
-            gettype($request->stores) === "array" &&
-            count($request->stores) !== 0
-        ) {
-            // Retrieve the existing resource IDs for the resource
-            $existingResourceIds = PostStoreRelation::where("post_id", $postId)
-                ->pluck("store_id")
-                ->toArray();
-
-            // Loop through the items array and update or create a record in the table
-            $updatedResourceIds = [];
-
-            foreach ($request->stores as $store) {
-                $storeId = $store["id"];
-                $updatedResourceIds[] = $storeId;
-
-                // Update or create  record in the table
-                PostStoreRelation::updateOrCreate([
-                    "store_id" => $storeId,
-                    "post_id" => $postId,
-                ]);
-            }
-
-            // Delete records that are not present in the request
-            $resourcesToDelete = array_diff(
-                $existingResourceIds,
-                $updatedResourceIds
-            );
-            PostStoreRelation::where("post_id", $postId)
-                ->whereIn("store_id", $resourcesToDelete)
                 ->delete();
         }
 
