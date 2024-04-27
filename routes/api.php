@@ -47,7 +47,7 @@ Route::get("{teamSlug}/job/{postSlug}/view/{postId}/", [
     "showAPI",
 ]);
 
-Route::get("{teamSlug}/store/{postSlug}/view/{postId}", [
+Route::get("{teamSlug}/listing/{postSlug}/view/{postId}", [
     StoreStoreController::class,
     "showAPI",
 ]);
