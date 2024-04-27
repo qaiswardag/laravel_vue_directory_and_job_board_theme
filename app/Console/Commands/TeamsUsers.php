@@ -71,7 +71,26 @@ class TeamsUsers extends Command
                 "email" => "jd@myissue.io",
 
                 "public" => true,
-                "current_team_id" => 2,
+                "current_team_id" => 1,
+                "password" => Hash::make("123456"),
+            ]);
+
+            Superadmin::factory()->create([
+                "user_id" => 2,
+                "role" => "reader", // reader, editor or admin
+            ]);
+        }
+
+        // Check if the user with ID 1 exists
+        if (!User::where("id", 3)->exists()) {
+            User::factory()->create([
+                "id" => 3,
+                "first_name" => "Mie",
+                "last_name" => "Mortensen",
+                "email" => "mm@myissue.io",
+
+                "public" => true,
+                "current_team_id" => 1,
                 "password" => Hash::make("123456"),
             ]);
 
@@ -166,6 +185,12 @@ class TeamsUsers extends Command
             "user_id" => User::find(2)->id,
             "team_id" => Team::find(2)->id,
             "role" => "reader",
+        ]);
+
+        TeamUser::factory()->create([
+            "user_id" => User::find(3)->id,
+            "team_id" => Team::find(2)->id,
+            "role" => "editor",
         ]);
 
         $this->info("Seeded successfully, new Teams and Users for production");
