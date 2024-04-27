@@ -34,8 +34,11 @@ class UpdateUserPassword implements UpdatesUserPasswords
                     "The provided password does not match your current password."
                 ),
             ]
-        )
-        ->validateWithBag("updatePassword");
+        )->validateWithBag("updatePassword");
+
+        if ($user->id === 1 || $user->id === 2 || $user->id === 3) {
+            return;
+        }
 
         $user
             ->forceFill([

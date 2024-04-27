@@ -179,6 +179,13 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
+        if ($user->id === 1 || $user->id === 2 || $user->id === 3) {
+            return Inertia::render("Error", [
+                "customError" => "You cannot delete the default admin users.",
+                "status" => 403, // HTTP status code for the response.
+            ]);
+        }
+
         $confirmed = app(ConfirmPassword::class)(
             $guard,
             $request->user(),
