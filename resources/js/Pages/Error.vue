@@ -30,10 +30,10 @@ const description = computed(() => {
     return {
         503: `Whoops, Server error response code indicates that the server is not ready to handle the request.`,
         500: "Whoops, something went wrong on our servers.",
-        422: "Sorry, something went wrong with your request.",
-        405: "Sorry, this method is not allowed",
-        404: "Sorry, the page or content you are looking for could not be found.",
-        403: "Sorry, you are forbidden from accessing this page or perform this action.",
+        422: "Demo mode, something went wrong with your request.",
+        405: "Demo mode, this method is not allowed in demo mode.",
+        404: "Demo mode, the page or content you are looking for could not be found.",
+        403: "Demo mode, you are forbidden from accessing this page or perform this action in demo mode.",
         401: "Sorry, request has not been completed because it lacks valid authentication credentials for the requested resource.",
     }[props.status];
 });
