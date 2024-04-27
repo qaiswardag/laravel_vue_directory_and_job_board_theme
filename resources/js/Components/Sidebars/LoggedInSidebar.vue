@@ -249,7 +249,7 @@ import {
                     route().current('team.posts.post.show')
                 "
             >
-                <span class="material-symbols-outlined"> post </span>
+                <span class="material-symbols-outlined"> article </span>
                 <div class="flex flex-col gap-2">
                     <span class="block"> Posts </span>
                     <span class="block text-xs font-normal">

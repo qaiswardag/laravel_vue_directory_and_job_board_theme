@@ -61,7 +61,7 @@ const breadcrumbsLinks = [
 const linksTopMenu = [
     {
         label: "Running posts",
-        icon: "campaign",
+        icon: "article",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
