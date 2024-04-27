@@ -1684,7 +1684,7 @@ defineProps({
                             v-if="post.brand_logos"
                             :images="post.brand_logos"
                             imageSize="medium_path"
-                            imageHeight="min-h-24 max-h-24"
+                            imageHeight="min-h-24 max-h-24 rounded-full"
                             imageWidth="w-24 min-w-24 max-w-24 mb-4 w-24 object-cover"
                             :roundedFull="false"
                             :squareButtons="true"
