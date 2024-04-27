@@ -4,7 +4,7 @@
 
 # Intro
 
-Laravel, Vue & Nuxt, a Listing Directory, Blog & Job Board Theme with Page Builder.
+Laravel, Vue, and Nuxt, a Page Builder, Listing Directory, Blog, and Job Board Theme.
 
 [Play around with the demo app](https://www.myissue.io)
 

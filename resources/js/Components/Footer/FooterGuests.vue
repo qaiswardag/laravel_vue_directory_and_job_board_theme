@@ -2,8 +2,8 @@
     <footer class="w-full mx-auto px-6 py-4 flex justify-between bg-gray-100">
         <div>
             <p class="myPrimaryParagraph lg:text-sm text-xs">
-                <span class="text-xs">©</span> Laravel and Vue Directory & Job
-                Board Theme
+                Laravel, Vue, and Nuxt, a Page Builder, Listing Directory, Blog,
+                and Job Board Theme.
             </p>
         </div>
         <div class="flex justify-center items-center myPrimaryGap">
