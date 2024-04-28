@@ -282,7 +282,7 @@ class JobsGuestIndexController extends Controller
             $postCount = $countQuery->count();
         }
 
-        $posts = $query->paginate(20);
+        $posts = $query->paginate(8);
 
         $posts->appends($request->all());
 
