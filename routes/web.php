@@ -328,23 +328,23 @@ Route::middleware([
     // JOBS #END
 
     // STORE #START
-    Route::get("/team/stores/{teamId}", [
+    Route::get("/team/listings/{teamId}", [
         StoreController::class,
         "index",
     ])->name("team.stores.index");
 
-    Route::get("/team/stores/draft/{teamId}", [
+    Route::get("/team/listings/draft/{teamId}", [
         StoreController::class,
         "IndexDraft",
     ])->name("team.stores.index.draft");
 
-    Route::get("/team/stores/trash/{teamId}", [
+    Route::get("/team/listings/trash/{teamId}", [
         StoreDeletedController::class,
         "index",
     ])->name("team.stores.index.trash");
 
     // unique store
-    Route::get("/team/{teamId}/stores/{slug}/view/{storeId}", [
+    Route::get("/team/{teamId}/listings/{slug}/view/{storeId}", [
         StoreController::class,
         "show",
     ])->name("team.stores.store.show");
@@ -502,7 +502,7 @@ Route::middleware([
     // JOBS #END
 
     // STORES #START
-    Route::get("/team/stores/store/{teamId}/{store}", [
+    Route::get("/team/listings/listing/{teamId}/{store}", [
         StoreController::class,
         "edit",
     ])->name("team.stores.store.edit");
@@ -512,7 +512,7 @@ Route::middleware([
         "update",
     ])->name("team.stores.update");
 
-    Route::get("/team/stores/create/{teamId}", [
+    Route::get("/team/listings/create/{teamId}", [
         StoreController::class,
         "create",
     ])->name("team.stores.create");
