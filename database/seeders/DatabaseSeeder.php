@@ -343,7 +343,15 @@ class DatabaseSeeder extends Seeder
         Job::factory($numbersOffakeResources)->create();
         $totalJobs = Job::count();
 
-        $jobCountries = ["Other", "United Arab Emirates"];
+        $jobCountries = [
+            "Australia",
+            "United Arab Emirates",
+            "United States",
+            "France",
+            "Denmark",
+            "Japan",
+            "Germany",
+        ];
 
         foreach ($jobCountries as $jobCountry) {
             JobCountry::factory()->create([
@@ -363,12 +371,12 @@ class DatabaseSeeder extends Seeder
         $states = [
             "Other",
             "Abu Dhabi",
-            "Dubai",
-            "Sharjah",
-            "Ajman",
-            "Umm Al Quwain",
-            "Ras Al Khaimah",
-            "Fujairah",
+            "Canberra",
+            "Washington D.C.",
+            "Paris",
+            "Copenhagen",
+            "Tokyo",
+            "Berlin",
         ];
 
         foreach ($states as $stateName) {
@@ -483,12 +491,12 @@ class DatabaseSeeder extends Seeder
         $totalStores = Store::count();
         $states = [
             "Abu Dhabi",
-            "Dubai",
-            "Sharjah",
-            "Ajman",
-            "Umm Al Quwain",
-            "Ras Al Khaimah",
-            "Fujairah",
+            "Canberra",
+            "Washington D.C.",
+            "Paris",
+            "Copenhagen",
+            "Tokyo",
+            "Berlin",
         ];
 
         foreach ($states as $stateName) {

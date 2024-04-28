@@ -29,12 +29,12 @@ class JobStates extends Command
         $states = [
             "Other",
             "Abu Dhabi",
-            "Dubai",
-            "Sharjah",
-            "Ajman",
-            "Umm Al Quwain",
-            "Ras Al Khaimah",
-            "Fujairah",
+            "Canberra",
+            "Washington D.C.",
+            "Paris",
+            "Copenhagen",
+            "Tokyo",
+            "Berlin",
         ];
 
         foreach ($states as $stateName) {
