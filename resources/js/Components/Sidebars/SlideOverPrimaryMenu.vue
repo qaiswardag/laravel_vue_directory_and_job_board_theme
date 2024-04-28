@@ -60,14 +60,14 @@ const goToStores = function () {
         usePage().props &&
         usePage().props.environment === "local"
     ) {
-        window.location.href = "http://localhost:4000/stores";
+        window.location.href = "http://localhost:4000/listings";
     }
     if (
         usePage() &&
         usePage().props &&
         usePage().props.environment !== "local"
     ) {
-        window.location.href = "https://www.myissue.io/stores";
+        window.location.href = "https://www.myissue.io/listings";
     }
 };
 const goToJobs = function () {
