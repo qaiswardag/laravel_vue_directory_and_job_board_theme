@@ -181,7 +181,7 @@ const goToPosts = function () {
                                                             type="button"
                                                             class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                         >
-                                                            Stores
+                                                            Listings
                                                         </button>
                                                     </li>
                                                     <li
