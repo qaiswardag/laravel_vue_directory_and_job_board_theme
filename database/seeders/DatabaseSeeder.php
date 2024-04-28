@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
                 "last_name" => "Wardag",
                 "email" => "qw@myissue.io",
                 "public" => true,
-                "current_team_id" => 2,
+                "current_team_id" => 1,
                 "password" => Hash::make("123456"),
             ]);
 
@@ -103,7 +103,7 @@ class DatabaseSeeder extends Seeder
             "email" => "jd@myissue.io",
 
             "public" => false,
-            "current_team_id" => 3,
+            "current_team_id" => 1,
             "password" => Hash::make("123456"),
         ]);
 
@@ -223,6 +223,11 @@ class DatabaseSeeder extends Seeder
         TeamUser::factory()->create([
             "team_id" => Team::find(2)->id,
             "user_id" => User::find(6)->id, // Ingrid
+            "role" => "editor",
+        ]);
+        TeamUser::factory()->create([
+            "team_id" => Team::find(1)->id,
+            "user_id" => User::find(3)->id,
             "role" => "editor",
         ]);
         TeamUser::factory()->create([
