@@ -12,6 +12,8 @@ Laravel, Vue, and Nuxt, a Page Builder, Listing Directory, Blog, and Job Board T
 
 Developed with Laravel, Vue 3, Vite, Vuex, Inertia and Tailwind CSS.
 
+Nuxt 3 has been used for server-side rendering (SSR) for the frontend part. Check out the GitHub [repository](https://github.com/qaiswardag/nuxt_directory_and_job_board_theme?tab=readme-ov-file).
+
 # Installation
 
 -   Clone the repository and install PHP dependencies using Composer:
