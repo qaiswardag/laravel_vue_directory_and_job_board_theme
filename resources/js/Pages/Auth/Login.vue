@@ -19,8 +19,8 @@ defineProps({
 });
 
 const form = useForm({
-    email: "",
-    password: "",
+    email: "jd@myissue.io",
+    password: "123456",
     remember: true,
 });
 
@@ -69,6 +69,7 @@ const submit = () => {
                                 <div class="mt-4 mb-8 flex justify-center">
                                     <AuthenticationCardLogo />
                                 </div>
+
                                 <div>
                                     <InputLabel for="email" value="Email" />
                                     <TextInput
@@ -117,6 +118,19 @@ const submit = () => {
                                         buttonText="Login"
                                     >
                                     </SubmitButton>
+                                </div>
+                                <div
+                                    class="border-y border-gray-200 px-2 py-4 mt-6 rounded"
+                                >
+                                    <p class="myPrimaryParagraph text-xs pb-2">
+                                        Login with the following credentials:
+                                    </p>
+                                    <p class="myPrimaryParagraph text-xs">
+                                        Email: jd@myissue.io
+                                    </p>
+                                    <p class="myPrimaryParagraph text-xs">
+                                        Password: 123456
+                                    </p>
                                 </div>
                                 <div
                                     class="flex items-center justify-between mt-12"
