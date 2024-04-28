@@ -342,7 +342,7 @@ onMounted(() => {
                             "
                             class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
                         >
-                            Latest Stores
+                            Latest Listings
                         </Link>
                     </div>
 

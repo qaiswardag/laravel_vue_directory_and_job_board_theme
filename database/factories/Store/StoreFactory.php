@@ -79,7 +79,7 @@ class StoreFactory extends Factory
             ->format("H:i:s");
 
         return [
-            "team_id" => 2,
+            "team_id" => 1,
             "user_id" => 1,
             "show_author" => 0,
             "deleted_at" => null,
