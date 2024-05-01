@@ -284,7 +284,7 @@ defineProps({
                 <!-- countries # end -->
 
                 <!-- opening hours # start -->
-                <template v-if="postType === 'Listing'">
+                <template v-if="postType === 'Store'">
                     <div class="myPrimaryWidget">
                         <h4 class="myQuaternaryHeader">Opening hours</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
@@ -1550,7 +1550,7 @@ defineProps({
                                 Show Job Recruiters
                             </h4>
                         </template>
-                        <template v-if="postType === 'Listing'">
+                        <template v-if="postType === 'Store'">
                             <h4 class="myQuaternaryHeader">
                                 Show Store Staff Members
                             </h4>
@@ -1568,7 +1568,7 @@ defineProps({
                                 Show Job Recruiters
                             </h4>
                         </template>
-                        <template v-if="postType === 'Listing'">
+                        <template v-if="postType === 'Store'">
                             <h4 class="myQuaternaryHeader">
                                 Show Store Staff Members
                             </h4>
@@ -1595,7 +1595,7 @@ defineProps({
                     <template v-if="postType === 'Job'">
                         <h4 class="myQuaternaryHeader">Job Recruiters</h4>
                     </template>
-                    <template v-if="postType === 'Listing'">
+                    <template v-if="postType === 'Store'">
                         <h4 class="myQuaternaryHeader">Store Staff Members</h4>
                     </template>
                     <WidgetSectionBorder></WidgetSectionBorder>
@@ -1654,54 +1654,118 @@ defineProps({
                 <!-- authors # end -->
                 <!-- cover images - start -->
                 <!-- cover images for resource # start -->
-                <template v-if="post.cover_images">
-                    <div class="myPrimaryWidget">
-                        <h4 class="myQuaternaryHeader flex items-center gap-2">
-                            {{ post.title }}
-                            <!-- brand website # start -->
-                            <template v-if="post.brand_website_url">
-                                <div class="flex items-center gap-4">
-                                    <a
-                                        :href="post.brand_website_url"
-                                        target="_blank"
-                                        :title="`Website for ${post?.title}`"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                <div class="myPrimaryWidget">
+                    <h4 class="myQuaternaryHeader flex items-center gap-2">
+                        {{ post.title }}
+                        <!-- brand website # start -->
+                        <template v-if="post.brand_website_url">
+                            <div class="flex items-center gap-4">
+                                <a
+                                    :href="post.brand_website_url"
+                                    target="_blank"
+                                    :title="`Website for ${post?.title}`"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                >
+                                    <div
+                                        class="myMediumIcon material-symbols-outlined"
                                     >
-                                        <div
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            link
-                                        </div>
-                                    </a>
-                                </div>
-                            </template>
-                            <!-- brand website # end -->
-                        </h4>
+                                        link
+                                    </div>
+                                </a>
+                            </div>
+                        </template>
+                        <!-- brand website # end -->
+                    </h4>
 
-                        <WidgetSectionBorder></WidgetSectionBorder>
-                        <!-- post logo # start -->
-                        <ThumbnailSmallImageSlider
-                            v-if="post.brand_logos"
-                            :images="post.brand_logos"
-                            imageSize="medium_path"
-                            imageHeight="min-h-24 max-h-24 rounded-full"
-                            imageWidth="w-24 min-w-24 max-w-24 mb-4 w-24 object-cover"
-                            :roundedFull="false"
-                            :squareButtons="true"
-                        ></ThumbnailSmallImageSlider>
-                        <!-- post logo # end -->
+                    <WidgetSectionBorder></WidgetSectionBorder>
+                    <!-- post logo # start -->
+                    <ThumbnailSmallImageSlider
+                        v-if="post.brand_logos"
+                        :images="post.brand_logos"
+                        imageSize="medium_path"
+                        imageHeight="min-h-24 max-h-24 rounded-full"
+                        imageWidth="w-24 min-w-24 max-w-24 mb-4 w-24 object-cover"
+                        :roundedFull="false"
+                        :squareButtons="true"
+                    ></ThumbnailSmallImageSlider>
+                    <!-- post logo # end -->
 
-                        <ThumbnailSmallImageSlider
-                            v-if="post.cover_images"
-                            :images="post.cover_images"
-                            imageSize="large_path"
-                            imageHeight="xl:max-h-[28rem] xl:min-h-[28rem] xl:h-[28rem] lg:max-h-[30rem] min-h-[30rem] lg:h-[30rem] md:max-h-[26rem] min-h-[26rem] md:h-[26rem] max-h-[34rem] min-h-[34rem] h-[34rem]"
-                            imageWidth="w-full object-cover rounded-b-none"
-                            :roundedFull="false"
-                            :squareButtons="true"
-                        ></ThumbnailSmallImageSlider>
-                    </div>
-                </template>
+                    <template v-if="post.cover_images">
+                        <!-- start photo -->
+                        <template
+                            v-if="
+                                post &&
+                                post.cover_images !== null &&
+                                postType === 'Post'
+                            "
+                        >
+                            <ThumbnailSmallImageSlider
+                                :images="post.cover_images"
+                                imageSize="large_path"
+                                imageHeight="xl:max-h-[20rem] xl:min-h-[20rem] xl:h-[20rem] lg:max-h-[22rem] min-h-[22rem] lg:h-[22rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[26rem] min-h-[26rem] h-[26rem]"
+                                imageWidth="w-full object-cover rounded-b-none"
+                                :roundedFull="false"
+                                :squareButtons="true"
+                                @firstButtonClick="
+                                    goToSinglePost(
+                                        post.team.slug,
+                                        post.slug,
+                                        post.id
+                                    )
+                                "
+                                :imageClickable="true"
+                            ></ThumbnailSmallImageSlider>
+                        </template>
+                        <template
+                            v-if="
+                                post &&
+                                post.cover_images !== null &&
+                                postType === 'Job'
+                            "
+                        >
+                            <ThumbnailSmallImageSlider
+                                :images="post.cover_images"
+                                imageSize="large_path"
+                                imageHeight="xl:max-h-[20rem] xl:min-h-[20rem] xl:h-[20rem] lg:max-h-[22rem] min-h-[22rem] lg:h-[22rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[26rem] min-h-[26rem] h-[26rem]"
+                                imageWidth="w-full object-cover rounded-b-none"
+                                :roundedFull="false"
+                                :squareButtons="true"
+                                @firstButtonClick="
+                                    goToSinglePost(
+                                        post.team.slug,
+                                        post.slug,
+                                        post.id
+                                    )
+                                "
+                                :imageClickable="true"
+                            ></ThumbnailSmallImageSlider>
+                        </template>
+                        <template
+                            v-if="
+                                post &&
+                                post.cover_images !== null &&
+                                postType === 'Store'
+                            "
+                        >
+                            <ThumbnailSmallImageSlider
+                                :images="post.cover_images"
+                                imageSize="large_path"
+                                imageHeight="xl:max-h-[34rem] xl:min-h-[34rem] xl:h-[34rem] lg:max-h-[34rem] min-h-[34rem] lg:h-[34rem] md:max-h-[z-30rem] min-h-[z-30rem] md:h-[z-30rem] max-h-[34rem] min-h-[34rem] h-[34rem]"
+                                imageWidth="w-full object-cover rounded-b-none object-top"
+                                :roundedFull="false"
+                                :squareButtons="true"
+                                @firstButtonClick="
+                                    goToSinglePost(
+                                        post.team.slug,
+                                        post.slug,
+                                        post.id
+                                    )
+                                "
+                                :imageClickable="true"
+                            ></ThumbnailSmallImageSlider>
+                        </template>
+                    </template>
+                </div>
                 <!-- cover images for resource # end -->
             </aside>
         </template>
