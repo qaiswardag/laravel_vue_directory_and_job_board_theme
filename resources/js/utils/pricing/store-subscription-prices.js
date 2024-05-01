@@ -1,6 +1,6 @@
 const listingsubscriptionPrices = [
     {
-        name: "Single Store",
+        name: "Single Listing",
         id: "single_store",
         dynamic_product: false,
         priceIdentifierStripe: "1234",
@@ -14,7 +14,7 @@ const listingsubscriptionPrices = [
         totalPrice: "16",
         frequencies: "per store / monthly",
         billed: "Billed every month",
-        title: "Single store",
+        title: "Single listing",
         description: "Affordable & with all features.",
         features: [
             "Page Builder",
