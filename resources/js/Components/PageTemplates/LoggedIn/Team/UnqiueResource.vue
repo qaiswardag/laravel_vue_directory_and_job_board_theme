@@ -1706,14 +1706,7 @@ defineProps({
                                 imageWidth="w-full object-cover rounded-b-none"
                                 :roundedFull="false"
                                 :squareButtons="true"
-                                @firstButtonClick="
-                                    goToSinglePost(
-                                        post.team.slug,
-                                        post.slug,
-                                        post.id
-                                    )
-                                "
-                                :imageClickable="true"
+                                :imageClickable="false"
                             ></ThumbnailSmallImageSlider>
                         </template>
                         <template
@@ -1730,14 +1723,7 @@ defineProps({
                                 imageWidth="w-full object-cover rounded-b-none"
                                 :roundedFull="false"
                                 :squareButtons="true"
-                                @firstButtonClick="
-                                    goToSinglePost(
-                                        post.team.slug,
-                                        post.slug,
-                                        post.id
-                                    )
-                                "
-                                :imageClickable="true"
+                                :imageClickable="false"
                             ></ThumbnailSmallImageSlider>
                         </template>
                         <template
@@ -1754,14 +1740,7 @@ defineProps({
                                 imageWidth="w-full object-cover rounded-b-none object-top"
                                 :roundedFull="false"
                                 :squareButtons="true"
-                                @firstButtonClick="
-                                    goToSinglePost(
-                                        post.team.slug,
-                                        post.slug,
-                                        post.id
-                                    )
-                                "
-                                :imageClickable="true"
+                                :imageClickable="false"
                             ></ThumbnailSmallImageSlider>
                         </template>
                     </template>
