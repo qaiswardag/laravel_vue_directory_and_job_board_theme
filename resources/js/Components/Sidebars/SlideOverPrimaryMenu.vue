@@ -76,7 +76,7 @@ const goToJobs = function () {
         usePage().props &&
         usePage().props.environment === "local"
     ) {
-        window.location.href = "http://localhost:4/jobs";
+        window.location.href = "http://localhost:4000/jobs";
     }
     if (
         usePage() &&
