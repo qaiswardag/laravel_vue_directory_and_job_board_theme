@@ -50,6 +50,14 @@ class UserController extends Controller
             ]);
         }
 
+        if ($request->user()->id === 2 || $request->user()->id === 3) {
+            return Inertia::render("Error", [
+                "customError" =>
+                    "You can not update the default admin users in demo mode.",
+                "status" => 403,
+            ]);
+        }
+
         $updater->update($request->user(), $request->all());
         return app(ProfileInformationUpdatedResponse::class);
     }
