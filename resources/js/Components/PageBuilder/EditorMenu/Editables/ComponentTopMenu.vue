@@ -81,9 +81,7 @@ const deleteComponent = function (e) {
                 @click="deleteComponent()"
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white text-myPrimaryErrorColor"
             >
-                <span class="myMediumIcon material-symbols-outlined">
-                    delete
-                </span>
+                <span class="material-symbols-outlined"> delete_forever </span>
             </div>
         </div>
 

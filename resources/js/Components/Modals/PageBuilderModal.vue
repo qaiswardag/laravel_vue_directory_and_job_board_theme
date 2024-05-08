@@ -219,10 +219,15 @@ onMounted(() => {
                                         class="flex justify-start myPrimaryGap"
                                     >
                                         <button
-                                            class="myPrimaryButton"
+                                            class="myPrimaryButton text-[10px] py-2 min-h-2"
                                             @click="secondButton"
                                             type="button"
                                         >
+                                            <span
+                                                class="material-symbols-outlined text-[18px]"
+                                            >
+                                                done
+                                            </span>
                                             Save & Close
                                         </button>
                                         <button
@@ -230,12 +235,12 @@ onMounted(() => {
                                                 updateOrCreate === 'update' &&
                                                 hideDraftButton
                                             "
-                                            class="mySecondaryButton"
+                                            class="mySecondaryButton text-[10px] py-2 min-h-2"
                                             @click="handleDraftForUpdate"
                                             type="button"
                                         >
                                             <span
-                                                class="material-symbols-outlined"
+                                                class="material-symbols-outlined text-[18px]"
                                             >
                                                 edit
                                             </span>

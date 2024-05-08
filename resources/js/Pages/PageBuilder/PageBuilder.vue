@@ -200,12 +200,6 @@ onMounted(async () => {
                         <ComponentTopMenu v-if="getElement"></ComponentTopMenu>
                     </div>
                 </div>
-                <div
-                    @click.self="
-                        store.commit('pageBuilderState/setComponent', null)
-                    "
-                    class="w-full h-full"
-                ></div>
             </div>
             <main
                 class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl"
