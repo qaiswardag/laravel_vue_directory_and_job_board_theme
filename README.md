@@ -6,6 +6,8 @@
 
 Laravel, Vue, and Nuxt, a Page Builder, Listing Directory, Blog, and Job Board Theme.
 
+I would greatly appreciate if you could star the GitHub repository. It helps to boost the visibility of this project and encourages me to continue adding new features.
+
 [Play around with the demo app](https://www.myissue.io)
 
 # Technologies and Frameworks
