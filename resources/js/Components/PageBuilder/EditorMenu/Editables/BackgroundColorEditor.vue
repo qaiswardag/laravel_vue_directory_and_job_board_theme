@@ -42,7 +42,7 @@ watch(
             <ListboxButton class="w-max min-w-[10rem] flex items-center px-2">
                 <div v-if="getBackgroundColor === 'none'" class="flex gap-2">
                     <span class="material-symbols-outlined"> ev_shadow </span>
-                    <span class="block truncate">Background color</span>
+                    <span class="block truncate">Background</span>
                 </div>
                 <div
                     v-if="backgroundColor !== 'none'"

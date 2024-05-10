@@ -181,7 +181,7 @@ onMounted(() => {
                         leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     >
                         <div
-                            class="inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
+                            class="bg-red-100 inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
                         >
                             <DynamicModal
                                 :show="showModalConfirmClosePageBuilder"
@@ -212,39 +212,39 @@ onMounted(() => {
                                         null
                                     )
                                 "
-                                class="px-4 h-[10vh] flex items-center justify-between border-b border-gray-200 mb-2"
+                                class="px-4 h-[10vh] flex items-center justify-between border-b border-gray-200 bg-white"
                             >
                                 <div class="flex justify-start myPrimaryGap">
                                     <div
                                         class="flex justify-start myPrimaryGap"
                                     >
                                         <button
-                                            class="myPrimaryButton text-[10px] py-2 min-h-2"
+                                            class="myPrimaryButton lg:text-xs text-[10px] lg:py-3 py-2 min-h-2"
                                             @click="secondButton"
                                             type="button"
                                         >
                                             <span
-                                                class="material-symbols-outlined text-[18px]"
+                                                class="material-symbols-outlined text-[16px]"
                                             >
                                                 done
                                             </span>
-                                            Save & Close
+                                            Save & Exit
                                         </button>
                                         <button
                                             v-if="
                                                 updateOrCreate === 'update' &&
                                                 hideDraftButton
                                             "
-                                            class="mySecondaryButton text-[10px] py-2 min-h-2"
+                                            class="mySecondaryButton lg:text-xs text-[10px] lg:py-3 py-2 min-h-2"
                                             @click="handleDraftForUpdate"
                                             type="button"
                                         >
                                             <span
-                                                class="material-symbols-outlined text-[18px]"
+                                                class="material-symbols-outlined text-[16px]"
                                             >
-                                                edit
+                                                settings_backup_restore
                                             </span>
-                                            Draft
+                                            Recreate Draft
                                         </button>
                                     </div>
                                 </div>

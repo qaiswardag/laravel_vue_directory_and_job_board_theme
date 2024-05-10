@@ -85,10 +85,10 @@ const handleEscapeKey = function () {
                         leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     >
                         <div
-                            class="inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
+                            class="bg-red-100 inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
                         >
                             <div
-                                class="px-4 h-[10vh] flex items-center justify-between border-b border-gray-200 mb-2"
+                                class="px-4 h-[10vh] flex items-center justify-between border-b border-gray-200 bg-white"
                             >
                                 <ApplicationLogo></ApplicationLogo>
                                 <div

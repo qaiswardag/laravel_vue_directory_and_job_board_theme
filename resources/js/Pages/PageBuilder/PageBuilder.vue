@@ -160,16 +160,16 @@ onMounted(async () => {
     </PageBuilderPreviewModal>
 
     <div
-        class="w-full inset-x-0 h-[90vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
+        class="w-full inset-x-0 h-[90vh] z-10 bg-white overflow-x-scroll lg:pt-2 pt-2"
     >
         <div class="relative h-full flex">
             <div
                 @click.self="
                     store.commit('pageBuilderState/setComponent', null)
                 "
-                class="min-w-[3.5rem] py-2"
+                class="min-w-[3.5rem] pt-6 pb-2 my-2 mx-2 bg-myPrimaryLightGrayColor rounded-full shadow"
             >
-                <div class="mx-4 flex flex-col myPrimaryGap">
+                <div class="mx-2 flex flex-col myPrimaryGap">
                     <div class="flex gap-2 items-center justify-center">
                         <button
                             type="button"
@@ -293,7 +293,7 @@ onMounted(async () => {
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span class="material-symbols-outlined">
-                                    filter_vintage
+                                    gesture
                                 </span>
                             </button>
                         </div>

@@ -59,8 +59,8 @@ const deleteAllComponents = function () {
     showModalDeleteAllComponents.value = true;
     typeModal.value = "delete";
     gridColumnModal.value = 2;
-    titleModal.value = "Delete all Components";
-    descriptionModal.value = "Are you sure you want to delete all Components?";
+    titleModal.value = "Remove all Components";
+    descriptionModal.value = "Are you sure you want to remove all Components?";
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Delete";
@@ -124,13 +124,12 @@ const settingsSlideOverButton = function () {
     >
         <div>
             <MenuButton
-                class="inline-flex items-center gap-2 justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-600"
+                class="inline-flex items-center gap-2 justify-center w-full rounded-md border border-gray-300 shadow-sm pl-4 pr-6 py-2 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-600"
             >
-                <span class="myMediumIcon material-symbols-outlined">
-                    check
+                <span class="material-symbols-outlined text-[16px]">
+                    keyboard_command_key
                 </span>
-                Options
-                <span class="material-symbols-outlined"> unfold_more </span>
+                <span class="text-sm"> Options </span>
             </MenuButton>
         </div>
 
@@ -157,11 +156,15 @@ const settingsSlideOverButton = function () {
                                 'block px-4 py-2',
                             ]"
                         >
-                            <div class="flex items-center justify-left gap-2">
+                            <div
+                                class="flex items-center justify-left gap-2 text-sm"
+                            >
                                 <div
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    class="h-8 w-8 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 >
-                                    <span class="material-symbols-outlined">
+                                    <span
+                                        class="material-symbols-outlined text-[16px]"
+                                    >
                                         visibility
                                     </span>
                                 </div>
@@ -181,12 +184,16 @@ const settingsSlideOverButton = function () {
                                 'block px-4 py-2',
                             ]"
                         >
-                            <div class="flex items-center justify-left gap-2">
+                            <div
+                                class="flex items-center justify-left gap-2 text-sm"
+                            >
                                 <div
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    class="h-8 w-8 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 >
-                                    <span class="material-symbols-outlined">
-                                        gesture
+                                    <span
+                                        class="material-symbols-outlined text-[16px]"
+                                    >
+                                        settings
                                     </span>
                                 </div>
                                 Settings
@@ -204,18 +211,20 @@ const settingsSlideOverButton = function () {
                                 'block px-4 py-2',
                             ]"
                         >
-                            <div class="flex items-center justify-left gap-2">
+                            <div
+                                class="flex items-center justify-left gap-2 text-sm"
+                            >
                                 <div
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    class="h-8 w-8 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white text-myPrimaryErrorColor"
                                 >
                                     <span
-                                        class="myMediumIcon material-symbols-outlined"
+                                        class="myMediumIcon material-symbols-outlined text-[16px]"
                                     >
                                         delete
                                     </span>
                                 </div>
                                 <span class="group-hover:text-white">
-                                    Delete all Components
+                                    Clear page
                                 </span>
                             </div>
                         </div>

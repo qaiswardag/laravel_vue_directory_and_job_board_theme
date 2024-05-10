@@ -279,7 +279,7 @@ const handleModalIframeSrc = function () {
     </MediaLibraryModal>
 
     <div
-        class="z-20 py-1 px-2 h-20 flex items-center justify-center border-b border-gray-200"
+        class="z-20 py-1 px-2 h-20 flex items-center justify-center mt-2 mx-2 border-b border-myPrimaryLightGrayColor"
     >
         <div
             class="flex items-center justify-center divide-x divide-gray-200 py-1"

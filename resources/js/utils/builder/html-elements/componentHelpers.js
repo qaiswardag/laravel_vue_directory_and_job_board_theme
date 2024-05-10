@@ -75,7 +75,7 @@ const componentHelpers = [
     {
         html_code: `<section><div class="relative py-8"><div class="absolute inset-0 flex items-center" aria-hidden="true"><div class="w-full border-4 border-gray-800 leading-none"></div></div><div class="relative flex justify-start"></div></div></section>`,
         id: null,
-        title: "Line Break Divider",
+        title: "Break Divider",
         icon: `
         <span class="material-symbols-outlined">
         horizontal_rule

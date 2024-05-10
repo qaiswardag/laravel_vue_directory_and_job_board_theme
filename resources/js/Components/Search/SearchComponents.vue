@@ -382,7 +382,7 @@ onMounted(async () => {
                             </div>
                         </section>
                         <aside
-                            class="md:w-2/6 overflow-scroll min-h-[30rem] max-h-[30rem] w-full"
+                            class="md:w-2/6 overflow-scroll min-h-[30rem] max-h-[30rem] w-full border rounded pt-4 pb-2"
                         >
                             <div
                                 class="grid grid-cols-2 gap-2 w-full overflow-y-scroll"
@@ -396,14 +396,8 @@ onMounted(async () => {
                                     "
                                     v-for="helperComponent in componentHelpers"
                                     :key="helperComponent.title"
-                                    class="myPrimaryTag m-0 pt-8 pb-4 px-2 rounded cursor-pointer"
+                                    class="myPrimaryTag py-4 px-2 rounded-full cursor-pointer my-0 mx-2"
                                 >
-                                    <div
-                                        class="flex justify-center items-center"
-                                    >
-                                        <span v-html="helperComponent.icon">
-                                        </span>
-                                    </div>
                                     <div
                                         class="flex justify-center items-center gap-4 text-xs font-medium"
                                     >
