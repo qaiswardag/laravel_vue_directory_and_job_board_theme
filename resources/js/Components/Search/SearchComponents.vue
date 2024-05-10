@@ -332,7 +332,7 @@ onMounted(async () => {
                                 class="overflow-scroll min-h-[25rem] max-h-[25rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full myPrimaryGap px-2 p-4 border border-myPrimaryLightGrayColor rounded"
                             >
                                 <div
-                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded border lg:py-10 py-8 px-2"
+                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded border border-gray-300 lg:py-10 py-8 px-2"
                                     v-for="component in getFetchedComponents &&
                                     getFetchedComponents.fetchedData &&
                                     getFetchedComponents.fetchedData
@@ -352,16 +352,6 @@ onMounted(async () => {
                                                 component.cover_images
                                             "
                                         >
-                                            <p
-                                                @click="
-                                                    handleDropComponent(
-                                                        component
-                                                    )
-                                                "
-                                                class="myPrimaryParagraph pt-2 pb-2 text-xs cursor-pointer"
-                                            >
-                                                {{ component.title }}
-                                            </p>
                                             <ThumbnailSmallImageSlider
                                                 :images="component.cover_images"
                                                 imageSize="medium_path"
@@ -382,30 +372,34 @@ onMounted(async () => {
                             </div>
                         </section>
                         <aside
-                            class="md:w-2/6 overflow-scroll min-h-[30rem] max-h-[30rem] w-full border rounded pt-4 pb-2"
+                            class="md:w-2/6 overflow-scroll min-h-[30rem] max-h-[30rem] w-full border rounded py-4 px-2"
                         >
-                            <div
-                                class="grid grid-cols-2 gap-2 w-full overflow-y-scroll"
-                            >
+                            <div class="flex gap-4 flex-wrap w-full">
                                 <!-- Unique HTML Component # start -->
                                 <div
-                                    @click="
-                                        handleAddHelperComponent(
-                                            helperComponent
-                                        )
-                                    "
                                     v-for="helperComponent in componentHelpers"
                                     :key="helperComponent.title"
-                                    class="myPrimaryTag py-4 px-2 rounded-full cursor-pointer my-0 mx-2"
                                 >
                                     <div
-                                        class="flex justify-center items-center gap-4 text-xs font-medium"
+                                        class="flex justify-left items-center gap-4 text-xs font-medium"
                                     >
                                         <button
+                                            @click="
+                                                handleAddHelperComponent(
+                                                    helperComponent
+                                                )
+                                            "
                                             type="button"
-                                            class="flex items-center justify-center gap-2 my-2 cursor-pointer"
+                                            class="mySecondaryButton"
                                         >
-                                            {{ helperComponent.title }}
+                                            <span
+                                                class="material-symbols-outlined text-[16px]"
+                                            >
+                                                add
+                                            </span>
+                                            <span>
+                                                {{ helperComponent.title }}
+                                            </span>
                                         </button>
                                     </div>
                                 </div>
