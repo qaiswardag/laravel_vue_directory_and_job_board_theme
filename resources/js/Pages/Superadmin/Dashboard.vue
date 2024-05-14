@@ -440,11 +440,9 @@ const handleSelectTeam = function (team) {
 
     <MainLayout>
         <LoggedInLayout>
-            <template #header> Super Admininistrator test 1 </template>
+            <template #header> Super Admininistrator</template>
 
-            <template #description
-                >Super Admininistrator Dashboard test 1</template
-            >
+            <template #description>Super Admininistrator Dashboard</template>
 
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
