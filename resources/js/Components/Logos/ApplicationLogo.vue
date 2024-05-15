@@ -26,5 +26,5 @@ const goToHome = function () {
         src="/logo/logo.svg"
         alt="Logo"
     />
-    + ØØØ2
+    + Ø10
 </template>

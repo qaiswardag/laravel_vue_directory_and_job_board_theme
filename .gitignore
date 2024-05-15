@@ -24,6 +24,7 @@ yarn-error.log
 
 /public/uploads/
 /storage/app/public/uploads/*
+storage/app/public/profile-photos/*
 /storage/pail/*
 
 !/storage/app/public/uploads/components/
