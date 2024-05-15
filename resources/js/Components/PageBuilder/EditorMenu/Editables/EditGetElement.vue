@@ -285,15 +285,16 @@ const handleModalIframeSrc = function () {
             class="flex items-center justify-center divide-x divide-gray-200 py-1"
         >
             <template v-if="pageBuilder.ElOrFirstChildIsIframe()">
-                <div class="px-2">
+                <div class="px-2 flex items-center justify-start gap-2">
                     <button
                         @click="handleModalIframeSrc"
                         type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <span class="material-symbols-outlined">
                             play_circle
                         </span>
+                        <span>Add video</span>
                     </button>
                 </div>
             </template>
@@ -304,15 +305,17 @@ const handleModalIframeSrc = function () {
                     !pageBuilder.ElOrFirstChildIsIframe()
                 "
             >
-                <div class="px-2">
+                <div class="px-2 flex items-center justify-start gap-2">
                     <button
                         @click="handleModalPreviewTiptap"
                         type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <span class="material-symbols-outlined"> edit </span>
+                        <span>Edit Text</span>
                     </button>
                 </div>
+
                 <div class="px-2">
                     <TextColorEditor></TextColorEditor>
                 </div>
@@ -325,15 +328,16 @@ const handleModalIframeSrc = function () {
                     !pageBuilder.ElOrFirstChildIsIframe()
                 "
             >
-                <div class="px-2">
+                <div class="px-2 flex items-center justify-start gap-2">
                     <button
                         @click="handleAddImage"
                         type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <span class="material-symbols-outlined">
                             add_photo_alternate
                         </span>
+                        <span>Update image</span>
                     </button>
                 </div>
             </template>
@@ -352,27 +356,27 @@ const handleModalIframeSrc = function () {
 
             <!-- delete & restore element # start -->
             <template v-if="getRestoredElement">
-                <div class="px-2">
+                <div class="px-2 flex items-center justify-start gap-2">
                     <button
                         @click="pageBuilder.handleRestoreElement"
                         type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
-                        <span class="material-symbols-outlined"> refresh </span>
+                        <span class="material-symbols-outlined"> undo </span>
+                        <span>Undo</span>
                     </button>
                 </div>
             </template>
 
             <template v-if="getElement && !getRestoredElement">
-                <div class="px-2">
+                <div class="px-2 flex items-center justify-start gap-2">
                     <button
                         @click="pageBuilder.handleDeleteElement"
                         type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white focus-visible:ring-0 text-myPrimaryErrorColor"
+                        class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:text-white focus-visible:ring-0 hover:bg-myPrimaryErrorColor"
                     >
-                        <span class="myMediumIcon material-symbols-outlined">
-                            delete
-                        </span>
+                        <span class="material-symbols-outlined"> delete </span>
+                        <span class="hover:text-white">Delete selection</span>
                     </button>
                 </div>
             </template>

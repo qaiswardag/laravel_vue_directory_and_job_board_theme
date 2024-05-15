@@ -418,7 +418,7 @@ onMounted(() => {
                                                         class="hidden sm:block"
                                                     >
                                                         <div
-                                                            class="flex myPrimaryGap items-center overflow-x-scroll bg-myPrimaryLightGrayColor px-2 pt-3 pb-2 rounded-full"
+                                                            class="flex myPrimaryGap items-center overflow-x-auto bg-myPrimaryLightGrayColor px-2 pt-3 pb-2 rounded-full"
                                                         >
                                                             <nav
                                                                 class="flex-1 -mb-px flex space-x-2 xl:space-x-4"

@@ -438,7 +438,7 @@
 /* Add overflow-x property to enable horizontal scrollbar */
 .scrollable {
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     /* Add any other desired styles for the scrollable element */
 }
 /* Scrollbar Styles  - end */

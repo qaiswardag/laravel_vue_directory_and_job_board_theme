@@ -39,22 +39,29 @@ watch(
 <template>
     <Listbox as="div" v-model="textColor">
         <div class="relative">
-            <ListboxButton class="w-max min-w-[10rem] flex items-center px-2">
-                <div v-if="getTextColor === 'none'" class="flex gap-2">
+            <ListboxButton
+                class="w-max flex items-center px-2 text-[12.5px] gap-2 text-nowrap pl-2 pr-3 h-10 cursor-pointer rounded-full border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+            >
+                <div
+                    v-if="getTextColor === 'none'"
+                    class="flex gap-2 items-center"
+                >
                     <span class="material-symbols-outlined">
                         format_color_text
                     </span>
-                    <span class="block truncate">Text color</span>
+                    <span class="block truncate text-[12.5px]">Text color</span>
                 </div>
                 <div
                     v-if="textColor !== 'none'"
                     class="flex items-center gap-2"
                 >
                     <div
-                        class="aspect-square w-6 h-6 border border-gray-100 rounded-sm"
+                        class="aspect-square w-6 h-6 border border-gray-800 rounded-sm"
                         :class="`bg-${textColor?.replace('text-', '')}`"
                     ></div>
-                    <span class="block truncate">{{ textColor }}</span>
+                    <span class="block truncate text-[12.5px]">{{
+                        textColor
+                    }}</span>
                 </div>
             </ListboxButton>
 
@@ -64,7 +71,7 @@ watch(
                 leave-to-class="opacity-0"
             >
                 <ListboxOptions
-                    class="absolute z-40 mt-1 max-h-56 w-full overflow-auto rounded-md bg-gray-50 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                    class="absolute min-w-[12rem] z-40 mt-1 max-h-56 w-full overflow-auto rounded-md bg-gray-50 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                 >
                     <ListboxOption
                         as="template"
