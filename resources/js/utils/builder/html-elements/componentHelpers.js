@@ -27,7 +27,7 @@ const componentHelpers = [
         `,
     },
     {
-        html_code: `<section><div class="relative py-4"><div class="mx-auto max-w-7xl lg:px-4 px-2"><div class="break-words"><h2>Bonjour Comment Ça Va</h2></div></div></div></section>`,
+        html_code: `<section><div class="relative py-4"><div class="mx-auto max-w-7xl lg:px-4 px-2"><div class="break-words"><h2>Consequat mauris nunc congue</h2></div></div></div></section>`,
         id: null,
         title: "Header H2",
         icon: `
@@ -37,7 +37,7 @@ const componentHelpers = [
         `,
     },
     {
-        html_code: `<section><div class="relative py-4"><div class="mx-auto max-w-7xl lg:px-4 px-2"><div class="break-words"><h3>Bonjour Comment Ça Va</h3></div></div></div></section>`,
+        html_code: `<section><div class="relative py-4"><div class="mx-auto max-w-7xl lg:px-4 px-2"><div class="break-words"><h3>Consequat mauris nunc congue</h3></div></div></div></section>`,
         id: null,
         title: "Header H3",
         icon: `

@@ -149,7 +149,16 @@ const validateURL = function () {
 
 const handleModalIframeSrc = function () {
     urlError.value = null;
-    iframeSrc.value = "";
+
+    const iframeSrcValue =
+        getElement.value &&
+        getElement.value.firstElementChild?.tagName === "IFRAME" &&
+        getElement.value.firstElementChild.hasAttribute("src") &&
+        getElement.value.firstElementChild.getAttribute("src").trim() !== ""
+            ? getElement.value.firstElementChild.src
+            : "";
+
+    iframeSrc.value = iframeSrcValue;
     //
     //
     // open modal to true
@@ -176,7 +185,11 @@ const handleModalIframeSrc = function () {
             return;
         }
 
-        if (getElement.value.firstElementChild?.tagName === "IFRAME") {
+        if (
+            getElement.value &&
+            getElement.value.firstElementChild &&
+            getElement.value.firstElementChild.tagName === "IFRAME"
+        ) {
             // Set the src attribute
 
             // replace watch with embed
@@ -186,7 +199,8 @@ const handleModalIframeSrc = function () {
             iframeSrc.value = iframeSrc.value
                 .replace(/&ab_channel=[^&]*/, "")
                 .replace(/&list=[^&]*/, "")
-                .replace(/&start_radio=[^&]*/, "");
+                .replace(/&start_radio=[^&]*/, "")
+                .replace(/&t=[^&]*/, ""); // Remove the 't' parameter (time)
 
             getElement.value.firstElementChild.src = iframeSrc.value;
         }
@@ -294,7 +308,7 @@ const handleModalIframeSrc = function () {
                         <span class="material-symbols-outlined">
                             play_circle
                         </span>
-                        <span>Add video</span>
+                        <span>Add YouTube</span>
                     </button>
                 </div>
             </template>
@@ -315,7 +329,6 @@ const handleModalIframeSrc = function () {
                         <span>Edit Text</span>
                     </button>
                 </div>
-
                 <div class="px-2">
                     <TextColorEditor></TextColorEditor>
                 </div>
