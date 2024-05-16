@@ -223,7 +223,7 @@ onMounted(() => {
         <div v-if="pageBuilder.selectedElementIsValidText() && editor">
             <div class="relative rounded-lg">
                 <div
-                    class="flex items-center justify-center divide-x divide-gray-200 py-4 px-4 overflow-x-auto border-b border-gray-200"
+                    class="flex items-center justify-left divide-x divide-gray-200 py-4 px-4 overflow-x-auto border-b border-gray-200"
                 >
                     <div class="px-2 flex items-center justify-start gap-2">
                         <button
