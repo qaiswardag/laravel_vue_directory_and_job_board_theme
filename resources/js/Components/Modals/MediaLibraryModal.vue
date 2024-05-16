@@ -322,7 +322,7 @@ onMounted(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="relative w-full max-h-[65rem] my-2 inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full"
+                            class="relative max-h-[65rem] my-2 inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full w-[96%]"
                         >
                             <div
                                 class="flex gap-2 justify-between items-center border-b border-gray-200 p-4 mb-2"
