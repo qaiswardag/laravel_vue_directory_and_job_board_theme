@@ -255,6 +255,7 @@ const handleModalIframeSrc = function () {
         </main>
     </DynamicModal>
     <DynamicModal
+        :simpleModal="true"
         :show="getShowModalTipTap"
         maxWidth="5xl"
         :type="typeModal"
@@ -269,9 +270,7 @@ const handleModalIframeSrc = function () {
         @thirdModalButtonFunction="thirdModalButtonFunction"
     >
         <header></header>
-        <main
-            class="lg:min-h-[30rem] lg:max-h-[40rem] md:min-h-[20rem] md:max-h-[30rem] min-h-[20rem] max-h-[20rem] overflow-y-scroll"
-        >
+        <main class="overflow-y-auto">
             <TipTapInput></TipTapInput>
         </main>
     </DynamicModal>
@@ -326,7 +325,7 @@ const handleModalIframeSrc = function () {
                         class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <span class="material-symbols-outlined"> edit </span>
-                        <span>Edit Text</span>
+                        <span>Edit text</span>
                     </button>
                 </div>
                 <div class="px-2">
@@ -389,7 +388,7 @@ const handleModalIframeSrc = function () {
                         class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:text-white focus-visible:ring-0 hover:bg-myPrimaryErrorColor"
                     >
                         <span class="material-symbols-outlined"> delete </span>
-                        <span class="hover:text-white">Delete selection</span>
+                        <span class="hover:text-white">Delete</span>
                     </button>
                 </div>
             </template>

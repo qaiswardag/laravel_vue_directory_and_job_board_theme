@@ -48,7 +48,7 @@ watch(
                 >
                     <span class="material-symbols-outlined"> colors </span>
                     <span class="block truncate text-[12.5px]"
-                        >Background
+                        >Background color
                     </span>
                 </div>
                 <div

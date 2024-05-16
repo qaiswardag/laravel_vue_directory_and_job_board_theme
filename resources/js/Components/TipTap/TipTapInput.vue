@@ -219,99 +219,129 @@ onMounted(() => {
         </main>
     </DynamicModal>
 
-    <div
-        class="mt-2 mb-10 blockease-linear duration-200 block px-2 ease-linear"
-    >
+    <div class="blockease-linear duration-200 block ease-linear">
         <div v-if="pageBuilder.selectedElementIsValidText() && editor">
             <div class="relative rounded-lg">
                 <div
-                    class="h-16 px-2 bg-black rounded-t-lg sticky top-0 z-10 flex gap-4 flex-shrink-0 justify-start items-center border-b-2 border-gray-100 overflow-x-scroll"
+                    class="flex items-center justify-center divide-x divide-gray-200 py-4 px-4 overflow-x-auto border-b border-gray-200"
                 >
-                    <button
-                        @click="editor.chain().focus().setHardBreak().run()"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    >
-                        <span class="material-symbols-outlined">
-                            subdirectory_arrow_left
-                        </span>
-                    </button>
-                    <button
-                        @click="editor.chain().focus().toggleBold().run()"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        :class="{
-                            'bg-myPrimaryLinkColor text-white':
-                                editor.isActive('bold'),
-                        }"
-                    >
-                        <span class="material-symbols-outlined">
-                            format_bold
-                        </span>
-                    </button>
-                    <button
-                        @click="handleURL"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        :class="{
-                            'bg-myPrimaryLinkColor text-white':
-                                editor.isActive('link'),
-                        }"
-                    >
-                        <span class="material-symbols-outlined"> link </span>
-                    </button>
-                    <button
-                        @click="
-                            editor
-                                .chain()
-                                .focus()
-                                .toggleHeading({ level: 2 })
-                                .run()
-                        "
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        :class="{
-                            'bg-myPrimaryLinkColor text-white': editor.isActive(
-                                'heading',
-                                { level: 2 }
-                            ),
-                        }"
-                    >
-                        <span class="material-symbols-outlined">
-                            format_h2
-                        </span>
-                    </button>
-                    <button
-                        @click="
-                            editor
-                                .chain()
-                                .focus()
-                                .toggleHeading({ level: 3 })
-                                .run()
-                        "
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        :class="{
-                            'bg-myPrimaryLinkColor text-white': editor.isActive(
-                                'heading',
-                                { level: 3 }
-                            ),
-                        }"
-                    >
-                        <span class="material-symbols-outlined">
-                            format_h3
-                        </span>
-                    </button>
-                    <button
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        @click="editor.chain().focus().toggleBulletList().run()"
-                        :class="{
-                            'bg-myPrimaryLinkColor text-white':
-                                editor.isActive('bulletList'),
-                        }"
-                    >
-                        <span class="material-symbols-outlined"> list </span>
-                    </button>
+                    <div class="px-2 flex items-center justify-start gap-2">
+                        <button
+                            @click="editor.chain().focus().setHardBreak().run()"
+                            type="button"
+                            class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        >
+                            <span class="material-symbols-outlined">
+                                keyboard_return
+                            </span>
+                            <span>Line break</span>
+                        </button>
+                    </div>
+
+                    <div class="px-2 flex items-center justify-start gap-2">
+                        <button
+                            @click="editor.chain().focus().toggleBold().run()"
+                            type="button"
+                            class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            :class="{
+                                'bg-myPrimaryLinkColor text-white':
+                                    editor.isActive('bold'),
+                            }"
+                        >
+                            <span class="material-symbols-outlined">
+                                format_bold
+                            </span>
+                            <span>Bold</span>
+                        </button>
+                    </div>
+
+                    <div class="px-2 flex items-center justify-start gap-2">
+                        <button
+                            @click="handleURL"
+                            type="button"
+                            class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            :class="{
+                                'bg-myPrimaryLinkColor text-white':
+                                    editor.isActive('link'),
+                            }"
+                        >
+                            <span class="material-symbols-outlined">
+                                link
+                            </span>
+                            <span>Link</span>
+                        </button>
+                    </div>
+
+                    <div class="px-2 flex items-center justify-start gap-2">
+                        <button
+                            @click="
+                                editor
+                                    .chain()
+                                    .focus()
+                                    .toggleHeading({ level: 2 })
+                                    .run()
+                            "
+                            type="button"
+                            class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            :class="{
+                                'bg-myPrimaryLinkColor text-white':
+                                    editor.isActive('heading', { level: 2 }),
+                            }"
+                        >
+                            <span class="material-symbols-outlined">
+                                titlecase
+                            </span>
+                            <span>Header 2</span>
+                        </button>
+                    </div>
+
+                    <div class="px-2 flex items-center justify-start gap-2">
+                        <button
+                            @click="
+                                editor
+                                    .chain()
+                                    .focus()
+                                    .toggleHeading({ level: 3 })
+                                    .run()
+                            "
+                            type="button"
+                            class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            :class="{
+                                'bg-myPrimaryLinkColor text-white':
+                                    editor.isActive('heading', { level: 3 }),
+                            }"
+                        >
+                            <span class="material-symbols-outlined">
+                                titlecase
+                            </span>
+                            <span>Header 3</span>
+                        </button>
+                    </div>
+
+                    <div class="px-2 flex items-center justify-start gap-2">
+                        <button
+                            @click="
+                                editor.chain().focus().toggleBulletList().run()
+                            "
+                            type="button"
+                            class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            :class="{
+                                'bg-myPrimaryLinkColor text-white':
+                                    editor.isActive('bulletList'),
+                            }"
+                        >
+                            <span class="material-symbols-outlined">
+                                list
+                            </span>
+                            <span>List</span>
+                        </button>
+                    </div>
                 </div>
+
                 <editor-content
                     id="page-builder-editor"
                     :editor="editor"
-                    class="myPrimaryTextArea m-0 rounded-lg border-none lg:min-h-[20rem] lg:max-h-[40rem] md:min-h-[20rem] md:max-h-[20rem] min-h-[20rem] max-h-[20rem] overflow-y-scroll"
+                    class="px-4 pt-6 pb-12 bg-white rounded-lg lg:min-h-[20rem] lg:max-h-[30rem] md:min-h-[20rem] md:max-h-[20rem] min-h-[20rem] max-h-[20rem] overflow-y-auto"
                 />
             </div>
         </div>

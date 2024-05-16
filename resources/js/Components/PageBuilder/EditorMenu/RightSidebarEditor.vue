@@ -77,7 +77,7 @@ const isHeadingElement = computed(() => {
                 </p>
             </div>
 
-            <div class="mb-4 overflow-y-scroll md:pb-24 pb-12">
+            <div class="pl-3 pr-3 mb-4 overflow-y-scroll md:pb-24 pb-12">
                 <div v-show="isHeadingElement === true">
                     <article>
                         <ImageEditor

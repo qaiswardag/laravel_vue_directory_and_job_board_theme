@@ -8,42 +8,33 @@ import TextColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/TextC
 const store = useStore();
 
 const pageBuilder = new PageBuilder(store);
-
-const toggleTipTap = ref(true);
-
-const getShowModalTipTap = computed(() => {
-    return store.getters["pageBuilderState/getShowModalTipTap"];
-});
 </script>
 <template>
     <div>
-        <div
-            class="mt-2 mb-10 blockease-linear duration-200 block px-2 ease-linear"
-        >
+        <div class="blockease-linear duration-200 block ease-linear">
             <template v-if="pageBuilder.selectedElementIsValidText()">
                 <div
-                    class="h-16 py-2 pl-4 pr-4 bg-myPrimaryLightGrayColor rounded-full flex gap-4 flex-shrink-0 justify-start items-center border-gray-100 shadow"
+                    class="border-t border-myPrimaryLightGrayColor flex flex-row justify-between items-center pl-3 pr-3 py-5 cursor-pointer duration-200 hover:bg-myPrimaryLightGrayColor"
                 >
-                    <button
-                        @click="toggleTipTap = !toggleTipTap"
-                        type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    >
-                        <template v-if="toggleTipTap">
+                    <div class="px-2 flex items-center justify-start gap-2">
+                        <button
+                            @click="
+                                store.commit(
+                                    'pageBuilderState/setShowModalTipTap',
+                                    true
+                                )
+                            "
+                            type="button"
+                            class="text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        >
                             <span class="material-symbols-outlined">
-                                collapse_content
+                                edit
                             </span>
-                        </template>
-                        <template v-if="!toggleTipTap">
-                            <span class="material-symbols-outlined">
-                                expand_content
-                            </span>
-                        </template>
-                    </button>
+                            <span>Edit text</span>
+                        </button>
+                    </div>
                 </div>
             </template>
-            <TipTapInput v-if="!getShowModalTipTap && toggleTipTap">
-            </TipTapInput>
         </div>
     </div>
 </template>

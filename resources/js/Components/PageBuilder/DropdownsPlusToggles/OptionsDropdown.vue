@@ -74,6 +74,7 @@ const deleteAllComponents = function () {
     // handle click
     thirdModalButtonFunction.value = function () {
         pageBuilder.deleteAllComponents();
+        store.commit("pageBuilderState/setComponent", null);
         showModalDeleteAllComponents.value = false;
     };
     // end modal
@@ -168,7 +169,7 @@ const settingsSlideOverButton = function () {
                                         visibility
                                     </span>
                                 </div>
-                                Preview page
+                                Preview
                             </div>
                         </div>
                     </MenuItem>
