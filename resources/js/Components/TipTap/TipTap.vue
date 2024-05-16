@@ -14,7 +14,7 @@ const pageBuilder = new PageBuilder(store);
         <div class="blockease-linear duration-200 block ease-linear">
             <template v-if="pageBuilder.selectedElementIsValidText()">
                 <div
-                    class="border-t border-myPrimaryLightGrayColor flex flex-row justify-between items-center pl-3 pr-3 py-5 cursor-pointer duration-200 hover:bg-myPrimaryLightGrayColor"
+                    class="border-t border-myPrimaryLightGrayColor flex flex-row justify-between items-center pl-3 pr-3 py-5 duration-200 hover:bg-myPrimaryLightGrayColor"
                 >
                     <div class="px-2 flex items-center justify-start gap-2">
                         <button
