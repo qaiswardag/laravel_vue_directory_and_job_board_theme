@@ -34,7 +34,10 @@ const firstButton = function () {
 };
 
 const search_query = ref("");
-const categorySelected = ref({ name: "All", id: null });
+const categorySelected = ref(
+    { name: "All", id: null },
+    { name: "HTML Elements", id: null }
+);
 const store = useStore();
 const pageBuilder = new PageBuilder(store);
 
@@ -241,6 +244,28 @@ onMounted(async () => {
                         >
                             All
                         </button>
+                        <button
+                            @click="
+                                handleCategory({
+                                    name: 'HTML Elements',
+                                    id: null,
+                                })
+                            "
+                            class="myPrimaryTag font-medium"
+                            :class="[
+                                {
+                                    'bg-myPrimaryLinkColor text-white':
+                                        categorySelected.name ===
+                                        'HTML Elements',
+                                },
+                            ]"
+                            :disabled="
+                                categorySelected.name === 'HTML Elements'
+                            "
+                        >
+                            HTML Elements
+                        </button>
+
                         <template
                             v-for="category in getFetchedComponents &&
                             getFetchedComponents.fetchedData &&
@@ -328,48 +353,97 @@ onMounted(async () => {
                         class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2 overflow-y-scroll"
                     >
                         <section class="md:w-4/6">
-                            <div
-                                class="overflow-scroll min-h-[25rem] max-h-[25rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full myPrimaryGap px-2 p-4 border border-myPrimaryLightGrayColor rounded"
+                            <template
+                                v-if="
+                                    categorySelected &&
+                                    categorySelected.name !== 'HTML Elements'
+                                "
                             >
                                 <div
-                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded border border-gray-300 lg:py-10 py-8 px-2"
-                                    v-for="component in getFetchedComponents &&
-                                    getFetchedComponents.fetchedData &&
-                                    getFetchedComponents.fetchedData
-                                        .components &&
-                                    Array.isArray(
-                                        getFetchedComponents.fetchedData
-                                            .components.data
-                                    ) &&
-                                    getFetchedComponents.fetchedData.components
-                                        .data"
-                                    :key="component.id"
+                                    class="overflow-scroll min-h-[25rem] max-h-[25rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full myPrimaryGap px-2 p-4 border border-myPrimaryLightGrayColor rounded"
                                 >
-                                    <div class="relative">
-                                        <template
-                                            v-if="
-                                                component &&
-                                                component.cover_images
-                                            "
-                                        >
-                                            <ThumbnailSmallImageSlider
-                                                :images="component.cover_images"
-                                                imageSize="medium_path"
-                                                imageHeight="max-h-72"
-                                                imageWidth="w-full cursor-pointer object-contain bg-white"
-                                                :roundedFull="false"
-                                                :squareButtons="true"
-                                                @firstButtonClick="
-                                                    handleDropComponent(
-                                                        component
-                                                    )
+                                    <div
+                                        class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded border border-gray-300 lg:py-10 py-8 px-2"
+                                        v-for="component in getFetchedComponents &&
+                                        getFetchedComponents.fetchedData &&
+                                        getFetchedComponents.fetchedData
+                                            .components &&
+                                        Array.isArray(
+                                            getFetchedComponents.fetchedData
+                                                .components.data
+                                        ) &&
+                                        getFetchedComponents.fetchedData
+                                            .components.data"
+                                        :key="component.id"
+                                    >
+                                        <div class="relative">
+                                            <template
+                                                v-if="
+                                                    component &&
+                                                    component.cover_images
                                                 "
-                                                :imageClickable="true"
-                                            ></ThumbnailSmallImageSlider>
-                                        </template>
+                                            >
+                                                <ThumbnailSmallImageSlider
+                                                    :images="
+                                                        component.cover_images
+                                                    "
+                                                    imageSize="medium_path"
+                                                    imageHeight="max-h-72"
+                                                    imageWidth="w-full cursor-pointer object-contain bg-white"
+                                                    :roundedFull="false"
+                                                    :squareButtons="true"
+                                                    @firstButtonClick="
+                                                        handleDropComponent(
+                                                            component
+                                                        )
+                                                    "
+                                                    :imageClickable="true"
+                                                ></ThumbnailSmallImageSlider>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </template>
+                            <!-- if category selected is HTML Elements -->
+                            <template
+                                v-if="
+                                    categorySelected &&
+                                    categorySelected.name === 'HTML Elements'
+                                "
+                            >
+                                <div
+                                    class="min-h-[30rem] max-h-[30rem] w-full border rounded py-4 px-2 overflow-scroll"
+                                >
+                                    <div class="flex gap-4 flex-wrap">
+                                        <!-- Unique HTML Component # start -->
+                                        <div
+                                            class="flex justify-left items-center gap-4 text-sm font-medium"
+                                            v-for="helperComponent in componentHelpers"
+                                            :key="helperComponent.title"
+                                        >
+                                            <button
+                                                @click="
+                                                    handleAddHelperComponent(
+                                                        helperComponent
+                                                    )
+                                                "
+                                                type="button"
+                                                class="mySecondaryButton px-6 py-4"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined text-sm"
+                                                >
+                                                    add
+                                                </span>
+                                                <span>
+                                                    {{ helperComponent.title }}
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                            <!-- if category selected is HTML Elements -->
                         </section>
                         <aside
                             class="md:w-2/6 overflow-scroll min-h-[30rem] max-h-[30rem] w-full border rounded py-4 px-2"
@@ -393,7 +467,7 @@ onMounted(async () => {
                                             class="mySecondaryButton"
                                         >
                                             <span
-                                                class="material-symbols-outlined text-[16px]"
+                                                class="material-symbols-outlined text-sm"
                                             >
                                                 add
                                             </span>
