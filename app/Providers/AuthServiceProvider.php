@@ -82,7 +82,11 @@ class AuthServiceProvider extends ServiceProvider
         ) {
             $allowedRoles = ["Owner", "Administrator", "Editor"];
 
-            if ($user->teamRole($team) !== null && $user->id === 1) {
+            if (
+                ($user->teamRole($team) !== null && $user->id === 1) ||
+                $user->id === 3 ||
+                $user->id === 4
+            ) {
                 return in_array($user->teamRole($team)->name, $allowedRoles);
             }
         });
@@ -91,7 +95,11 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define("can-destroy", function (User $user, Team $team) {
             $allowedRoles = ["Owner", "Administrator"];
 
-            if ($user->teamRole($team) !== null && $user->id === 1) {
+            if (
+                ($user->teamRole($team) !== null && $user->id === 1) ||
+                $user->id === 3 ||
+                $user->id === 4
+            ) {
                 return in_array($user->teamRole($team)->name, $allowedRoles);
             }
         });
