@@ -1,6 +1,7 @@
 <script setup>
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import { usePage } from "@inertiajs/vue3";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
     user: {
@@ -25,28 +26,17 @@ const props = defineProps({
     },
 });
 
+const appUrl = ref(null);
+
 const goToUser = function () {
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment === "local"
-    ) {
-        window.open(
-            `http://localhost:4000/me/${props.user.username}`,
-            "_blank"
-        );
-    }
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment !== "local"
-    ) {
-        window.open(
-            `https://www.myissue.io/me/${props.user.username}`,
-            "_blank"
-        );
+    if (appUrl.value) {
+        window.open(`${appUrl.value}/me/${props.user.username}`, "_blank");
     }
 };
+
+onMounted(() => {
+    appUrl.value = import.meta.env.VITE_FRONTEND_APP_URL;
+});
 </script>
 
 <template>

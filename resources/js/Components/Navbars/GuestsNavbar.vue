@@ -1,7 +1,7 @@
 <script setup>
 import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications.vue";
 import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import { usePage } from "@inertiajs/vue3";
 import DynamicMenuModal from "@/Components/Modals/DynamicMenuModal.vue";
@@ -56,22 +56,17 @@ const notificationsSlideOverButton = function () {
     showNotificationsSlideOver.value = false;
 };
 
+const appFrontendUrl = ref(null);
+
 const goToHome = function () {
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment === "local"
-    ) {
-        window.location.href = "http://localhost:4000";
-    }
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment !== "local"
-    ) {
-        window.location.href = "https://www.myissue.io";
+    if (appFrontendUrl.value) {
+        window.location.href = appFrontendUrl.value;
     }
 };
+
+onMounted(() => {
+    appFrontendUrl.value = import.meta.env.VITE_FRONTEND_APP_URL;
+});
 </script>
 <template>
     <SlideOverNotifications

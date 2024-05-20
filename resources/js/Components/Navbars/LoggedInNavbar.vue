@@ -71,22 +71,17 @@ const notificationsSlideOverButton = function () {
     showNotificationsSlideOver.value = false;
 };
 
+const appFrontendUrl = ref(null);
+
 const goToHome = function () {
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment === "local"
-    ) {
-        window.location.href = "http://localhost:4000";
-    }
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment !== "local"
-    ) {
-        window.location.href = "https://www.myissue.io";
+    if (appFrontendUrl.value) {
+        window.location.href = appFrontendUrl.value;
     }
 };
+
+onMounted(() => {
+    appFrontendUrl.value = import.meta.env.VITE_FRONTEND_APP_URL;
+});
 </script>
 <template>
     <SearchAnythingModal

@@ -21,6 +21,7 @@ yarn-error.log
 .DS_Store
 /public/css/app.css
 /public/js/app.js
+.htaccess
 
 /public/uploads/
 /storage/app/public/uploads/*

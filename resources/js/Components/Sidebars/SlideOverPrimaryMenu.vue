@@ -10,6 +10,7 @@ import {
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { ChevronRightIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { usePage } from "@inertiajs/vue3";
+import { onMounted, ref } from "vue";
 
 // props
 const props = defineProps({
@@ -54,54 +55,27 @@ const navigation = [
     },
 ];
 
+const appFrontendUrl = ref(null);
+
 const goToStores = function () {
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment === "local"
-    ) {
-        window.location.href = "http://localhost:4000/listings";
-    }
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment !== "local"
-    ) {
-        window.location.href = "https://www.myissue.io/listings";
+    if (appFrontendUrl.value) {
+        window.location.href = appFrontendUrl.value + "/listings";
     }
 };
 const goToJobs = function () {
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment === "local"
-    ) {
-        window.location.href = "http://localhost:4000/jobs";
-    }
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment !== "local"
-    ) {
-        window.location.href = "https://www.myissue.io/jobs";
+    if (appFrontendUrl.value) {
+        window.location.href = appFrontendUrl.value + "/jobs";
     }
 };
 const goToPosts = function () {
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment === "local"
-    ) {
-        window.location.href = "http://localhost:4000/posts";
-    }
-    if (
-        usePage() &&
-        usePage().props &&
-        usePage().props.environment !== "local"
-    ) {
-        window.location.href = "https://www.myissue.io/posts";
+    if (appFrontendUrl.value) {
+        window.location.href = appFrontendUrl.value + "/posts";
     }
 };
+
+onMounted(() => {
+    appFrontendUrl.value = import.meta.env.VITE_FRONTEND_APP_URL;
+});
 </script>
 
 <template>
