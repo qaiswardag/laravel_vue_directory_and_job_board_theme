@@ -415,24 +415,24 @@
 /* Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: gray;
-}
-
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-    width: 6px;
-    height: 6px; /* Add height for horizontal scrollbar */
+    scrollbar-color: black transparent;
 }
 
 *::-webkit-scrollbar-track {
     background: transparent;
-    border-radius: 4px;
+    border-radius: 2px;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 2px;
+    height: 2px; /* Add height for horizontal scrollbar */
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: gray;
-    border-radius: 4px;
-    border: 2px solid gray;
+    background-color: transparent;
+    border-radius: 2px;
+    border: none;
 }
 
 /* Add overflow-x property to enable horizontal scrollbar */
