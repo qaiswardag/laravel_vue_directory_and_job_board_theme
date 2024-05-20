@@ -37,7 +37,7 @@ class UpdateUserPassword implements UpdatesUserPasswords
             ]
         )->validateWithBag("updatePassword");
 
-        if ($user->id === 2 || $user->id === 3) {
+        if ($user->id === 2) {
             return;
         }
 
