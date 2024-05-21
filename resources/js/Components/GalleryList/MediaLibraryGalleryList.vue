@@ -284,33 +284,6 @@ onMounted(() => {
                             >
                                 <dd
                                     v-if="
-                                        image.id !==
-                                        getCurrentImage?.currentImage
-                                            ?.mediaLibrary?.id
-                                    "
-                                >
-                                    <div
-                                        class="pb-2 flex justify-between items-center text-xs"
-                                    >
-                                        <dt></dt>
-                                        <div
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                        >
-                                            <span
-                                                v-if="
-                                                    getCurrentImage &&
-                                                    !getCurrentImage.isLoading
-                                                "
-                                                class="myMediumIcon material-symbols-outlined"
-                                            >
-                                                more_vert
-                                            </span>
-                                        </div>
-                                    </div>
-                                </dd>
-
-                                <dd
-                                    v-if="
                                         image.id ===
                                         getCurrentImage?.currentImage
                                             ?.mediaLibrary?.id
