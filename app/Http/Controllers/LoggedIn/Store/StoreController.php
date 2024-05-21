@@ -369,7 +369,6 @@ class StoreController extends Controller
             "title" => $title,
             "slug" => $slug,
 
-            "time_zone" => $request->time_zone ?? "Asia/Dubai",
             "use_team_opening_hours" => $request->use_team_opening_hours,
             "use_store_opening_hours" => $request->use_store_opening_hours,
 
@@ -411,6 +410,7 @@ class StoreController extends Controller
 
                 "sunday_opening_time" => $request->sunday_opening_time_store,
                 "sunday_closing_time" => $request->sunday_closing_time_store,
+                "time_zone" => $request->time_zone ?? "Asia/Dubai",
             ]);
         }
 
@@ -452,6 +452,7 @@ class StoreController extends Controller
 
                 "sunday_opening_time" => $request->sunday_opening_time_team,
                 "sunday_closing_time" => $request->sunday_closing_time_team,
+                "time_zone" => $request->time_zone ?? "Asia/Dubai",
             ]);
         }
 
@@ -1094,6 +1095,7 @@ class StoreController extends Controller
 
                 "sunday_opening_time" => $request->sunday_opening_time_team,
                 "sunday_closing_time" => $request->sunday_closing_time_team,
+                "time_zone" => $request->time_zone ?? "Asia/Dubai",
             ]);
         }
 
@@ -1114,7 +1116,6 @@ class StoreController extends Controller
             "title" => $title,
             "slug" => $slug,
 
-            "time_zone" => $request->time_zone ?? "Asia/Dubai",
             "use_team_opening_hours" => $request->use_team_opening_hours,
             "use_store_opening_hours" => $request->use_store_opening_hours,
 
@@ -1163,6 +1164,7 @@ class StoreController extends Controller
 
                 "sunday_opening_time" => $request->sunday_opening_time_store,
                 "sunday_closing_time" => $request->sunday_closing_time_store,
+                "time_zone" => $request->time_zone ?? "Asia/Dubai",
             ]);
         }
 
