@@ -12,20 +12,9 @@ export const vueFetch = function vueFetch() {
     const errors = ref(null);
     const goDirectToError = ref(false);
     const fetchedData = ref(null);
-    const shouldRetry = ref(false);
 
     const additionalTime = ref(null);
     const abortTimeout = ref(null);
-
-    // If loading time have been exceeded. Try fetch again after 2 seconds
-    const retryHandleData = async function (
-        url,
-        fetchOptions,
-        customFetchOptions
-    ) {
-        await delay(4000);
-        handleData(url, fetchOptions, customFetchOptions);
-    };
 
     // Function to handle data fetching and state updates
     const handleData = async function (
@@ -62,11 +51,7 @@ export const vueFetch = function vueFetch() {
                 isError.value = false;
                 goDirectToError.value = true;
 
-                shouldRetry.value = true;
-
-                throw new Error(
-                    "Error 500. Loading time exceeded. Trying again in 2 secondes."
-                );
+                throw new Error("Error 500. Loading time exceeded.");
             }
 
             // Fetch and handle response
@@ -129,10 +114,6 @@ export const vueFetch = function vueFetch() {
                 "'Error 500. The request header must contain 'application/json', 'text/plain' or 'text/html'"
             );
         } catch (err) {
-            // If loading time have been exceeded. Try fetch again after 2 seconds
-            if (shouldRetry.value) {
-                await retryHandleData(url, fetchOptions, customFetchOptions);
-            }
             //
             //
             clearTimeout(timer);
