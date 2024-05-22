@@ -250,7 +250,10 @@ onMounted(() => {
                         {{ title }}
                     </h3>
                 </div>
-                <div @click="firstButton" class="flex-end cursor-pointer">
+                <div
+                    class="h-10 w-10 flex-start cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
+                    @click="firstButton"
+                >
                     <span class="material-symbols-outlined"> close </span>
                 </div>
             </div>

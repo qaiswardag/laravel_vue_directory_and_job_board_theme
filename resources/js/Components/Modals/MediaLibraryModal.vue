@@ -322,7 +322,7 @@ onMounted(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="relative max-h-[65rem] my-2 inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full w-[96%]"
+                            class="relative max-h-[65rem] my-2 inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full w-[96%]"
                         >
                             <div
                                 class="flex gap-2 justify-between items-center border-b border-gray-200 p-4 mb-2"
@@ -360,24 +360,14 @@ onMounted(() => {
                                 </DialogTitle>
 
                                 <div class="flex-end">
-                                    <span
-                                        class="h-6 w-6 text-gray-700 self-center cursor-pointer"
+                                    <div
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
                                         @click="firstButton"
-                                        ><svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor"
-                                            class="w-6 h-6"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </span>
+                                    >
+                                        <span class="material-symbols-outlined">
+                                            close
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
