@@ -14,8 +14,6 @@ export const vueFetch = function vueFetch() {
     const fetchedData = ref(null);
     const shouldRetry = ref(false);
 
-    // Initializing fetch operation control parameters
-    const controller = new AbortController();
     const additionalTime = ref(null);
     const abortTimeout = ref(null);
 
@@ -25,7 +23,7 @@ export const vueFetch = function vueFetch() {
         fetchOptions,
         customFetchOptions
     ) {
-        await delay(2000);
+        await delay(4000);
         handleData(url, fetchOptions, customFetchOptions);
     };
 
@@ -42,6 +40,9 @@ export const vueFetch = function vueFetch() {
         // Provide default values for abortTimeout and additionalTime
         if (additionalTime.value === undefined) additionalTime.value = 0;
         if (abortTimeout.value === undefined) abortTimeout.value = 4000;
+
+        // Initializing fetch operation control parameters
+        const controller = new AbortController();
 
         // Abort fetch operation after the specified timeout
         const timer = setTimeout(() => {
