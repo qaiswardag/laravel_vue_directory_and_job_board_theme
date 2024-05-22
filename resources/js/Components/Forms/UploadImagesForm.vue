@@ -166,21 +166,20 @@ onMounted(() => {
     <form @submit.prevent="submit" enctype="multipart/form-data">
         <div class="myInputGroup">
             <div class="col-span-3 mb-4">
-                <label class="block text-sm font-normal text-gray-700 pt-4"
-                    >Upload multiple images</label
-                >
-
                 <div class="relativeflex flex-col items-center justify-center">
                     <InputLabel
-                        class="myPrimaryParagraph rounded text-center w-full inset-0 block text-myPrimaryLinkColor font-medium text-base cursor-pointer pt-6 pb-6 px-4 border border-dashed border-gray-400"
+                        class="myPrimaryParagraph rounded-full bg-myPrimaryLightGrayColor text-center w-full inset-0 block text-base cursor-pointer pt-6 pb-6 px-4"
                         for="images"
-                        value="Click & Upload multiple images"
+                        value="Click & Upload multiple images.."
                     >
-                        <p
-                            class="myPrimaryParagraph text-sm pt-2 leading-5 text-gray-600"
+                        <div
+                            class="myPrimaryButton mt-4 hover:shadow hover:outline hover:outline-myPrimaryLinkColor hover:outline-offset-2 gap-3"
                         >
-                            PNG, JPG and more up to 2MB
-                        </p>
+                            <span class="material-symbols-outlined">
+                                cloud_upload
+                            </span>
+                            <span> PNG, JPG, up to 2MB </span>
+                        </div>
                     </InputLabel>
 
                     <input
@@ -189,7 +188,7 @@ onMounted(() => {
                         id="images"
                         type="file"
                         multiple
-                        class="sr-only myPrimaryLinkColor"
+                        class="sr-only"
                     />
                 </div>
             </div>
