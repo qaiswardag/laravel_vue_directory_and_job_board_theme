@@ -420,18 +420,18 @@
 
 *::-webkit-scrollbar-track {
     background: transparent;
-    border-radius: 2px;
+    border-radius: 25px;
 }
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-    width: 2px;
-    height: 2px; /* Add height for horizontal scrollbar */
+    width: 6px;
+    height: 6px; /* Add height for horizontal scrollbar */
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    border-radius: 2px;
+    background-color: black;
+    border-radius: 25px;
     border: none;
 }
 
