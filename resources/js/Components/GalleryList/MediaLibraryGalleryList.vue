@@ -233,7 +233,7 @@ onMounted(() => {
         "
     >
         <div
-            class="border p-2 rounded border-gray-200 overflow-y-scroll md:min-h-[24rem] md:max-h-[24rem] min-h-[15rem] max-h-[15rem]"
+            class="border p-2 rounded-lg border-gray-200 overflow-y-scroll md:min-h-[24rem] md:max-h-[24rem] min-h-[15rem] max-h-[15rem]"
         >
             <div v-if="getCurrentMedia?.fetchedMedia?.total_results === 0">
                 <div class="pt-6 py-b px-4">
@@ -259,7 +259,7 @@ onMounted(() => {
                 "
             >
                 <div
-                    class="grid lg:grid-cols-8 md:grid-cols-6 grid-cols-2 myPrimaryGap"
+                    class="grid lg:grid-cols-6 md:grid-cols-6 grid-cols-2 myPrimaryGap"
                 >
                     <template
                         v-for="image in Array.isArray(
@@ -269,11 +269,11 @@ onMounted(() => {
                     >
                         <div
                             @click="handleImageClick(image.id)"
-                            class="bg-gray-50 px-0 pb-2 cursor-pointer rounded-sm"
+                            class="px-0 pb-2 cursor-pointer rounded border border-myPrimaryLightMediumGrayColor"
                         >
                             <div class="flex-shrink-0">
                                 <img
-                                    class="group block object-cover aspect-auto overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
+                                    class="group block object-cover aspect-auto overflow-hidden cursor-pointer rounded-t"
                                     :src="`/storage/uploads/${image?.medium_path}`"
                                     alt="image"
                                 />

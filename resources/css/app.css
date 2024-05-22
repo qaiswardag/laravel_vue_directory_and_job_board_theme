@@ -294,7 +294,7 @@
     }
 
     .myInputsOrganization {
-        @apply px-4 pt-4 pb-4 bg-white rounded border border-gray-200;
+        @apply px-4 pt-4 pb-4 bg-white rounded-lg border border-gray-200;
     }
 
     .myPrimaryFormOrganizationHeaderDescriptionSection {

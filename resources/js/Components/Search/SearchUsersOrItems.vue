@@ -435,7 +435,7 @@ onMounted(() => {
                                         getCurrentItems.fetchedData.items.data
                                             .length !== 0
                                     "
-                                    class="min-w-full w-max rounded divide-y divide-gray-200 flex flex-col gap-2 px-2 p-4 border border-myPrimaryLightGrayColor"
+                                    class="min-w-full w-max rounded-lg divide-y divide-gray-200 flex flex-col gap-2 px-2 p-4 border border-myPrimaryLightGrayColor"
                                 >
                                     <div
                                         v-for="item in getCurrentItems
@@ -750,7 +750,7 @@ onMounted(() => {
                 <aside
                     v-if="getCurrentItems && !getCurrentItems.isError"
                     aria-label="sidebar"
-                    class="h-full md:max-h-[38.5rem] max-h-[12rem] md:w-3/5 w-full pl-2 border border-gray-200 overflow-y-scroll"
+                    class="rounded-lg h-full md:max-h-[38.5rem] max-h-[12rem] md:w-3/5 w-full pl-2 border border-gray-200 overflow-y-scroll"
                 >
                     <div
                         v-if="

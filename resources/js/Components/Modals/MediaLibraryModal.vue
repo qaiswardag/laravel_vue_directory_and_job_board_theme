@@ -360,13 +360,17 @@ onMounted(() => {
                                 </DialogTitle>
 
                                 <div class="flex-end">
-                                    <div
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
-                                        @click="firstButton"
-                                    >
-                                        <span class="material-symbols-outlined">
-                                            close
-                                        </span>
+                                    <div class="flex-end">
+                                        <div
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
+                                            @click="firstButton"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined"
+                                            >
+                                                close
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -509,7 +513,7 @@ onMounted(() => {
                                             class="md:w-72"
                                         >
                                             <div
-                                                class="rounded md:w-72 md:min-h-[42.5rem] md:max-h-[42.5rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
+                                                class="rounded-lg md:w-72 md:min-h-[42.5rem] md:max-h-[42.5rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
                                             >
                                                 <div
                                                     v-if="
@@ -841,7 +845,7 @@ onMounted(() => {
                                         <aside
                                             v-if="selected === 'Upload'"
                                             aria-label="sidebar"
-                                            class="rounded md:w-72 md:min-h-[42.5rem] md:max-h-[42.5rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
+                                            class="rounded-lg md:w-72 md:min-h-[42.5rem] md:max-h-[42.5rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
                                         >
                                             <div
                                                 v-if="
@@ -867,7 +871,7 @@ onMounted(() => {
                                                     :src="
                                                         getCurrentPreviewImage.preview_url
                                                     "
-                                                    class="mx-auto block h-72 w-full rounded-t-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                    class="mx-auto block h-72 w-full rounded-t object-cover object-center cursor-pointer hover:shadow-sm"
                                                     alt="image"
                                                 />
 
