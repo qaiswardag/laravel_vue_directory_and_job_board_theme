@@ -285,7 +285,7 @@ const handleClearForm = function () {
     // set modal standards
     typeModal.value = "warning";
     gridColumnModal.value = 2;
-    titleModal.value = `Are you certain that you want to clear the form?`;
+    titleModal.value = `Clear the form?`;
     descriptionModal.value =
         "Are you certain that you want to clear the form? The form will be cleared.";
     firstButtonModal.value = "Close";
@@ -876,9 +876,9 @@ const categoriesSorted = computed(() => {
                     <button
                         type="button"
                         @click="handleClearForm"
-                        class="myPrimaryDeleteButton"
+                        class="text-myPrimaryErrorColor italic text-xs"
                     >
-                        Clear
+                        Clear form
                     </button>
                 </template>
                 <SubmitButton :disabled="postForm.processing" buttonText="Save">
