@@ -363,7 +363,7 @@ onMounted(async () => {
                                 "
                             >
                                 <div
-                                    class="overflow-scroll min-h-[25rem] max-h-[25rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full myPrimaryGap px-2 p-4 border border-myPrimaryLightGrayColor rounded"
+                                    class="overflow-scroll min-h-[25rem] max-h-[25rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full myPrimaryGap px-2 p-4 border border-myPrimaryLightGrayColor rounded-lg"
                                 >
                                     <div
                                         class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded border border-gray-300 lg:py-10 py-8 px-2"
@@ -449,7 +449,7 @@ onMounted(async () => {
                             <!-- if category selected is HTML Elements -->
                         </section>
                         <aside
-                            class="md:w-2/6 overflow-scroll min-h-[30rem] max-h-[30rem] w-full border rounded py-4 px-2"
+                            class="md:w-2/6 overflow-scroll min-h-[30rem] max-h-[30rem] w-full border rounded-lg py-4 px-2"
                         >
                             <div class="flex gap-4 flex-wrap w-full">
                                 <!-- Unique HTML Component # start -->
