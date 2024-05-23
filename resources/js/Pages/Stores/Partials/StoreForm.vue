@@ -3143,6 +3143,13 @@ const pageBuilder = new PageBuilder(store);
                         Clear form
                     </button>
                 </template>
+                <button
+                    type="button"
+                    @click="handlePageBuilder"
+                    class="mySecondaryButton"
+                >
+                    Manage Content
+                </button>
                 <SubmitButton :disabled="postForm.processing" buttonText="Save">
                 </SubmitButton>
             </div>
