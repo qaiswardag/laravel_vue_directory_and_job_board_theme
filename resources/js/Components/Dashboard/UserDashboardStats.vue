@@ -137,7 +137,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
+                            class="mySecondaryButton"
                         >
                             Latest Company Members
                         </Link>
@@ -190,7 +190,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
+                            class="mySecondaryButton"
                         >
                             Latest Company Images
                         </Link>
@@ -286,7 +286,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
+                            class="mySecondaryButton"
                         >
                             Latest Jobs
                         </Link>
@@ -340,7 +340,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
+                            class="mySecondaryButton"
                         >
                             Latest Listings
                         </Link>
@@ -395,7 +395,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
+                            class="mySecondaryButton"
                         >
                             Latest Posts
                         </Link>
@@ -441,11 +441,7 @@ onMounted(() => {
                     class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
                     <div class="border-b border-gray-200 mb-8 pb-2">
-                        <div
-                            class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
-                        >
-                            Stats
-                        </div>
+                        <div class="mySecondaryButton">Stats</div>
                     </div>
 
                     <ChartDefault></ChartDefault>

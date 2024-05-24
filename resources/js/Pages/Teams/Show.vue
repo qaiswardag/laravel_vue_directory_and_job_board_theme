@@ -44,11 +44,9 @@ const breadcrumbsLinks = [
             </div>
             <!-- Company owner box # end -->
             <div class="myPrimarySection">
-                <div
-                    class="divide-y divide-gray-200 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
-                >
+                <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
                     <div
-                        class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor cursor-pointer"
+                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -85,18 +83,10 @@ const breadcrumbsLinks = [
                                 company settings.
                             </p>
                         </div>
-                        <span
-                            class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
-                            aria-hidden="true"
-                        >
-                            <span class="material-symbols-outlined">
-                                arrow_forward
-                            </span>
-                        </span>
                     </div>
 
                     <div
-                        class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor cursor-pointer"
+                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -124,18 +114,10 @@ const breadcrumbsLinks = [
                                 Browser Sessions and Profile deletion
                             </p>
                         </div>
-                        <span
-                            class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
-                            aria-hidden="true"
-                        >
-                            <span class="material-symbols-outlined">
-                                arrow_forward
-                            </span>
-                        </span>
                     </div>
                     <!-- password -->
                     <div
-                        class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor cursor-pointer"
+                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -167,22 +149,12 @@ const breadcrumbsLinks = [
                                 company settings.
                             </p>
                         </div>
-                        <span
-                            class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
-                            aria-hidden="true"
-                        >
-                            <span class="material-symbols-outlined">
-                                arrow_forward
-                            </span>
-                        </span>
                     </div>
                 </div>
                 <SectionBorder description="Companies"></SectionBorder>
-                <div
-                    class="divide-y divide-gray-200 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
-                >
+                <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
                     <div
-                        class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor cursor-pointer"
+                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -214,14 +186,6 @@ const breadcrumbsLinks = [
                                 company settings.
                             </p>
                         </div>
-                        <span
-                            class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
-                            aria-hidden="true"
-                        >
-                            <span class="material-symbols-outlined">
-                                arrow_forward
-                            </span>
-                        </span>
                     </div>
                 </div>
             </div>
