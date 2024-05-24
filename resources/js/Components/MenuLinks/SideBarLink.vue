@@ -15,7 +15,7 @@ const classes = computed(() => {
 <template>
     <Link
         :href="href"
-        class="text-myPrimaryDarkGrayColor group flex items-center px-2 py-4 font-medium text-base gap-3 rounded"
+        class="text-myPrimaryDarkGrayColor group flex items-center px-2 py-4 font-medium text-base gap-3 rounded-full hover:bg-myPrimaryLightGrayColor"
         :class="classes"
     >
         <slot />

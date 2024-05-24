@@ -83,7 +83,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryParagraph {
-        @apply font-normal text-gray-700 lg:text-base text-sm;
+        @apply font-normal text-myPrimaryDarkGrayColor lg:text-base text-sm;
     }
 
     .myPrimaryParagraphError {
@@ -141,12 +141,12 @@
         @apply lg:flex lg:gap-2 lg:items-center focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 font-medium;
     }
     .myRadio {
-        @apply w-5 h-5 text-myPrimaryBrandColor bg-myPrimaryLightGrayColor border-gray-300 focus:ring-myPrimaryBrandColor dark:focus:ring-myPrimaryBrandColor dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+        @apply w-5 h-5 text-myPrimaryBrandColor bg-myPrimaryLightGrayColor border-gray-300 focus:ring-myPrimaryBrandColor dark:focus:ring-myPrimaryBrandColor dark:ring-offset-gray-800 focus:ring-2 dark:bg-myPrimaryDarkGrayColor dark:border-gray-600;
     }
 
     .myPrimaryButton {
         @apply min-h-[3rem] lg:px-4 lg:py-3 px-3 py-3
-        sm:text-sm text-xs whitespace-nowrap break-keep font-medium inline-flex gap-1 items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
+        sm:text-sm text-xs whitespace-nowrap break-keep font-medium inline-flex gap-1 items-center justify-center rounded-full border border-transparent bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryLinkColor;
     }
@@ -341,7 +341,7 @@
     }
 
     .myPrimaryTextArea {
-        @apply block w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
+        @apply block w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:border-transparent;
     }
 
     .myPrimaryCheckbox {

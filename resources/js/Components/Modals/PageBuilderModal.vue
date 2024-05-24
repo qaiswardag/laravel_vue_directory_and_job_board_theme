@@ -214,39 +214,37 @@ onMounted(() => {
                                 "
                                 class="px-4 h-[10vh] flex items-center justify-between border-b border-gray-200 bg-white"
                             >
-                                <div class="flex justify-start myPrimaryGap">
-                                    <div
-                                        class="flex justify-start myPrimaryGap"
+                                <div
+                                    class="flex justify-start divide-x divide-gray-200 myPrimaryGap"
+                                >
+                                    <button
+                                        class="myPrimaryButton lg:text-sm text-[12px] lg:py-3 py-3 min-h-2"
+                                        @click="secondButton"
+                                        type="button"
                                     >
-                                        <button
-                                            class="myPrimaryButton lg:text-xs text-[10px] lg:py-3 py-2 min-h-2"
-                                            @click="secondButton"
-                                            type="button"
+                                        <span
+                                            class="material-symbols-outlined text-[18px]"
                                         >
-                                            <span
-                                                class="material-symbols-outlined text-[16px]"
-                                            >
-                                                done
-                                            </span>
-                                            Save & Exit
-                                        </button>
-                                        <button
-                                            v-if="
-                                                updateOrCreate === 'update' &&
-                                                hideDraftButton
-                                            "
-                                            class="mySecondaryButton lg:text-xs text-[10px] lg:py-3 py-2 min-h-2"
-                                            @click="handleDraftForUpdate"
-                                            type="button"
+                                            save
+                                        </span>
+                                        Save & Exit
+                                    </button>
+                                    <button
+                                        v-if="
+                                            updateOrCreate === 'update' &&
+                                            hideDraftButton
+                                        "
+                                        class="mySecondaryButton lg:text-sm text-[12px] lg:py-3 py-3 min-h-2"
+                                        @click="handleDraftForUpdate"
+                                        type="button"
+                                    >
+                                        <span
+                                            class="material-symbols-outlined text-[18px]"
                                         >
-                                            <span
-                                                class="material-symbols-outlined text-[16px]"
-                                            >
-                                                settings_backup_restore
-                                            </span>
-                                            Recreate Draft
-                                        </button>
-                                    </div>
+                                            settings_backup_restore
+                                        </span>
+                                        Use Draft
+                                    </button>
                                 </div>
                                 <button
                                     type="button"
