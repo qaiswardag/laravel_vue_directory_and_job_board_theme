@@ -180,7 +180,7 @@ import {
 
         <SideBarLink
             :href="route('dashboard')"
-            :active="route().current('dashboard')"
+            :active="route().current('dashboard') || route().current('home')"
         >
             <span class="material-symbols-outlined"> play_shapes </span>
 
