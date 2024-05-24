@@ -8,7 +8,7 @@ const props = defineProps({
 });
 
 const classes = computed(() => {
-    return props.active ? "bg-myPrimaryLightMediumGrayColor" : "";
+    return props.active ? "bg-myPrimaryLightGrayColor" : "";
 });
 </script>
 
