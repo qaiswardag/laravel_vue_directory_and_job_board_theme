@@ -1166,7 +1166,9 @@ const handleSwitchTeam = function (team) {
                     <p class="py-4">Company added</p>
 
                     <template v-if="formCharge.subscription_team">
-                        <div class="p-2 border border-myPrimaryLightGrayColor">
+                        <div
+                            class="p-2 border border-myPrimaryLightGrayColor rounded-lg"
+                        >
                             <div
                                 @click="handleShowAllTeams"
                                 class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max cursor-pointer"

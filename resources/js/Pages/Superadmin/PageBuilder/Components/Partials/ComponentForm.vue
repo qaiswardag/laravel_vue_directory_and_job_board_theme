@@ -639,7 +639,7 @@ const categoriesSorted = computed(() => {
                             postForm.categories &&
                             postForm.categories.length !== 0
                         "
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
                     >
                         <div
                             v-for="category in Array.isArray(
@@ -759,7 +759,7 @@ const categoriesSorted = computed(() => {
                             Array.isArray(postForm?.cover_image) &&
                             postForm.cover_image?.length !== 0
                         "
-                        class="p-2 border border-myPrimaryLightGrayColor"
+                        class="p-2 border border-myPrimaryLightGrayColor rounded-lg"
                     >
                         <div
                             class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"

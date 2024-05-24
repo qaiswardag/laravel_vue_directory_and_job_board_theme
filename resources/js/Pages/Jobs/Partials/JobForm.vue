@@ -1618,7 +1618,7 @@ const pageBuilder = new PageBuilder(store);
                             Array.isArray(postForm?.cover_image) &&
                             postForm.cover_image?.length !== 0
                         "
-                        class="p-2 border border-myPrimaryLightGrayColor"
+                        class="p-2 border border-myPrimaryLightGrayColor rounded-lg"
                     >
                         <div
                             class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
@@ -1788,7 +1788,7 @@ const pageBuilder = new PageBuilder(store);
                             postForm.countries &&
                             postForm.countries?.length !== 0
                         "
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
                     >
                         <div
                             v-for="country in Array.isArray(countriesSorted) &&
@@ -1888,7 +1888,7 @@ const pageBuilder = new PageBuilder(store);
 
                     <div
                         v-if="postForm.states && postForm.states?.length !== 0"
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
                     >
                         <div
                             v-for="state in Array.isArray(statesSorted) &&
@@ -1999,7 +1999,7 @@ const pageBuilder = new PageBuilder(store);
                             postForm.categories &&
                             postForm.categories?.length !== 0
                         "
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
                     >
                         <div
                             v-for="category in Array.isArray(
@@ -2101,7 +2101,7 @@ const pageBuilder = new PageBuilder(store);
 
                     <div
                         v-if="postForm.types && postForm.types?.length !== 0"
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
                     >
                         <div
                             v-for="jobType in Array.isArray(jobTypesSorted) &&
@@ -2300,7 +2300,7 @@ const pageBuilder = new PageBuilder(store);
                             v-if="
                                 postForm.author && postForm.author?.length !== 0
                             "
-                            class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                            class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
                         >
                             <div
                                 v-for="user in Array.isArray(authorSorted) &&

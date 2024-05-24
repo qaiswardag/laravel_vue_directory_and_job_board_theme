@@ -865,7 +865,7 @@ onMounted(() => {
                             Array.isArray(form?.user_image) &&
                             form.user_image?.length !== 0
                         "
-                        class="p-2 border border-myPrimaryLightGrayColor"
+                        class="p-2 border border-myPrimaryLightGrayColor rounded-lg"
                     >
                         <div
                             class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
