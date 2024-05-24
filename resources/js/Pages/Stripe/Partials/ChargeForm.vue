@@ -1224,55 +1224,50 @@ const handleSwitchTeam = function (team) {
 
                 <div class="flex flex-col gap-6">
                     <div v-for="product in products" :key="product.id">
-                        <div class="px-2 py-8 rounded border border-gray-200">
+                        <div
+                            class="px-2 py-8 rounded-lg border border-gray-200"
+                        >
                             <div>
                                 <div class="flex items-center">
                                     <div class="flex flex-col text-sm">
-                                        <div
-                                            as="span"
-                                            class="font-medium text-gray-900"
-                                        >
-                                            <p
+                                        <div as="span">
+                                            <span
                                                 :id="product.id"
-                                                class="myQuaternaryHeader"
+                                                class="myPrimaryParagraph font-medium"
                                             >
                                                 {{ product.name }}
-                                            </p>
+                                            </span>
 
                                             <div
-                                                class="mt-2 flex items-baseline gap-x-1"
+                                                class="mt-2 flex items-baseline gap-x-1 myPrimaryParagraph"
                                             >
-                                                <span
-                                                    class="text-2xl font-medium tracking-tight text-gray-900"
-                                                    >{{ product.price }}</span
-                                                >
-                                                <span
-                                                    class="text-sm font-medium leading-6 text-gray-600"
-                                                    >{{
-                                                        product.frequencies
-                                                    }}</span
-                                                >
+                                                <span class="">{{
+                                                    product.price
+                                                }}</span>
+                                                <span class="">{{
+                                                    product.frequencies
+                                                }}</span>
                                             </div>
                                             <template
                                                 v-if="!product.dynamic_product"
                                             >
-                                                <p>
+                                                <span class="mt-2 block">
                                                     Total: ${{
                                                         product.totalPrice
                                                     }}
-                                                </p>
+                                                </span>
                                             </template>
                                             <template
                                                 v-if="product.dynamic_product"
                                             >
-                                                <p>
+                                                <span class="mt-1 block">
                                                     Total: ${{
                                                         fullDynamicPrice
                                                     }}
-                                                </p>
+                                                </span>
                                             </template>
                                             <div
-                                                class="block text-[10px] leading-6 text-gray-600 italic mt-1"
+                                                class="block italic mt-2 text-xs"
                                             >
                                                 {{ product.billed }}
                                             </div>

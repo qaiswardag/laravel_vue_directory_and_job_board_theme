@@ -320,7 +320,7 @@
     }
 
     .myPrimaryFormFocus {
-        @apply focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:ring-offset-2 focus:border focus:border-gray-200;
+        @apply focus:ring-2 focus:ring-myPrimaryLinkColor  focus:ring-offset-2 focus:border focus:border-gray-200;
     }
     .myPrimaryInput {
         @apply block pr-8 text-left bg-white w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-300  focus:bg-white rounded-md py-3 px-3  border border-gray-300 shadow-sm focus:outline-none myPrimaryFormFocus h-full;

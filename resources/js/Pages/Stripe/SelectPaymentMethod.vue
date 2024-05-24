@@ -293,7 +293,7 @@ onMounted(() => {
                 v-for="paymentMethod in fetchedPaymentMethods.paymentMethods"
                 :key="paymentMethod.id"
             >
-                <div class="px-2 py-8 rounded border border-gray-200">
+                <div class="px-2 py-8 rounded-lg border border-gray-200">
                     <div>
                         <div class="flex items-center">
                             <span class="flex flex-col text-sm">
@@ -307,7 +307,7 @@ onMounted(() => {
                                 </div>
                                 <div
                                     as="span"
-                                    class="text-gray-500 flex flex-col gap-2"
+                                    class="myPrimaryParagraph text-xs flex flex-col gap-2"
                                 >
                                     <div>
                                         **** **** ****
