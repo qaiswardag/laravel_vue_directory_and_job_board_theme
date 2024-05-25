@@ -122,19 +122,14 @@ const handleMediaLibrary = function (imageID) {
 
                 <div>
                     <div class="col-span-full">
-                        <label class="myQuaternaryHeader"
-                            >Manage or upload new images
-                        </label>
                         <div
-                            class="mt-2 mb-6 flex justify-center rounded-lg border border-dashed border-gray-400 px-6 py-10"
+                            class="myPrimaryParagraph rounded-full bg-myPrimaryLightGrayColor text-center w-full inset-0 text-base pt-6 pb-6 px-2 flex items-center justify-center"
                         >
                             <div class="text-center">
-                                <div
-                                    class="mt-4 flex text-sm leading-6 text-gray-800"
-                                >
+                                <div class="my-8">
                                     <PrimaryButton
                                         @click="handleMediaLibrary"
-                                        class="mb-4 myPrimaryButton gap-2 items-center"
+                                        class="myPrimaryButton gap-3 py-4"
                                     >
                                         <span class="material-symbols-outlined">
                                             cloud_upload
@@ -156,7 +151,7 @@ const handleMediaLibrary = function (imageID) {
                                     v-for="file in images && images.data"
                                     :key="file.id"
                                     @click="handleMediaLibrary(file.id)"
-                                    class="rounded pb-2 cursor-pointer bg-myPrimaryLightGrayColor"
+                                    class="pb-2 cursor-pointer border border-myPrimaryLightMediumGrayColor rounded-lg"
                                 >
                                     <div
                                         class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-myPrimaryLightGrayColor"

@@ -311,6 +311,8 @@ onMounted(async () => {
                     <!-- Categories # End -->
                     <div
                         v-if="
+                            categorySelected &&
+                            categorySelected.name !== 'HTML Elements' &&
                             getFetchedComponents &&
                             getFetchedComponents.fetchedData &&
                             getFetchedComponents.fetchedData.components
