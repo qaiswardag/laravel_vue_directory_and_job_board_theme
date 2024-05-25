@@ -46,7 +46,7 @@ const breadcrumbsLinks = [
             <div class="myPrimarySection">
                 <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -86,7 +86,7 @@ const breadcrumbsLinks = [
                     </div>
 
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -117,7 +117,7 @@ const breadcrumbsLinks = [
                     </div>
                     <!-- password -->
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -154,7 +154,7 @@ const breadcrumbsLinks = [
                 <SectionBorder description="Companies"></SectionBorder>
                 <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span

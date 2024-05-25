@@ -112,7 +112,7 @@ const updatePaymentMethod = function () {
             <div class="myPrimarySection">
                 <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -147,7 +147,7 @@ const updatePaymentMethod = function () {
                     </div>
 
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -178,7 +178,7 @@ const updatePaymentMethod = function () {
                     </div>
                     <!-- password -->
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -218,7 +218,7 @@ const updatePaymentMethod = function () {
                 <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
                     <!-- Payments and invoices # start -->
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -254,7 +254,7 @@ const updatePaymentMethod = function () {
                     <!-- Payments and invoices # end -->
                     <!-- subscriptions # start -->
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -298,7 +298,7 @@ const updatePaymentMethod = function () {
                     <!-- Update payment methods # start -->
                     <div
                         v-if="intent"
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
@@ -335,7 +335,7 @@ const updatePaymentMethod = function () {
                     <!-- Update payment methods # end -->
                     <!-- Create new Subscription # start -->
                     <div
-                        class="relative group py-6 px-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryLinkColor cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
+                        class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
                         <div>
                             <span
