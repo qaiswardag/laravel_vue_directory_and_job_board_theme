@@ -75,7 +75,7 @@ class SuperadminSwitchTeamController extends Controller
 
         if ($user->id === 2) {
             return Inertia::render("Error", [
-                "customError" => "You cannot switch Company in demo mode.",
+                "customError" => "Demo mode.",
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
