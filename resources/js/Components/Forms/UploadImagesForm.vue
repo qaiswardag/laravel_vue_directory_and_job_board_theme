@@ -168,17 +168,22 @@ onMounted(() => {
             <div class="col-span-3 mb-4">
                 <div class="relativeflex flex-col items-center justify-center">
                     <InputLabel
-                        class="myPrimaryParagraph rounded-full bg-myPrimaryLightGrayColor text-center w-full inset-0 block text-base cursor-pointer pt-6 pb-6 px-4"
+                        class="myPrimaryParagraph text-center w-full inset-0 block text-base cursor-pointer"
                         for="images"
-                        value="Click & Upload multiple images.."
                     >
                         <div
-                            class="myPrimaryButton mt-4 hover:shadow hover:outline hover:outline-myPrimaryLinkColor hover:outline-offset-2 gap-3"
+                            class="p-2 rounded-full border-2 border-dashed border-myPrimaryLinkColor hover:border-2 hover:border-opacity-50 hover:border-dashed hover:border-myPrimaryLinkColor"
                         >
-                            <span class="material-symbols-outlined">
-                                cloud_upload
-                            </span>
-                            <span> PNG, JPG, up to 2MB </span>
+                            <div
+                                class="myPrimaryParagraph rounded-full bg-myPrimaryLightGrayColor text-center w-full inset-0 text-base pt-6 pb-6 px-2 flex items-center justify-center p-2"
+                            >
+                                <div class="myPrimaryButton hover:shadow gap-3">
+                                    <span class="material-symbols-outlined">
+                                        cloud_upload
+                                    </span>
+                                    <span> PNG, JPG, up to 2MB </span>
+                                </div>
+                            </div>
                         </div>
                     </InputLabel>
 

@@ -123,19 +123,25 @@ const handleMediaLibrary = function (imageID) {
                 <div>
                     <div class="col-span-full">
                         <div
-                            class="myPrimaryParagraph rounded-full bg-myPrimaryLightGrayColor text-center w-full inset-0 text-base pt-6 pb-6 px-2 flex items-center justify-center"
+                            class="p-2 rounded-full border-2 border-dashed border-myPrimaryLinkColor hover:border-2 hover:border-opacity-50 hover:border-dashed hover:border-myPrimaryLinkColor"
                         >
-                            <div class="text-center">
-                                <div class="my-8">
-                                    <PrimaryButton
-                                        @click="handleMediaLibrary"
-                                        class="myPrimaryButton gap-3 py-4"
-                                    >
-                                        <span class="material-symbols-outlined">
-                                            cloud_upload
-                                        </span>
-                                        Manage & Upload Images
-                                    </PrimaryButton>
+                            <div
+                                class="myPrimaryParagraph rounded-full bg-myPrimaryLightGrayColor text-center w-full inset-0 text-base pt-6 pb-6 px-2 flex items-center justify-center p-2"
+                            >
+                                <div class="text-center">
+                                    <div class="my-8">
+                                        <PrimaryButton
+                                            @click="handleMediaLibrary"
+                                            class="myPrimaryButton gap-3 py-4"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined"
+                                            >
+                                                cloud_upload
+                                            </span>
+                                            Manage & Upload Images
+                                        </PrimaryButton>
+                                    </div>
                                 </div>
                             </div>
                         </div>
