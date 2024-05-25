@@ -48,6 +48,14 @@ class TeamController extends Controller
      */
     public function store(StoreNewTeamRequest $request)
     {
+        $user = Auth::user();
+        if ($user->id === 2) {
+            return Inertia::render("Error", [
+                "customError" => "You cannot switch Company in demo mode.",
+                "status" => 403, // HTTP status code for the response.
+            ]);
+        }
+
         $creator = app(CreatesTeams::class);
 
         $team = $creator->create($request->user(), $request->all());

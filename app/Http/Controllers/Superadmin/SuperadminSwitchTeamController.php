@@ -8,6 +8,7 @@ use App\Models\TeamUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 
 class SuperadminSwitchTeamController extends Controller
 {
@@ -71,6 +72,13 @@ class SuperadminSwitchTeamController extends Controller
         }
 
         $user = Auth::user();
+
+        if ($user->id === 2) {
+            return Inertia::render("Error", [
+                "customError" => "You cannot switch Company in demo mode.",
+                "status" => 403, // HTTP status code for the response.
+            ]);
+        }
 
         $teamId = $request->team_id;
 
