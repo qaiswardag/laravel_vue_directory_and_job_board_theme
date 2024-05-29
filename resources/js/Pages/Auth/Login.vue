@@ -19,7 +19,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: "jd@myissue.io",
+    email: "jd@myissue.dk",
     password: "123456",
     remember: true,
 });
@@ -126,7 +126,7 @@ const submit = () => {
                                         Login with the following credentials:
                                     </p>
                                     <p class="myPrimaryParagraph text-xs">
-                                        Email: jd@myissue.io
+                                        Email: jd@myissue.dk
                                     </p>
                                     <p class="myPrimaryParagraph text-xs">
                                         Password: 123456

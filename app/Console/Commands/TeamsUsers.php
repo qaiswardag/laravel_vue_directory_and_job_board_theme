@@ -51,7 +51,7 @@ class TeamsUsers extends Command
                 "id" => 1,
                 "first_name" => "Qais",
                 "last_name" => "Wardag",
-                "email" => "qw@myissue.io",
+                "email" => "qw@myissue.dk",
                 "public" => true,
                 "current_team_id" => 2,
                 "password" => Hash::make("123456"),
@@ -68,7 +68,7 @@ class TeamsUsers extends Command
                 "id" => 2,
                 "first_name" => "John",
                 "last_name" => "Doe",
-                "email" => "jd@myissue.io",
+                "email" => "jd@myissue.dk",
 
                 "public" => true,
                 "current_team_id" => 1,
@@ -87,7 +87,7 @@ class TeamsUsers extends Command
                 "id" => 3,
                 "first_name" => "Mie",
                 "last_name" => "Mortensen",
-                "email" => "mm@myissue.io",
+                "email" => "mm@myissue.dk",
 
                 "public" => true,
                 "current_team_id" => 1,

@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
                 "id" => 1,
                 "first_name" => "Qais",
                 "last_name" => "Wardag",
-                "email" => "qw@myissue.io",
+                "email" => "qw@myissue.dk",
                 "public" => true,
                 "current_team_id" => 1,
                 "password" => Hash::make("123456"),
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
             "id" => 2,
             "first_name" => "Mie",
             "last_name" => "Mortensen",
-            "email" => "mm@myissue.io",
+            "email" => "mm@myissue.dk",
 
             "public" => true,
             "current_team_id" => 2,
@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
             "id" => 3,
             "first_name" => "John",
             "last_name" => "Doe",
-            "email" => "jd@myissue.io",
+            "email" => "jd@myissue.dk",
 
             "public" => false,
             "current_team_id" => 1,
@@ -125,7 +125,7 @@ class DatabaseSeeder extends Seeder
             "id" => 4,
             "first_name" => "Marilyn",
             "last_name" => "Monroe",
-            "email" => "mjm@myissue.io",
+            "email" => "mjm@myissue.dk",
             "current_team_id" => 4,
             "password" => Hash::make("123456"),
         ]);
@@ -142,7 +142,7 @@ class DatabaseSeeder extends Seeder
             "id" => 5,
             "first_name" => "Oprah",
             "last_name" => "Winfrey",
-            "email" => "ow@myissue.io",
+            "email" => "ow@myissue.dk",
             "current_team_id" => 5,
             "password" => Hash::make("123456"),
         ]);
@@ -160,7 +160,7 @@ class DatabaseSeeder extends Seeder
             "id" => 6,
             "first_name" => "Ingrid",
             "last_name" => "Bergman",
-            "email" => "ib@myissue.io",
+            "email" => "ib@myissue.dk",
             "current_team_id" => 6,
             "password" => Hash::make("123456"),
         ]);
@@ -179,7 +179,7 @@ class DatabaseSeeder extends Seeder
             "id" => 7,
             "first_name" => "Karl",
             "last_name" => "Lagerfeld",
-            "email" => "kl@myissue.io",
+            "email" => "kl@myissue.dk",
             "current_team_id" => 1,
             "password" => Hash::make("123456"),
         ]);
