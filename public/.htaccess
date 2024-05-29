@@ -21,5 +21,5 @@
     
     # Redirect the request to www from non-www
     RewriteCond %{HTTP_HOST} !^www\. [NC]
-    RewriteRule ^(.*)$ https://www.admin.myissue.io/$1 [L,R=301]
+    RewriteRule ^(.*)$ https://www.demo-admin.myissue.dk/$1 [L,R=301]
 </IfModule>
