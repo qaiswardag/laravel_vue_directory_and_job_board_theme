@@ -26,7 +26,7 @@ const breadcrumbsLinks = [
             </template>
 
             <div class="myPrimarySection">
-                <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
+                <div class="grid sm:grid-cols-2 grid-cols-1 myPrimaryGap">
                     <div
                         class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >

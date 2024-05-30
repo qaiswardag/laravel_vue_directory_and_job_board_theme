@@ -463,7 +463,7 @@ const handleSelectTeam = function (team) {
                         "
                     ></UserTag>
                 </div>
-                <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
+                <div class="grid sm:grid-cols-2 grid-cols-1 myPrimaryGap">
                     <div
                         v-for="(action, actionIdx) in actions"
                         :key="action.title"
@@ -522,7 +522,7 @@ const handleSelectTeam = function (team) {
 
                 <SectionBorder description="Teams"></SectionBorder>
 
-                <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
+                <div class="grid sm:grid-cols-2 grid-cols-1 myPrimaryGap">
                     <!-- Update payment methods # start -->
                     <div
                         class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"

@@ -110,7 +110,7 @@ const updatePaymentMethod = function () {
             </template>
 
             <div class="myPrimarySection">
-                <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
+                <div class="grid sm:grid-cols-2 grid-cols-1 myPrimaryGap">
                     <div
                         class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
                     >
@@ -215,7 +215,7 @@ const updatePaymentMethod = function () {
                 <SectionBorder
                     description="Billing & subscriptions"
                 ></SectionBorder>
-                <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
+                <div class="grid sm:grid-cols-2 grid-cols-1 myPrimaryGap">
                     <!-- Payments and invoices # start -->
                     <div
                         class="relative group py-6 px-6 cursor-pointer bg-white rounded-3xl border-2 border-white hover:border-2 hover:border-myPrimaryLinkColor"
@@ -294,7 +294,7 @@ const updatePaymentMethod = function () {
                     <!-- subscriptions # end -->
                 </div>
                 <SectionBorder description="Payment methods"></SectionBorder>
-                <div class="sm:grid sm:grid-cols-2 myPrimaryGap">
+                <div class="grid sm:grid-cols-2 grid-cols-1 myPrimaryGap">
                     <!-- Update payment methods # start -->
                     <div
                         v-if="intent"
