@@ -1702,8 +1702,8 @@ defineProps({
                             <ThumbnailSmallImageSlider
                                 :images="post.cover_images"
                                 imageSize="large_path"
-                                imageHeight="xl:max-h-[20rem] xl:min-h-[20rem] xl:h-[20rem] lg:max-h-[22rem] min-h-[22rem] lg:h-[22rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[26rem] min-h-[26rem] h-[26rem]"
-                                imageWidth="w-full object-cover rounded-b-none object-top"
+                                imageHeight="xl:max-h-[18rem] xl:min-h-[18rem] xl:h-[18rem] lg:max-h-[18rem] min-h-[18rem] lg:h-[18rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[18rem] min-h-[18rem] h-[18rem]"
+                                imageWidth="w-full object-cover object-top"
                                 :roundedFull="false"
                                 :squareButtons="true"
                                 :imageClickable="false"
@@ -1719,8 +1719,8 @@ defineProps({
                             <ThumbnailSmallImageSlider
                                 :images="post.cover_images"
                                 imageSize="large_path"
-                                imageHeight="xl:max-h-[20rem] xl:min-h-[20rem] xl:h-[20rem] lg:max-h-[22rem] min-h-[22rem] lg:h-[22rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[26rem] min-h-[26rem] h-[26rem]"
-                                imageWidth="w-full object-cover rounded-b-none object-top"
+                                imageHeight="xl:max-h-[18rem] xl:min-h-[18rem] xl:h-[18rem] lg:max-h-[18rem] min-h-[18rem] lg:h-[18rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[18rem] min-h-[18rem] h-[18rem]"
+                                imageWidth="w-full object-cover object-top"
                                 :roundedFull="false"
                                 :squareButtons="true"
                                 :imageClickable="false"
@@ -1736,8 +1736,8 @@ defineProps({
                             <ThumbnailSmallImageSlider
                                 :images="post.cover_images"
                                 imageSize="large_path"
-                                imageHeight="xl:max-h-[34rem] xl:min-h-[34rem] xl:h-[34rem] lg:max-h-[34rem] min-h-[34rem] lg:h-[34rem] md:max-h-[z-30rem] min-h-[z-30rem] md:h-[z-30rem] max-h-[34rem] min-h-[34rem] h-[34rem]"
-                                imageWidth="w-full object-cover rounded-b-none object-top"
+                                imageHeight="xl:max-h-[18rem] xl:min-h-[18rem] xl:h-[18rem] lg:max-h-[18rem] min-h-[18rem] lg:h-[18rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[18rem] min-h-[18rem] h-[18rem]"
+                                imageWidth="w-full object-cover object-top"
                                 :roundedFull="false"
                                 :squareButtons="true"
                                 :imageClickable="false"
