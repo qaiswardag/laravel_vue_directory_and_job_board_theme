@@ -1702,7 +1702,7 @@ defineProps({
                             <ThumbnailSmallImageSlider
                                 :images="post.cover_images"
                                 imageSize="large_path"
-                                imageHeight="xl:max-h-[18rem] xl:min-h-[18rem] xl:h-[18rem] lg:max-h-[18rem] min-h-[18rem] lg:h-[18rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[18rem] min-h-[18rem] h-[18rem]"
+                                imageHeight="xl:max-h-[22rem] xl:min-h-[22rem] xl:h-[22rem] lg:max-h-[22rem] min-h-[22rem] lg:h-[22rem] md:max-h-[22rem] min-h-[22rem] md:h-[22rem] max-h-[22rem] min-h-[22rem] h-[22rem]"
                                 imageWidth="w-full object-cover object-top"
                                 :roundedFull="false"
                                 :squareButtons="true"
@@ -1719,7 +1719,7 @@ defineProps({
                             <ThumbnailSmallImageSlider
                                 :images="post.cover_images"
                                 imageSize="large_path"
-                                imageHeight="xl:max-h-[18rem] xl:min-h-[18rem] xl:h-[18rem] lg:max-h-[18rem] min-h-[18rem] lg:h-[18rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[18rem] min-h-[18rem] h-[18rem]"
+                                imageHeight="xl:max-h-[22rem] xl:min-h-[22rem] xl:h-[22rem] lg:max-h-[22rem] min-h-[22rem] lg:h-[22rem] md:max-h-[22rem] min-h-[22rem] md:h-[22rem] max-h-[22rem] min-h-[22rem] h-[22rem]"
                                 imageWidth="w-full object-cover object-top"
                                 :roundedFull="false"
                                 :squareButtons="true"
@@ -1736,7 +1736,7 @@ defineProps({
                             <ThumbnailSmallImageSlider
                                 :images="post.cover_images"
                                 imageSize="large_path"
-                                imageHeight="xl:max-h-[18rem] xl:min-h-[18rem] xl:h-[18rem] lg:max-h-[18rem] min-h-[18rem] lg:h-[18rem] md:max-h-[18rem] min-h-[18rem] md:h-[18rem] max-h-[18rem] min-h-[18rem] h-[18rem]"
+                                imageHeight="xl:max-h-[22rem] xl:min-h-[22rem] xl:h-[22rem] lg:max-h-[22rem] min-h-[22rem] lg:h-[22rem] md:max-h-[22rem] min-h-[22rem] md:h-[22rem] max-h-[22rem] min-h-[22rem] h-[22rem]"
                                 imageWidth="w-full object-cover object-top"
                                 :roundedFull="false"
                                 :squareButtons="true"
