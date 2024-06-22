@@ -5,6 +5,10 @@
 
 # Ultimate Free Page Builder, Listing Directory, Blog, and Job Board Theme
 
+## Demo
+
+[Play around with the demo app](https://www.demo.myissue.dk)
+
 ## Introduction
 
 Introducing the **Ultimate Free Page Builder, Listing Directory, Blog, and Job Board Theme**! Are you searching for a powerful yet user-friendly theme to manage listings, jobs, or blog posts? Look no further! Our theme is designed to provide a seamless experience for both administrators and users, thanks to its robust features and intuitive Page Builder.
@@ -31,12 +35,6 @@ This theme includes:
 - **Customizable Design**: Tailor the look and feel of your site to match your brand.
 
 Empower your users to create the perfect listings, jobs, or blog posts with our versatile Page Builder.
-
-## Support the Project
-
-I would greatly appreciate it if you could star the GitHub repository. Starring the project helps to boost its visibility and encourages me to continue adding new features.
-
-[Play around with the demo app](https://www.demo.myissue.dk)
 
 # Technical Details
 
@@ -145,7 +143,13 @@ If you have any questions or if you're looking for customization, feel free to c
 
 # Feedback
 
-I would love to hear your feedback, suggestions, or any issues you encounter while using this app. Feel free to reach out to me if you have any questions or just want to say hello. You can connect with me through:
+I would love to hear your feedback, suggestions, or any issues you encounter while using this app. Feel free to reach out to me if you have any questions or just want to say hello. 
+
+# Support the Project
+
+I would greatly appreciate it if you could star the GitHub repository. Starring the project helps to boost its visibility and encourages me to continue adding new features.
+
+
 
 # License
 
