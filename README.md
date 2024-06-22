@@ -9,6 +9,12 @@
 
 [Play around with the demo app](https://www.demo.myissue.dk)
 
+# Front-end
+
+Nuxt 3 has been used for server-side rendering (SSR) for the frontend part.
+
+Check out the GitHub [repository](https://github.com/qaiswardag/nuxt_directory_and_job_board_theme).
+
 ## Introduction
 
 Introducing the **Ultimate Free Page Builder, Listing Directory, Blog, and Job Board Theme**! Are you searching for a powerful yet user-friendly theme to manage listings, jobs, or blog posts? Look no further! Our theme is designed to provide a seamless experience for both administrators and users, thanks to its robust features and intuitive Page Builder.
@@ -41,11 +47,6 @@ Empower your users to create the perfect listings, jobs, or blog posts with our 
 - **Frameworks**: Laravel, Vue 3, and Nuxt.
 - **Features**: Drag & Drop Page Builder, Listing Directory, Blog, Job Board, and Stripe integration for subscriptions and one-time payments.
 
-# Nuxt 3 for Server-Side Rendering
-
-Nuxt 3 has been used for server-side rendering (SSR) for the frontend part.
-
-Check out the GitHub [repository](https://github.com/qaiswardag/nuxt_directory_and_job_board_theme).
 
 # Installation
 
