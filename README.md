@@ -14,6 +14,7 @@ Introducing the **Ultimate Free Page Builder, Listing Directory, Blog, and Job B
 
 [Play around with the demo app](https://www.demo.myissue.dk)
 
+Nuxt GitHub repo: [repository](https://github.com/qaiswardag/nuxt_directory_and_job_board_theme).
 
 ## Key Features
 
@@ -145,14 +146,6 @@ I would love to hear your feedback, suggestions, or any issues you encounter whi
 # Support the Project
 
 I would greatly appreciate it if you could star the GitHub repository. Starring the project helps to boost its visibility and encourages me to continue adding new features.
-
-
-# Front-end
-
-Nuxt 3 has been used for server-side rendering (SSR) for the frontend part.
-
-Check out the GitHub [repository](https://github.com/qaiswardag/nuxt_directory_and_job_board_theme).
-
 
 
 # License
