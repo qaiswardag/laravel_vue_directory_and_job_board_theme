@@ -17,6 +17,14 @@ Introducing the **Ultimate Free Page Builder, Listing Directory, Blog, and Job B
 
 ## Key Features
 
+This theme includes:
+- **Page Builder**: Drag & Drop Page Builder.
+- **Listing Directory**: Organize and manage listings effortlessly.
+- **Job Board**: Post and manage job listings with ease.
+- **Blog**: Share updates and engage with your audience.
+- **Stripe Integration**: Handle subscriptions and one-time payments securely.
+- **Customizable Design**: Tailor the look and feel of your site to match your brand.
+  
 The built-in Page Builder is packed with features:
 - **Drag & Drop**: Easily rearrange elements on your page.
 - **Reordering**: Change the order of your content without hassle.
@@ -28,13 +36,6 @@ The built-in Page Builder is packed with features:
 - **Undo & Redo**: Experiment confidently with the ability to revert changes.
 - **YouTube Videos**: Integrate video content smoothly.
 
-This theme includes:
-- **Page Builder**: Drag & Drop Page Builder.
-- **Listing Directory**: Organize and manage listings effortlessly.
-- **Job Board**: Post and manage job listings with ease.
-- **Blog**: Share updates and engage with your audience.
-- **Stripe Integration**: Handle subscriptions and one-time payments securely.
-- **Customizable Design**: Tailor the look and feel of your site to match your brand.
 
 Empower your users to create the perfect listings, jobs, or blog posts with our versatile Page Builder.
 
