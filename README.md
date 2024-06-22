@@ -39,7 +39,7 @@ The built-in Page Builder is packed with features:
 
 Empower users to create the perfect listings, jobs, or blog posts with the Page Builder.
 
-## Technical Details
+### Technical Details
 
 - **Frameworks**: Laravel, Vue 3, and Nuxt.
 - **Features**: Drag & Drop Page Builder, Listing Directory, Blog, Job Board, and Stripe integration for subscriptions and one-time payments.
