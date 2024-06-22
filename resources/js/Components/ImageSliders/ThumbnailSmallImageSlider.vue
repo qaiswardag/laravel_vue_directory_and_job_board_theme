@@ -163,7 +163,7 @@ const sortedImages = computed(() => {
                                 squareButtons,
                         },
                         {
-                            'bg-opacity-60 top-1/2 bottom-1/2 left-[4px] shaddow h-10 w-10 rounded-full ':
+                            'bg-opacity-50 top-[45%] left-[4px] shaddow h-10 w-10 rounded-full ':
                                 !squareButtons,
                         },
                     ]"
@@ -184,7 +184,7 @@ const sortedImages = computed(() => {
                                 squareButtons,
                         },
                         {
-                            'bg-opacity-60 top-1/2 bottom-1/2 right-[4px] shaddow h-10 w-10 rounded-full ':
+                            'bg-opacity-50 top-[45%] right-[4px] shaddow h-10 w-10 rounded-full ':
                                 !squareButtons,
                         },
                     ]"
