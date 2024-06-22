@@ -44,6 +44,28 @@ Empower users to create the perfect listings, jobs, or blog posts with the Page 
 - **Frameworks**: Laravel, Vue 3, and Nuxt.
 - **Features**: Drag & Drop Page Builder, Listing Directory, Blog, Job Board, and Stripe integration for subscriptions and one-time payments.
 
+
+## Installation
+
+```
+composer install
+
+npm install
+
+npm run dev
+
+php artisan key:generate
+
+php artisan migrate
+
+php artisan db:seed
+
+php artisan serve
+
+npm run dev
+```
+
+
 ## Contributing
 
 Thank you for considering contributing to this project!
