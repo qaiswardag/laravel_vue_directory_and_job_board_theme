@@ -9,7 +9,7 @@ Demo [play around](https://www.demo.myissue.dk)
 
 Nuxt 3 frontend GitHub [repository](https://github.com/qaiswardag/nuxt_directory_and_job_board_theme)
 
-## Introduction
+### Introduction
 
 ### About
 
