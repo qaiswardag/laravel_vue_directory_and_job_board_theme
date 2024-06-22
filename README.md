@@ -100,25 +100,22 @@ php artisan db:seed
  npm run dev
 ```
 
-## Required Software Installation
-
-Please note that these instructions assume you have PHP, Composer, and Node.js installed
 
 # Documentation
 
-## Inertia.js Documentation
+### Inertia.js Documentation
 
 Inertia.js is a powerful JavaScript framework that allows you to build modern, single-page applications using server-side routing and Laravel. By integrating Inertia.js into your Laravel project, you can create a seamless user experience while customizing your admin panel. Dive into the Inertia.js documentation to learn about its features, installation process, and how to integrate it with your Laravel application.
 
 [Inertia.js Documentation](https://inertiajs.com/)
 
-## Laravel Documentation
+### Laravel Documentation
 
 Laravel is a popular PHP web application framework known for its elegant syntax and developer-friendly features. The Laravel documentation provides comprehensive guidance on building and customizing web applications, including admin panels. Explore the documentation to understand Laravel's core concepts, routing, database interactions, and more. Learning Laravel will empower you to make meaningful customizations to your admin panel.
 
 [Laravel Documentation](https://laravel.com/docs/10.x)
 
-## Laravel Jetstream Documentation
+### Laravel Jetstream Documentation
 
 Laravel Jetstream is a beautifully designed application scaffolding for Laravel. It provides pre-built authentication, user management, and more. By leveraging Laravel Jetstream, you can accelerate the development of your admin panel and focus on customizing the features that matter most. The documentation will walk you through the setup and customization of Jetstream, helping you build a robust admin panel efficiently.
 
