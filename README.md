@@ -4,7 +4,15 @@
 
 # Intro
 
-Laravel, Vue, and Nuxt, a Page Builder, Listing Directory, Blog, and Job Board Theme.
+Free Listing Directory, Blog & Job Board Theme
+
+Allow your users to create listings, jobs, or posts without limits using the built-in Page Builder.
+
+Page Builder features such as Drag & Drop, Reordering, True Visual Editing, Media Library, Responsive Editing, Text Editing, Font Customization, Undo & Redo, and YouTube Videos.
+
+Frameworks: Laravel, Vue 3, and Nuxt.
+
+Features: Drag & Drop Page Builder, Listing Directory, Blog, Job Board, and Stripe integration for subscriptions and one-time payments.
 
 I would greatly appreciate if you could star the GitHub repository. It helps to boost the visibility of this project and encourages me to continue adding new features.
 
