@@ -5,9 +5,7 @@
 
 # Ultimate Free Page Builder, Listing Directory, Blog, and Job Board Theme
 
-## Demo
 Demo: [Play around with the demo app](https://www.demo.myissue.dk)
-
 Nuxt 3 frontend GitHub repo: [repository](https://github.com/qaiswardag/nuxt_directory_and_job_board_theme).
 
 # Introduction
