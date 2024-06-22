@@ -2,9 +2,8 @@
 <img width="200" style="max-width: 100%;" src="public/logo/logo.svg" alt="Logo">
 </p>
 
-# Intro
 
-# Ultimate Free Listing Directory, Blog & Job Board Theme
+# Ultimate Free Page Builder, Listing Directory, Blog, and Job Board Theme.
 
 ## Introduction
 
@@ -55,7 +54,6 @@ Check out the GitHub [repository](https://github.com/qaiswardag/nuxt_directory_a
 
 # Installation
 
--   Clone the repository and install PHP dependencies using Composer:
 
 ```
 composer install
