@@ -3,11 +3,11 @@
 </p>
 
 
-# Ultimate Free Page Builder, Listing Directory, Blog, and Job Board Theme.
+# Ultimate Free Page Builder, Listing Directory, Blog, and Job Board Theme
 
 ## Introduction
 
-Introducing the **Ultimate Free Listing Directory, Blog & Job Board Theme**! Are you searching for a powerful yet user-friendly theme to manage listings, jobs, or blog posts? Look no further! Our theme is designed to provide a seamless experience for both administrators and users, thanks to its robust features and intuitive Page Builder.
+Introducing the **Ultimate Free Page Builder, Listing Directory, Blog, and Job Board Theme**! Are you searching for a powerful yet user-friendly theme to manage listings, jobs, or blog posts? Look no further! Our theme is designed to provide a seamless experience for both administrators and users, thanks to its robust features and intuitive Page Builder.
 
 ## Key Features
 
