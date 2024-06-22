@@ -52,7 +52,7 @@ Thank you for considering contributing to this project!
 
 If you discover a security vulnerability, please send me an e-mail.
 
-## Get in touch for customization or any questions.
+## Get in touch for customization or any questions
 
 If you have any questions or if you're looking for customization, feel free to connect with me on LinkedIn and send me a message.
 
