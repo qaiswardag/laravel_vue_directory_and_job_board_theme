@@ -167,6 +167,7 @@ const sortedImages = computed(() => {
                                 !squareButtons,
                         },
                     ]"
+                    style="touch-action: manipulation"
                 >
                     <span class="material-symbols-outlined">
                         keyboard_arrow_left
@@ -187,6 +188,7 @@ const sortedImages = computed(() => {
                                 !squareButtons,
                         },
                     ]"
+                    style="touch-action: manipulation"
                 >
                     <span class="material-symbols-outlined">
                         keyboard_arrow_right
