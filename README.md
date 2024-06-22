@@ -37,7 +37,7 @@ The built-in Page Builder is packed with features:
 - **YouTube Videos**: Integrate video content smoothly.
 
 
-Empower your users to create the perfect listings, jobs, or blog posts with our versatile Page Builder.
+Empower users to create the perfect listings, jobs, or blog posts with the Page Builder.
 
 # Technical Details
 
