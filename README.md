@@ -32,20 +32,16 @@ This theme includes:
 
 Empower your users to create the perfect listings, jobs, or blog posts with our versatile Page Builder.
 
-## Technical Details
-
-- **Frameworks**: Laravel, Vue 3, and Nuxt.
-- **Features**: Drag & Drop Page Builder, Listing Directory, Blog, Job Board, and Stripe integration for subscriptions and one-time payments.
-
 ## Support the Project
 
 I would greatly appreciate it if you could star the GitHub repository. Starring the project helps to boost its visibility and encourages me to continue adding new features.
 
 [Play around with the demo app](https://www.demo.myissue.dk)
 
-# Technologies and Frameworks
+# Technical Details
 
-Developed with Laravel, Vue 3, Vite, Vuex, Inertia and Tailwind CSS.
+- **Frameworks**: Laravel, Vue 3, and Nuxt.
+- **Features**: Drag & Drop Page Builder, Listing Directory, Blog, Job Board, and Stripe integration for subscriptions and one-time payments.
 
 # Nuxt 3 for Server-Side Rendering
 
