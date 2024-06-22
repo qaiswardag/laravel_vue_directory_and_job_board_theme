@@ -9,13 +9,13 @@ Demo [play around](https://www.demo.myissue.dk)
 
 Nuxt 3 frontend GitHub [repository](https://github.com/qaiswardag/nuxt_directory_and_job_board_theme)
 
-# Introduction
+## Introduction
 
-## About
+### About
 
 Introducing the **Free Page Builder, Listing Directory, Blog, and Job Board Theme**! Are you searching for a powerful yet user-friendly theme to manage listings, jobs, or blog posts? Look no further! Our theme is designed to provide a seamless experience for both administrators and users, thanks to its robust features and intuitive Page Builder.
 
-## Key Features
+### Key Features
 
 This theme includes:
 - **Page Builder**: Drag & Drop Page Builder.
@@ -39,112 +39,35 @@ The built-in Page Builder is packed with features:
 
 Empower users to create the perfect listings, jobs, or blog posts with the Page Builder.
 
-# Technical Details
+## Technical Details
 
 - **Frameworks**: Laravel, Vue 3, and Nuxt.
 - **Features**: Drag & Drop Page Builder, Listing Directory, Blog, Job Board, and Stripe integration for subscriptions and one-time payments.
 
-
-# Installation
-
-
-```
-composer install
-```
-
--   Install NPM dependencies:
-
-```
-npm install
-```
-
--   Build assets:
-
-```
-npm run dev
-```
-
--   Setup configuration:
-
-```
-cp .env.example .env
-```
-
--   Generate an application key:
-
-```
-php artisan key:generate
-```
-
--   Create an database and run the database migrations:
-
-```
-php artisan migrate
-```
-
--   Run the database seeder:
-
-```
-php artisan db:seed
-```
-
--   Start the project:
-
-```
- php artisan serve
-```
-
--   Additionally, if you want to rebuild your assets during development, you can run the following command separately:
-
-```
- npm run dev
-```
-
-
-# Documentation
-
-### Inertia.js Documentation
-
-Inertia.js is a powerful JavaScript framework that allows you to build modern, single-page applications using server-side routing and Laravel. By integrating Inertia.js into your Laravel project, you can create a seamless user experience while customizing your admin panel. Dive into the Inertia.js documentation to learn about its features, installation process, and how to integrate it with your Laravel application.
-
-[Inertia.js Documentation](https://inertiajs.com/)
-
-### Laravel Documentation
-
-Laravel is a popular PHP web application framework known for its elegant syntax and developer-friendly features. The Laravel documentation provides comprehensive guidance on building and customizing web applications, including admin panels. Explore the documentation to understand Laravel's core concepts, routing, database interactions, and more. Learning Laravel will empower you to make meaningful customizations to your admin panel.
-
-[Laravel Documentation](https://laravel.com/docs/10.x)
-
-### Laravel Jetstream Documentation
-
-Laravel Jetstream is a beautifully designed application scaffolding for Laravel. It provides pre-built authentication, user management, and more. By leveraging Laravel Jetstream, you can accelerate the development of your admin panel and focus on customizing the features that matter most. The documentation will walk you through the setup and customization of Jetstream, helping you build a robust admin panel efficiently.
-
-[Laravel Jetstream Documentation](https://jetstream.laravel.com/introduction.html)
-
-# Contributing
+## Contributing
 
 Thank you for considering contributing to this project!
 
-# Security Vulnerabilities
+## Security Vulnerabilities
 
 If you discover a security vulnerability, please send me an e-mail.
 
-# Get in touch for customization or any questions.
+## Get in touch for customization or any questions.
 
 If you have any questions or if you're looking for customization, feel free to connect with me on LinkedIn and send me a message.
 
 -   [Email](mailto:qais.wardag@outlook.com)
 -   [LinkedIn](https://www.linkedin.com/in/qaiswardag)
 
-# Feedback
+## Feedback
 
 I would love to hear your feedback, suggestions, or any issues you encounter while using this app. Feel free to reach out to me if you have any questions or just want to say hello. 
 
-# Support the Project
+## Support the Project
 
 I would greatly appreciate it if you could star the GitHub repository. Starring the project helps to boost its visibility and encourages me to continue adding new features.
 
 
-# License
+## License
 
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
