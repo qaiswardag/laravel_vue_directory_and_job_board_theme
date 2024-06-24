@@ -299,6 +299,34 @@ class JobsGuestIndexController extends Controller
         ];
     }
 
+    public function indexSearchEngines()
+    {
+        $posts = Job::latest()
+            ->with("team")
+            ->with("types")
+            ->with("categories")
+            ->with("coverImages")
+            ->with("countries")
+            ->with("states")
+            ->with("authors")
+            ->where("published", true)
+            ->where("is_paid", true)
+            // Add a condition to filter posts where ended_at is
+            ->where(function ($query) {
+                // Include posts where ended_at is not null
+                $query
+                    ->whereNotNull("started_at")
+                    ->whereNotNull("ended_at")
+                    ->where("started_at", "<=", now()->addDays(1))
+                    ->where("ended_at", ">=", now());
+            })
+            ->get();
+
+        return [
+            "posts" => $posts,
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      */

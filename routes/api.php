@@ -36,6 +36,26 @@ Route::get("/guest/jobs/index", [JobsGuestIndexController::class, "index"]);
 
 Route::get("/guest/stores/index", [StoresGuestIndexController::class, "index"]);
 
+// index for search engines
+Route::get("/guest/posts/index-search-engines", [
+    PostsGuestIndexController::class,
+    "indexSearchEngines",
+]);
+
+Route::get("/guest/jobs/index-search-engines", [
+    JobsGuestIndexController::class,
+    "indexSearchEngines",
+]);
+
+Route::get("/guest/stores/index-search-engines", [
+    StoresGuestIndexController::class,
+    "indexSearchEngines",
+]);
+
+//
+//
+//
+//
 // single
 Route::get("{teamSlug}/post/{postSlug}/view/{postId}/", [
     PostPostController::class,

@@ -155,6 +155,20 @@ class PostsGuestIndexController extends Controller
         ];
     }
 
+    public function indexSearchEngines()
+    {
+        $posts = Post::latest()
+            ->with("team")
+            ->with("categories")
+            ->with("coverImages")
+            ->where("published", true)
+            ->get();
+
+        return [
+            "posts" => $posts,
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -199,6 +199,23 @@ class StoresGuestIndexController extends Controller
         ];
     }
 
+    public function indexSearchEngines()
+    {
+        $posts = Store::latest()
+            ->with("team")
+            ->with("categories")
+            ->with("coverImages")
+            ->with("brandLogos")
+            ->with("states")
+            ->with("authors")
+            ->where("published", true)
+            ->get();
+
+        return [
+            "posts" => $posts,
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      */
