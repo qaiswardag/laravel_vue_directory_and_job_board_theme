@@ -96,16 +96,6 @@ defineProps({
 
                         <WidgetSectionBorder></WidgetSectionBorder>
 
-                        <template v-if="team.coverImagesWithLogos?.logos">
-                            <ThumbnailSmallImageSlider
-                                :images="team.coverImagesWithLogos?.logos"
-                                imageSize="large_path"
-                                imageHeight="min-h-24 max-h-24"
-                                imageWidth="w-24 min-w-24 max-w-24 mb-4 w-24 object-cover"
-                                :roundedFull="true"
-                                :squareButtons="false"
-                            ></ThumbnailSmallImageSlider>
-                        </template>
                         <template
                             v-if="team.coverImagesWithLogos?.cover_images"
                         >
@@ -120,6 +110,20 @@ defineProps({
                                 :roundedFull="false"
                                 :squareButtons="false"
                             ></ThumbnailSmallImageSlider>
+                        </template>
+                        <template v-if="team.coverImagesWithLogos?.logos">
+                            <div
+                                class="relative flex justify-center items-center mt-[-2rem] z-20 h-[4rem] w-[4rem] mx-auto"
+                            >
+                                <ThumbnailSmallImageSlider
+                                    :images="team.coverImagesWithLogos?.logos"
+                                    imageSize="large_path"
+                                    imageHeight="min-h-24 max-h-24"
+                                    imageWidth="w-24 min-w-24 max-w-24 object-cover"
+                                    :roundedFull="true"
+                                    :squareButtons="false"
+                                ></ThumbnailSmallImageSlider>
+                            </div>
                         </template>
                     </div>
                 </template>
@@ -1678,18 +1682,6 @@ defineProps({
                     </h4>
 
                     <WidgetSectionBorder></WidgetSectionBorder>
-                    <!-- post logo # start -->
-                    <ThumbnailSmallImageSlider
-                        v-if="post.brand_logos"
-                        :images="post.brand_logos"
-                        imageSize="medium_path"
-                        imageHeight="min-h-24 max-h-24 rounded-full"
-                        imageWidth="w-24 min-w-24 max-w-24 mb-4 w-24 object-cover"
-                        :roundedFull="false"
-                        :squareButtons="false"
-                    ></ThumbnailSmallImageSlider>
-                    <!-- post logo # end -->
-
                     <template v-if="post.cover_images">
                         <!-- start photo -->
                         <template
@@ -1744,6 +1736,27 @@ defineProps({
                             ></ThumbnailSmallImageSlider>
                         </template>
                     </template>
+                    <!-- post logo # start -->
+                    <template
+                        v-if="
+                            post.brand_logos && Array.isArray(post.brand_logos)
+                        "
+                    >
+                        <div
+                            class="relative flex justify-center items-center mt-[-2rem] z-20 h-[4rem] w-[4rem] mx-auto"
+                        >
+                            <ThumbnailSmallImageSlider
+                                v-if="post.brand_logos"
+                                :images="post.brand_logos"
+                                imageSize="medium_path"
+                                imageHeight="min-h-24 max-h-24 rounded-full"
+                                imageWidth="w-24 min-w-24 max-w-24 w-24 object-cover"
+                                :roundedFull="false"
+                                :squareButtons="false"
+                            ></ThumbnailSmallImageSlider>
+                        </div>
+                    </template>
+                    <!-- post logo # end -->
                 </div>
                 <!-- cover images for resource # end -->
             </aside>
