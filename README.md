@@ -50,17 +50,17 @@ Empower users to create the perfect listings, jobs, or blog posts with the Page 
 ```
 composer install
 
-npm install
-
-npm run dev
-
-php artisan key:generate
-
 php artisan migrate
 
 php artisan db:seed
 
+php artisan key:generate
+
+php artisan storage:link
+
 php artisan serve
+
+npm install
 
 npm run dev
 ```
