@@ -484,6 +484,18 @@ h3 {
     width: 100%; */
 }
 
+#page-builder-editor-editable-area #youtube-video::before {
+    content: "Select video element";
+    font-family: "Jost";
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+#page-builder-editor-editable-area #youtube-video:hover::before {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 #page-builder-editor a,
 #page-builder-editor-editable-area a {
     text-decoration: underline;

@@ -51,7 +51,7 @@ const componentHelpers = [
         <section>
         <div class="py-4">
         <div class="mx-auto max-w-7xl lg:px-4 px-2">
-        <div class="w-full aspect-video bg-slate-100 border border-slate-200 rounded-xl lg:p-8 md:p-6 p-4">
+        <div  id="youtube-video" class="w-full aspect-video bg-slate-100 border border-slate-200 rounded-xl lg:p-8 md:p-6 p-4">
      
         <iframe
         frameborder="0" 
