@@ -24,14 +24,19 @@ class AttachTeamsController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        $teams0 = Team::where(function ($query) use ($user) {
-            $query
-                ->where("user_id", $user->id)
-                ->orWhereHas("users", function ($subQuery) use ($user) {
-                    $subQuery->where("users.id", $user->id);
-                });
-        })
-            ->orderBy("name")
+        $teams = Team::with([
+            "owner" => function ($query) {
+                $query->select("id", "email", "first_name", "last_name");
+            },
+        ])
+            ->where(function ($query) use ($user) {
+                $query
+                    ->where("user_id", $user->id)
+                    ->orWhereHas("users", function ($subQuery) use ($user) {
+                        $subQuery->where("users.id", $user->id);
+                    });
+            })
+            ->orderBy("created_at", "desc")
             ->when($request->query("search_query"), function (
                 $query,
                 $searchQuery
@@ -42,38 +47,8 @@ class AttachTeamsController extends Controller
             })
             ->paginate(10);
 
-        //
-        //
-        //
-        //
-        //
-        //
-        // $teams1 = $user
-        //     ->teams()
-        //     ->when($request->query("search_query"), function (
-        //         $query,
-        //         $searchQuery
-        //     ) {
-        //         $query->where(function ($query) use ($searchQuery) {
-        //             $query->where("name", "LIKE", "%" . $searchQuery . "%");
-        //         });
-        //     })
-        //     ->paginate(2);
-
-        // $teams2 = $user
-        //     ->ownedTeams()
-        //     ->when($request->query("search_query"), function (
-        //         $query,
-        //         $searchQuery
-        //     ) {
-        //         $query->where(function ($query) use ($searchQuery) {
-        //             $query->where("name", "LIKE", "%" . $searchQuery . "%");
-        //         });
-        //     })
-        //     ->paginate(2);
-
         return [
-            "teams" => $teams0,
+            "teams" => $teams,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
             ],

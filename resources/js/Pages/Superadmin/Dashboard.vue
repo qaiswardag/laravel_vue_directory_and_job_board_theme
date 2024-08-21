@@ -392,6 +392,29 @@ const handleSelectTeam = function (team) {
                                             >
                                                 Id: {{ team?.id }}
                                             </p>
+
+                                            <div
+                                                class="border-t border-red-200 pt-2 mt-2"
+                                            >
+                                                <p
+                                                    class="myPriamryParagraph font-medium cursor-pointer text-xs"
+                                                >
+                                                    Owner:
+                                                </p>
+                                                <p
+                                                    class="myPriamryParagraph cursor-pointer text-xs"
+                                                >
+                                                    Email:
+                                                    {{ team.owner?.email }}
+                                                </p>
+                                                <p
+                                                    class="myPriamryParagraph cursor-pointer text-xs"
+                                                >
+                                                    Name:
+                                                    {{ team.owner?.first_name }}
+                                                    {{ team.owner?.last_name }}
+                                                </p>
+                                            </div>
                                         </div>
                                         <template
                                             v-if="

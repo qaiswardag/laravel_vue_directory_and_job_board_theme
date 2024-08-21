@@ -21,7 +21,13 @@ class SuperadminAttachTeamsController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        $teams = Team::orderBy("name")
+        $teams = Team::with([
+            "owner" => function ($query) {
+                $query->select("id", "email", "first_name", "last_name");
+            },
+        ])
+            ->orderBy("created_at", "desc")
+
             ->when($request->query("search_query"), function (
                 $query,
                 $searchQuery
