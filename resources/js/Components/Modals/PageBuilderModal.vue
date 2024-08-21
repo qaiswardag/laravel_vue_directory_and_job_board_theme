@@ -217,6 +217,7 @@ onMounted(() => {
                                 <div
                                     class="flex justify-start divide-x divide-gray-200 myPrimaryGap"
                                 >
+                                    <ApplicationLogo></ApplicationLogo>
                                     <button
                                         class="myPrimaryButton lg:text-sm text-[12px] lg:py-3 py-3 min-h-2"
                                         @click="secondButton"
@@ -227,7 +228,7 @@ onMounted(() => {
                                         >
                                             save
                                         </span>
-                                        Save & Exit
+                                        Save & Close
                                     </button>
                                     <button
                                         v-if="
@@ -256,9 +257,13 @@ onMounted(() => {
                                     >
                                         Close Builder
                                     </span>
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
+                                    <div
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    >
+                                        <span class="material-symbols-outlined">
+                                            close
+                                        </span>
+                                    </div>
                                 </button>
                             </div>
                             <slot></slot>
