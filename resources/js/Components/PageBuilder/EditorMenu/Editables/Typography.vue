@@ -44,6 +44,7 @@ watch(
     getFontBase,
     (newValue) => {
         fontBase.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -51,6 +52,7 @@ watch(
     getFontDesktop,
     (newValue) => {
         fontDesktop.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -58,6 +60,7 @@ watch(
     getFontTablet,
     (newValue) => {
         fontTablet.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -65,6 +68,7 @@ watch(
     getFontMobile,
     (newValue) => {
         fontMobile.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -72,6 +76,7 @@ watch(
     getFontWeight,
     (newValue) => {
         fontWeight.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -79,6 +84,7 @@ watch(
     getFontFamily,
     (newValue) => {
         fontFamily.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -86,6 +92,7 @@ watch(
     getFontStyle,
     (newValue) => {
         fontStyle.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );

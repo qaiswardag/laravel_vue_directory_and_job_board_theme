@@ -39,6 +39,7 @@ watch(
     getBorderStyle,
     (newValue) => {
         borderStyle.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -46,6 +47,7 @@ watch(
     getBorderWidth,
     (newValue) => {
         borderWidth.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -53,6 +55,7 @@ watch(
     getBorderColor,
     (newValue) => {
         borderColor.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );

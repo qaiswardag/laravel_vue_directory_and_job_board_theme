@@ -31,6 +31,7 @@ watch(
     getBackgroundColor,
     (newValue) => {
         backgroundColor.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );

@@ -152,6 +152,7 @@ watch(
     getBorderRadiusGlobal,
     (newValue) => {
         borderRadiusGlobal.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -159,6 +160,7 @@ watch(
     getBorderRadiusTopLeft,
     (newValue) => {
         borderRadiusTopLeft.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -166,6 +168,7 @@ watch(
     getBorderRadiusTopRight,
     (newValue) => {
         borderRadiusTopRight.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -173,6 +176,7 @@ watch(
     getBorderRadiusBottomleft,
     (newValue) => {
         borderRadiusBottomleft.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -180,6 +184,7 @@ watch(
     getBorderRadiusBottomRight,
     (newValue) => {
         borderRadiusBottomRight.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );

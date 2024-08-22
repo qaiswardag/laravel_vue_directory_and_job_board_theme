@@ -31,6 +31,7 @@ watch(
     getTextColor,
     (newValue) => {
         textColor.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );

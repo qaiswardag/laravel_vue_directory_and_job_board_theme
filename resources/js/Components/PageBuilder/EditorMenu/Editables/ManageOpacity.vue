@@ -31,6 +31,7 @@ watch(
     getOpacity,
     (newValue) => {
         opacityVueModel.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );

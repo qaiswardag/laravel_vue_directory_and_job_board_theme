@@ -31,6 +31,7 @@ watch(
     getFontVerticalPadding,
     (newValue) => {
         fontVerticalPadding.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -38,6 +39,7 @@ watch(
     getFontHorizontalPadding,
     (newValue) => {
         fontHorizontalPadding.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -45,6 +47,7 @@ watch(
     getFontVerticalMargin,
     (newValue) => {
         fontVerticalMargin.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
@@ -52,6 +55,7 @@ watch(
     getFontHorizontalMargin,
     (newValue) => {
         fontHorizontalMargin.value = newValue;
+        pageBuilder.handlePageBuilderMethods();
     },
     { immediate: true }
 );
