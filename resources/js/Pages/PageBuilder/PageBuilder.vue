@@ -57,11 +57,10 @@ const firstDesignerPreviewModalButtonFunction = ref(null);
 
 const handleDesignerPreview = function () {
     previewCurrentDesign();
-    // set modal standards
+
     openDesignerPreviewModal.value = true;
     // handle click
     firstDesignerPreviewModalButtonFunction.value = function () {
-        // set open modal
         openDesignerPreviewModal.value = false;
     };
     // end modal

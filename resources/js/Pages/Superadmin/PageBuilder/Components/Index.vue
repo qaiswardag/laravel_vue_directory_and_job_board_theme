@@ -84,7 +84,6 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 const checkUserTeamAuthorization = function () {
-    // set modal standards
     showModalEditComponentTeamAuth.value = true;
     typeModal.value = "danger";
     gridColumnModal.value = 2;
@@ -97,7 +96,6 @@ const checkUserTeamAuthorization = function () {
 
     // handle click
     firstModalButtonFunction.value = function () {
-        // set open modal
         showModalEditComponentTeamAuth.value = false;
     };
     // end modal
@@ -142,7 +140,6 @@ const handleEdit = function (componentID) {
 const handleDelete = function (postId, post) {
     modalShowDeleteComponent.value = true;
 
-    // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Delete Component?`;

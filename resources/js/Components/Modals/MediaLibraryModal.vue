@@ -201,7 +201,7 @@ const handleImageUpdate = function (imageId) {
 
 const handleDeleteImage = function (imageId) {
     modalShowDeleteImage.value = true;
-    // set modal standards
+
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Delete Image`;

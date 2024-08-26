@@ -41,7 +41,7 @@ const handleDeleteTeam = () => {
 
     // handle show modal for unique content
     modalShowDeleteTeam.value = true;
-    // set modal standards
+
     typeModal.value = "delete";
     gridColumnModal.value = 2;
     titleModal.value = `Delete team`;

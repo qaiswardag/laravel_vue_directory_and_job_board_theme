@@ -273,7 +273,7 @@ const handleRemoveAttachedUser = function (userId) {
 const handleAddAuthor = function () {
     // handle show modal for unique content
     showSearchUserModal.value = true;
-    // set modal standards
+
     titleModalSearchItems.value = "Assign people";
     descriptionModalSearchItems.value = "Assign people to this job.";
     firstButtonModalSearchItems.value = "Close";
@@ -306,7 +306,7 @@ const handleRemoveAttachedCountries = function (itemId) {
 const handleAddCountries = function () {
     // handle show modal for unique content
     showSearchJobCountriesModal.value = true;
-    // set modal standards
+
     titleModalSearchItems.value = "Add Job Country";
     descriptionModalSearchItems.value = "Add Job Country";
     firstButtonModalSearchItems.value = "Close";
@@ -337,7 +337,7 @@ const handleRemoveAttachedStates = function (itemId) {
 const handleAddStates = function () {
     // handle show modal for unique content
     showSearchJobStatesModal.value = true;
-    // set modal standards
+
     titleModalSearchItems.value = "Add Job State";
     descriptionModalSearchItems.value = "Add Job State";
     firstButtonModalSearchItems.value = "Close";
@@ -371,7 +371,7 @@ const handleRemoveAttachedCategory = function (itemId) {
 const handleAddCategories = function () {
     // handle show modal for unique content
     showSearchJobCategoriesModal.value = true;
-    // set modal standards
+
     titleModalSearchItems.value = "Add Job Categories";
     descriptionModalSearchItems.value = "Add Job Categories";
     firstButtonModalSearchItems.value = "Close";
@@ -398,7 +398,7 @@ const handleAddCategories = function () {
 const handleAddJobTypes = function () {
     // handle show modal for unique content
     showSearchJobTypesModal.value = true;
-    // set modal standards
+
     titleModalSearchItems.value = "Add Job Types";
     descriptionModalSearchItems.value = "Add Job Types";
     firstButtonModalSearchItems.value = "Close";
@@ -542,7 +542,7 @@ const createPost = () => {
 const handleClearForm = function () {
     // handle show modal for unique content
     modalShowClearForm.value = true;
-    // set modal standards
+
     typeModal.value = "warning";
     gridColumnModal.value = 2;
     titleModal.value = `Clear the form?`;
@@ -665,8 +665,7 @@ router.on = async () => {
         }
     }
 
-    // set open modal
-    openDesignerModal.value = false;
+    openPageBuilder.value = false;
 
     await delay();
     store.commit("user/setIsLoading", false);
@@ -689,8 +688,7 @@ window.addEventListener("beforeunload", async function () {
         }
     }
 
-    // set open modal
-    openDesignerModal.value = false;
+    openPageBuilder.value = false;
 
     await delay();
     store.commit("user/setIsLoading", false);
@@ -773,11 +771,11 @@ const getComponents = computed(() => {
     return store.getters["pageBuilderState/getComponents"];
 });
 
-const openDesignerModal = ref(false);
+const openPageBuilder = ref(false);
 
 // use designer model
-const firstDesignerModalButtonFunction = ref(null);
-const secondDesignerModalButtonFunction = ref(null);
+const pageBuilderPrimaryHandler = ref(null);
+const pageBuilderSecondaryHandler = ref(null);
 const handleDraftForUpdate = async function () {
     store.commit("user/setIsLoading", true);
 
@@ -793,12 +791,11 @@ const handleDraftForUpdate = async function () {
 };
 
 const handlePageBuilder = async function () {
-    // set modal standards
     store.commit("user/setIsLoading", true);
 
     await delay();
     await nextTick();
-    openDesignerModal.value = true;
+    openPageBuilder.value = true;
 
     if (formType.value === "create") {
         store.commit("pageBuilderState/setComponents", []);
@@ -816,7 +813,7 @@ const handlePageBuilder = async function () {
     }
 
     // handle click
-    firstDesignerModalButtonFunction.value = async function () {
+    pageBuilderPrimaryHandler.value = async function () {
         store.commit("user/setIsLoading", true);
 
         if (formType.value === "update") {
@@ -825,13 +822,12 @@ const handlePageBuilder = async function () {
             await delay();
         }
 
-        // set open modal
-        openDesignerModal.value = false;
+        openPageBuilder.value = false;
         store.commit("user/setIsLoading", false);
     };
 
     // handle click
-    secondDesignerModalButtonFunction.value = async function () {
+    pageBuilderSecondaryHandler.value = async function () {
         store.commit("user/setIsLoading", true);
 
         // save to local storage if new resource
@@ -863,9 +859,7 @@ const handlePageBuilder = async function () {
                     .join("");
         }
 
-        // set open modal
-
-        openDesignerModal.value = false;
+        openPageBuilder.value = false;
         await delay();
         store.commit("user/setIsLoading", false);
     };
@@ -1164,10 +1158,10 @@ const pageBuilder = new PageBuilder(store);
 
 <template>
     <PageBuilderModal
-        :show="openDesignerModal"
+        :show="openPageBuilder"
         :updateOrCreate="formType"
-        @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
-        @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
+        @pageBuilderPrimaryHandler="pageBuilderPrimaryHandler"
+        @pageBuilderSecondaryHandler="pageBuilderSecondaryHandler"
         @handleDraftForUpdate="handleDraftForUpdate"
     >
         <PageBuilderView

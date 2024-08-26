@@ -111,7 +111,7 @@ const modalShowCreateTeam = ref(false);
 const handleCreateTeam = function () {
     // handle show modal for unique content
     modalShowCreateTeam.value = true;
-    // set modal standards
+
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = `Create a new team ${postForm.name}`;

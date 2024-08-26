@@ -136,7 +136,6 @@ const thirdModalButtonFunction = ref(null);
 const handleDelete = function (postId, post) {
     modalShowDeletePost.value = true;
 
-    // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Permanently delete ${post.title}?`;
@@ -187,7 +186,6 @@ const modalShowRestorePost = ref(false);
 const handleRestore = function (postId, post) {
     modalShowRestorePost.value = true;
 
-    // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 3;
     titleModal.value = `Restore job ${post.title}?`;

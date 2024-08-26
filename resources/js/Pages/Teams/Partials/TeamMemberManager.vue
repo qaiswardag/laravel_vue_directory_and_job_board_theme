@@ -64,7 +64,7 @@ const addTeamMember = () => {
             addTeamMemberForm.reset();
 
             modalShowAddedTeamMember.value = true;
-            // set modal standards
+
             typeModal.value = "success";
             gridColumnModal.value = 1;
             titleModal.value = `Company member added to ${props.team.name}`;
@@ -98,7 +98,6 @@ const addTeamMember = () => {
 const handleCancelTeamInvitation = function (invitation) {
     modalShowCancelTeamInvitation.value = true;
 
-    // set modal standards
     typeModal.value = "danger";
     gridColumnModal.value = 2;
     titleModal.value = "Cancel pending Company Invitation";
@@ -143,7 +142,6 @@ const manageRole = (teamMember) => {
     updateRoleForm.role = teamMember.membership.role;
     modalShowCurrentlyManagingRole.value = true;
 
-    // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Change Role ";
@@ -186,7 +184,6 @@ const updateRole = () => {
 const handleLeaveTeam = function () {
     modalShowLeaveTeam.value = true;
 
-    // set modal standards
     typeModal.value = "warning";
     gridColumnModal.value = 2;
     titleModal.value = "Leave team ";
@@ -232,7 +229,6 @@ const handleRemoveTeamMember = (teamMember) => {
     // handle show modal for unique content
     modalShowTeamMemberBeingRemoved.value = true;
 
-    // set modal standards
     typeModal.value = "danger";
     gridColumnModal.value = 2;
     titleModal.value = "Remove team member? ";

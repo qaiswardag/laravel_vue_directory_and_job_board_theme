@@ -112,7 +112,6 @@ const handleRemoveSuperadmin = (
 ) => {
     modalShowRemoveSuperadmin.value = true;
 
-    // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 2;
     titleModal.value = "Remove Superadmin?";
@@ -145,7 +144,6 @@ const handleUpdateSuperadmin = (
 ) => {
     modalShowCreateUpdateSuperadmin.value = true;
 
-    // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Update Superadmin?";
@@ -178,7 +176,6 @@ const handleCreateSuperadmin = (
 ) => {
     modalShowCreateUpdateSuperadmin.value = true;
 
-    // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Create Superadmin?";
@@ -259,7 +256,6 @@ const removeSuperadminRole = (userIdForNewSuperadmin) => {
 const handleDelete = function (id, user) {
     modalShowDeleteUser.value = true;
 
-    // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 2;
     titleModal.value = `Delete User ${user.first_name} ${user.last_name}?`;

@@ -38,7 +38,7 @@ const thirdModalButtonFunction = ref(null);
 const handleUserDeletion = function () {
     // handle show modal for unique content
     modalShowConfirmingUserDeletion.value = true;
-    // set modal standards
+
     typeModal.value = "danger";
     gridColumnModal.value = 2;
     titleModal.value = "Permanently delete your account?";

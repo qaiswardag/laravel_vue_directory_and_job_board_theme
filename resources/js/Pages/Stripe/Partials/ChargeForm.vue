@@ -420,7 +420,7 @@ const handleShowAllTeams = function () {
     );
 
     modalShowTeams.value = true;
-    // set modal standards
+
     typeModal.value = "success";
     gridColumnModal.value = 3;
     titleModal.value = `Switch Company`;

@@ -93,7 +93,6 @@ const thirdModalButtonFunction = ref(null);
 const handleDeletePaymentMethod = function (method) {
     modalShowDeletePaymentMethod.value = true;
 
-    // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Delete payment method?`;
@@ -145,7 +144,6 @@ const handleSetDefaultPaymentMethod = function (method) {
     //
     modalShowUpdatePaymentMethod.value = true;
 
-    // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 3;
     titleModal.value = `Set default payment method`;

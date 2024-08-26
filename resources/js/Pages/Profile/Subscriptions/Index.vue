@@ -92,7 +92,6 @@ const thirdModalButtonFunction = ref(null);
 const handleResumeSubscription = function (postId) {
     modalShowResumePost.value = true;
 
-    // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 3;
     titleModal.value = `Resume Subscription`;
@@ -135,7 +134,6 @@ const resumeSubscription = (postId) => {
 const handleCancelSubscription = function (postId) {
     modalShowDeletePost.value = true;
 
-    // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Cancel Subscription`;

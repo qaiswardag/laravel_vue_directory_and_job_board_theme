@@ -135,7 +135,6 @@ const thirdModalButtonFunction = ref(null);
 const handleDelete = function (postId, post) {
     modalShowDeletePost.value = true;
 
-    // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Delete ${post.title}?`;

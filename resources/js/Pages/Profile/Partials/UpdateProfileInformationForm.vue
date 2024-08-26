@@ -163,11 +163,11 @@ const getComponents = computed(() => {
     return store.getters["pageBuilderState/getComponents"];
 });
 
-const openDesignerModal = ref(false);
+const openPageBuilder = ref(false);
 
 // use designer model
-const firstDesignerModalButtonFunction = ref(null);
-const secondDesignerModalButtonFunction = ref(null);
+const pageBuilderPrimaryHandler = ref(null);
+const pageBuilderSecondaryHandler = ref(null);
 
 const handleDraftForUpdate = async function () {
     store.commit("user/setIsLoading", true);
@@ -183,15 +183,14 @@ const handleDraftForUpdate = async function () {
 };
 
 const handlePageBuilder = async function () {
-    // set modal standards
     store.commit("user/setIsLoading", true);
 
     await delay();
     await nextTick();
-    openDesignerModal.value = true;
+    openPageBuilder.value = true;
 
     // handle click
-    firstDesignerModalButtonFunction.value = async function () {
+    pageBuilderPrimaryHandler.value = async function () {
         store.commit("user/setIsLoading", true);
 
         await nextTick();
@@ -199,13 +198,12 @@ const handlePageBuilder = async function () {
         pageBuilder.synchronizeDOMAndComponents();
         await delay();
 
-        // set open modal
-        openDesignerModal.value = false;
+        openPageBuilder.value = false;
         store.commit("user/setIsLoading", false);
     };
 
     // handle click
-    secondDesignerModalButtonFunction.value = async function () {
+    pageBuilderSecondaryHandler.value = async function () {
         store.commit("user/setIsLoading", true);
 
         await nextTick();
@@ -221,9 +219,7 @@ const handlePageBuilder = async function () {
                 })
                 .join("");
 
-        // set open modal
-
-        openDesignerModal.value = false;
+        openPageBuilder.value = false;
         await delay();
         store.commit("user/setIsLoading", false);
     };
@@ -494,10 +490,10 @@ onMounted(() => {
 
 <template>
     <PageBuilderModal
-        :show="openDesignerModal"
+        :show="openPageBuilder"
         updateOrCreate="update"
-        @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
-        @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
+        @pageBuilderPrimaryHandler="pageBuilderPrimaryHandler"
+        @pageBuilderSecondaryHandler="pageBuilderSecondaryHandler"
         @handleDraftForUpdate="handleDraftForUpdate"
     >
         <PageBuilderView :forUserNotTeam="true" :user="user"></PageBuilderView>

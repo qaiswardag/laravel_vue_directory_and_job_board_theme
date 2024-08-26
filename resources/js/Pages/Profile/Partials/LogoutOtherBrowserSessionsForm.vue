@@ -39,7 +39,7 @@ const handleSessionLogout = () => {
 
     // handle show modal for unique content
     modalShowConfirmingSessionLogout.value = true;
-    // set modal standards
+
     typeModal.value = "danger";
     gridColumnModal.value = 2;
     titleModal.value = "Log Out Other Browser Sessions";

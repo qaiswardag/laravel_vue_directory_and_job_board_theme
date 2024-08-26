@@ -199,7 +199,7 @@ const handleRemoveAttachedCategory = function (itemId) {
 const handleAddCategories = function () {
     // handle show modal for unique content
     modalShowSearchItemsModal.value = true;
-    // set modal standards
+
     titleModalSearchItems.value = "Add Component Categories";
     descriptionModalSearchItems.value = "Add Component Categories";
     firstButtonModalSearchItems.value = "Close";
@@ -282,7 +282,6 @@ const handleClearForm = function () {
     // handle show modal for unique content
     modalShowClearForm.value = true;
 
-    // set modal standards
     typeModal.value = "warning";
     gridColumnModal.value = 2;
     titleModal.value = `Clear the form?`;

@@ -53,7 +53,7 @@ const thirdModalButtonFunction = ref(null);
 
 const handleModalPreviewTiptap = function () {
     store.commit("pageBuilderState/setShowModalTipTap", true);
-    // set modal standards
+
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Manage Content";
@@ -65,12 +65,10 @@ const handleModalPreviewTiptap = function () {
     // handle click
 
     firstModalButtonFunction.value = function () {
-        // set open modal
         store.commit("pageBuilderState/setShowModalTipTap", false);
     };
 
     thirdModalButtonFunction.value = function () {
-        // set open modal
         store.commit("pageBuilderState/setShowModalTipTap", false);
     };
 };
@@ -164,7 +162,6 @@ const handleModalIframeSrc = function () {
     // open modal to true
     showModalIframeSrc.value = true;
 
-    // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Add video url";
@@ -175,7 +172,6 @@ const handleModalIframeSrc = function () {
 
     // handle click
     firstModalButtonFunction.value = function () {
-        // set open modal
         showModalIframeSrc.value = false;
     };
     // handle click
@@ -205,7 +201,6 @@ const handleModalIframeSrc = function () {
             getElement.value.firstElementChild.src = iframeSrc.value;
         }
 
-        // set open modal
         showModalIframeSrc.value = false;
     };
 };
