@@ -417,7 +417,7 @@ onMounted(async () => {
                                 "
                             >
                                 <div
-                                    class="min-h-[30rem] max-h-[30rem] w-full border rounded py-4 px-2 overflow-scroll"
+                                    class="min-h-[30rem] max-h-[30rem] w-full border rounded-lg py-4 px-2 overflow-scroll"
                                 >
                                     <div class="flex gap-4 flex-wrap">
                                         <!-- Unique HTML Component # start -->
