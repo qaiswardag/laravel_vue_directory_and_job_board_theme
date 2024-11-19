@@ -38,13 +38,7 @@ class LoggedInUser extends Controller
      */
     public function show(Request $request)
     {
-        $user = Auth::user();
-
-        if (!$user) {
-            return response()->json("User is null", 403);
-        }
-
-        return $user;
+        return Auth::user();
     }
 
     /**

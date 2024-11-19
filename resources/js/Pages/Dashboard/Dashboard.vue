@@ -27,8 +27,6 @@ const breadcrumbsLinks = [
         },
     },
 ];
-
-const currentUserDetails = ref(false);
 </script>
 
 <template>

@@ -14,11 +14,16 @@ return [
     |
     */
 
-    "paths" => ["api/*", "sanctum/csrf-cookie"],
+    "paths" => ["api/*", "loggedin-user", "sanctum/csrf-cookie"],
 
     "allowed_methods" => ["*"],
 
-    "allowed_origins" => ["*"],
+    "allowed_origins" => [
+        "https://www.demo-admin.myissue.dk",
+        "https://www.demo.myissue.dk",
+        "http://localhost:8000",
+        "http://localhost:4000",
+    ],
 
     "allowed_origins_patterns" => [],
 
@@ -28,5 +33,5 @@ return [
 
     "max_age" => 0,
 
-    "supports_credentials" => false,
+    "supports_credentials" => true,
 ];
