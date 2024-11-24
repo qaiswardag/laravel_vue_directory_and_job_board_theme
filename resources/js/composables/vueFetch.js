@@ -124,9 +124,6 @@ export const vueFetch = function vueFetch() {
             isError.value = true;
             error.value = `Not able to fetch data. Error status: ${err}.`;
 
-            // Fetch response for error handling
-            const response = await fetch(url, fetchOptions);
-
             // Get content type of the response
             const contentType = response.headers.get("content-type") || "";
 
