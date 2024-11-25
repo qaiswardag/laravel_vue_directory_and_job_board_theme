@@ -295,8 +295,6 @@ const deleteUser = (userId) => {
     });
 };
 
-const handleEdit = function (userId) {};
-
 // handle search
 const handleSearch = function () {
     search();
@@ -555,9 +553,7 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Created at
                                     </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Edit
-                                    </th>
+
                                     <th scope="col" class="myPrimaryTableTh">
                                         Delete
                                     </th>
@@ -694,19 +690,6 @@ onMounted(() => {
                                             }}
                                         </td>
 
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <button
-                                                type="button"
-                                                @click="handleEdit(user.id)"
-                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                            >
-                                                <span
-                                                    class="myMediumIcon material-symbols-outlined"
-                                                >
-                                                    edit
-                                                </span>
-                                            </button>
-                                        </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <button
                                                 type="button"
