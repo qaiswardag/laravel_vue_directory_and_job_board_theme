@@ -48,7 +48,7 @@ const handleBack = function () {
 
     <div class="relative isolate min-h-screen">
         <img
-            src="/brand-images/pink-lady-high-resolution.jpg"
+            src="/brand-images/brand_bg.jpg"
             alt=""
             class="absolute inset-0 -z-10 h-full w-full object-cover object-top"
         />
