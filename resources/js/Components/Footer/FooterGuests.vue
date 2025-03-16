@@ -1,9 +1,19 @@
+<script setup>
+import { onMounted, ref } from "vue";
+
+const version = ref("");
+
+onMounted(() => {
+    version.value = import.meta.env.VITE_APP_VERSION;
+});
+</script>
+
 <template>
     <footer class="w-full mx-auto px-6 py-4 flex justify-between bg-gray-100">
         <div>
             <p class="myPrimaryParagraph lg:text-sm text-xs">
                 Laravel, Vue, and Nuxt, a Page Builder, Listing Directory, Blog,
-                and Job Board Theme.
+                and Job Board Theme. | Version: {{ version }}
             </p>
         </div>
         <div class="flex justify-center items-center myPrimaryGap">
