@@ -16,11 +16,11 @@ if ! command_exists gh; then
   exit 1
 fi
 
-# Read the version number from the .env file
-VERSION=$(grep -oP '(?<=^VITE_APP_VERSION=).+' .env)
+# Read the version number from package.json
+VERSION=$(jq -r '.version' ./package.json)
 if [ -z "$VERSION" ]; then
-  echo "Error: VITE_APP_VERSION is not set in .env file."
-  exit 1
+    echo "Error: version number in package.json is empty."
+    exit 1
 fi
 
 # Check if the release notes file exists and is not empty
