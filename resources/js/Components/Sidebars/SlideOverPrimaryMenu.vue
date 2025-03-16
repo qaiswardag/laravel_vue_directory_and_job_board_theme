@@ -72,6 +72,11 @@ const goToPosts = function () {
         window.location.href = appFrontendUrl.value + "/posts";
     }
 };
+const goProfessional = function () {
+    if (appFrontendUrl.value) {
+        window.location.href = appFrontendUrl.value + "/professional";
+    }
+};
 
 onMounted(() => {
     appFrontendUrl.value = import.meta.env.VITE_FRONTEND_APP_URL;
@@ -178,6 +183,32 @@ onMounted(() => {
                                                             class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                         >
                                                             Posts
+                                                        </button>
+                                                    </li>
+                                                    <li
+                                                        class="block w-full hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                    >
+                                                        <button
+                                                            @click="
+                                                                goProfessional
+                                                            "
+                                                            type="button"
+                                                            class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                        >
+                                                            Professional
+                                                        </button>
+                                                    </li>
+                                                    <li
+                                                        class="block w-full hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                    >
+                                                        <button
+                                                            @click="
+                                                                goProfessional
+                                                            "
+                                                            type="button"
+                                                            class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                        >
+                                                            Contact us
                                                         </button>
                                                     </li>
                                                     <li>
