@@ -1,11 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
-
-const version = ref("");
-
-onMounted(() => {
-    version.value = import.meta.env.VITE_APP_VERSION;
-});
+const version = __APP_VERSION__;
 </script>
 
 <template>
