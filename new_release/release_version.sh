@@ -16,10 +16,10 @@ if ! command_exists gh; then
   exit 1
 fi
 
-# Read the version number from the file
-VERSION=$(cat ./new_release/VERSION)
+# Read the version number from the .env file
+VERSION=$(grep -oP '(?<=^VITE_APP_VERSION=).+' .env)
 if [ -z "$VERSION" ]; then
-  echo "Error: VERSION file is empty."
+  echo "Error: VITE_APP_VERSION is not set in .env file."
   exit 1
 fi
 
