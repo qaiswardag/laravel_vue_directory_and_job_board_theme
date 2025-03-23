@@ -87,7 +87,7 @@ onMounted(() => {
     >
     </DynamicMenuModal>
 
-    <header class="w-full text-sm">
+    <header class="w-full">
         <nav
             class="mx-auto flex myPrimaryGap items-center justify-end px-6 lg:px-8"
             aria-label="Global"
