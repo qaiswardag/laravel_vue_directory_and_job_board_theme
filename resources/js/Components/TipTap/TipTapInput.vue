@@ -223,7 +223,7 @@ onMounted(() => {
                 <div
                     class="flex justify-between myPrimaryGap items-center divide-x divide-gray-200 py-4 px-4 overflow-x-auto border-b border-gray-20"
                 >
-                    <div class="flex items-center 0">
+                    <div class="flex items-center 0 divide-x divide-gray-200">
                         <div class="px-2 flex items-center justify-start gap-2">
                             <button
                                 @click="

@@ -4,6 +4,7 @@ import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 
 import ClassEditor from "@/Components/PageBuilder/EditorMenu/Editables/ClassEditor.vue";
+import ElementEditor from "@/Components/PageBuilder/EditorMenu/Editables/ElementEditor.vue";
 import ImageEditor from "@/Components/PageBuilder/EditorMenu/Editables/ImageEditor.vue";
 import OpacityEditor from "@/Components/PageBuilder/EditorMenu/Editables/OpacityEditor.vue";
 import Typography from "@/Components/PageBuilder/EditorMenu/Editables/Typography.vue";
@@ -126,6 +127,11 @@ const isHeadingElement = computed(() => {
                     </article>
                 </div>
 
+                <div>
+                    <article>
+                        <ElementEditor></ElementEditor>
+                    </article>
+                </div>
                 <article class="min-h-[12em]"></article>
             </div>
         </div>
