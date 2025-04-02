@@ -1,6 +1,6 @@
 {
     "private": true,
-    "version": "v1.2.25",
+    "version": "v1.2.26",
     "scripts": {
         "dev": "vite",
         "build": "vite build"
