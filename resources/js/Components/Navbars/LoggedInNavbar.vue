@@ -4,7 +4,7 @@ import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue
 import { onMounted, ref } from "vue";
 import SearchAnythingModal from "@/Components/Modals/SearchAnythingModal.vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
-import { usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 
 import DynamicMenuModal from "@/Components/Modals/DynamicMenuModal.vue";
 
@@ -79,6 +79,10 @@ const goToHome = function () {
     }
 };
 
+const handleLogout = () => {
+    router.post(route("logout"));
+};
+
 onMounted(() => {
     appFrontendUrl.value = import.meta.env.VITE_FRONTEND_APP_URL;
 });
@@ -107,7 +111,7 @@ onMounted(() => {
     </DynamicMenuModal>
     <!-- search anything - start -->
 
-    <div class="flex flex-1">
+    <div class="flex flex-1 border-r border-myPrimaryLightMediumGrayColor">
         <div class="ml-4 flex items-center md:ml-6 gap-8">
             <form class="w-full flex md:ml-0" @submit.prevent>
                 <div
@@ -133,19 +137,20 @@ onMounted(() => {
         </div>
     </div>
     <!-- search anything - end -->
-    <header class="w-6/1 text-sm">
+    <header class="w-6/1 text-sm flex justify-between overflow-x-auto">
         <nav
-            class="mx-auto flex gap-4 max-w-7xl items-center justify-end px-6 lg:px-8"
+            class="mx-auto flex gap-4 max-w-7xl items-center justify-end px-6 lg:px-8 mt-2"
             aria-label="Global"
         >
-            <button @click="goToHome" type="button">
-                <div
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0 text-myPrimaryDarkGrayColor"
-                >
-                    <span class="myMediumIcon material-symbols-outlined">
-                        home
-                    </span>
-                </div>
+            <button
+                @click="goToHome"
+                type="button"
+                class="myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+            >
+                <span class="myMediumIcon material-symbols-outlined">
+                    home
+                </span>
+                <span> Start </span>
             </button>
 
             <button
@@ -156,7 +161,7 @@ onMounted(() => {
                 "
                 type="button"
                 @click="handleMenuUserTeamModal"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                class="flex justify-center items-center py-0.5 border-2 border-myPrimaryLinkColor hover:bg-myPrimaryLinkColor hover:bg-opacity-10 myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3"
             >
                 <div class="h-10 w-10 flex-shrink-0">
                     <ThumbnailSmallImageSlider
@@ -167,6 +172,7 @@ onMounted(() => {
                         :roundedFull="true"
                     ></ThumbnailSmallImageSlider>
                 </div>
+                <span> Account </span>
             </button>
             <button
                 v-if="
@@ -176,23 +182,42 @@ onMounted(() => {
                 "
                 @click="handleMenuUserTeamModal"
                 type="button"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                class="flex justify-center items-center py-0.5 border-2 border-myPrimaryLinkColor hover:bg-myPrimaryLinkColor hover:bg-opacity-10 myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3"
             >
-                <span class="myMediumIcon material-symbols-outlined">
-                    person
-                </span>
+                <div
+                    class="h-10 min-h-10 max-h-10 w-10 min-w-10 max-w-10 flex justify-center items-center mx-4"
+                >
+                    <span class="myMediumIcon material-symbols-outlined">
+                        person
+                    </span>
+                    <span> Account </span>
+                </div>
             </button>
 
             <button
                 @click="handleNotificationsSlideOver"
                 type="button"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0 text-myPrimaryDarkGrayColor"
+                class="myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
                 <span class="sr-only">View notifications</span>
                 <span class="myMediumIcon material-symbols-outlined">
                     notifications
                 </span>
+                <span> Notifications </span>
             </button>
+
+            <form @submit.prevent="handleLogout">
+                <button
+                    @click="handleLogout"
+                    type="button"
+                    class="myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                >
+                    <span class="myMediumIcon material-symbols-outlined">
+                        arrow_forward
+                    </span>
+                    <span> Sign out </span>
+                </button>
+            </form>
 
             <button
                 @click="handlePrimaryMenuSlideOver"

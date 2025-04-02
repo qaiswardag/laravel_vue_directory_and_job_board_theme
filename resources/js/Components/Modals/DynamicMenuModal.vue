@@ -202,7 +202,7 @@ const handleLogout = () => {
                                 arrow_forward
                             </span>
                         </button>
-                        <div>Log out</div>
+                        <div>Sign out</div>
                     </div>
                 </form>
             </div>
