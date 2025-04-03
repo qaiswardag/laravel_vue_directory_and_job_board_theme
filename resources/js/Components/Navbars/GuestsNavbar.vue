@@ -3,7 +3,7 @@ import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications
 import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue";
 import { onMounted, ref } from "vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, router } from "@inertiajs/vue3";
 import DynamicMenuModal from "@/Components/Modals/DynamicMenuModal.vue";
 
 // slide over
@@ -64,6 +64,10 @@ const goToHome = function () {
     }
 };
 
+const goToDashboard = function () {
+    router.get(route("home"));
+};
+
 onMounted(() => {
     appFrontendUrl.value = import.meta.env.VITE_FRONTEND_APP_URL;
 });
@@ -93,24 +97,11 @@ onMounted(() => {
             aria-label="Global"
         >
             <div class="flex myPrimaryGap items-center">
-                <template v-if="$page.props.user !== null">
-                    <Link :href="route('dashboard')">
-                        <button
-                            type="button"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        >
-                            <span class="material-symbols-outlined">
-                                play_shapes
-                            </span>
-                        </button>
-                    </Link>
-                </template>
-
                 <template v-if="$page.props.user === null">
                     <div class="lg:block hidden">
                         <button @click="goToHome" type="button">
                             <div class="myPrimaryMenuTextButton">
-                                <span> Home</span>
+                                <span> Start</span>
                             </div>
                         </button>
                     </div>
@@ -153,8 +144,8 @@ onMounted(() => {
                             $page.props.user.user_photo.length !== 0
                         "
                         type="button"
-                        @click="handleMenuUserTeamModal"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        @click="goToDashboard"
+                        class="flex justify-center items-center py-0.5 border-2 border-myPrimaryLinkColor hover:bg-myPrimaryLinkColor hover:bg-opacity-10 myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3"
                     >
                         <div class="h-10 w-10 flex-shrink-0">
                             <ThumbnailSmallImageSlider
@@ -165,6 +156,7 @@ onMounted(() => {
                                 :roundedFull="true"
                             ></ThumbnailSmallImageSlider>
                         </div>
+                        <span> Dashboard </span>
                     </button>
                     <button
                         v-if="
@@ -172,13 +164,20 @@ onMounted(() => {
                             Array.isArray($page.props.user.user_photo) &&
                             $page.props.user.user_photo.length === 0
                         "
-                        @click="handleMenuUserTeamModal"
+                        @click="goToDashboard"
                         type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="flex justify-center items-center py-0.5 border-2 border-myPrimaryLinkColor hover:bg-myPrimaryLinkColor hover:bg-opacity-10 myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3"
                     >
-                        <span class="myMediumIcon material-symbols-outlined">
-                            person
-                        </span>
+                        <div
+                            class="h-10 min-h-10 max-h-10 w-10 min-w-10 max-w-10 flex justify-center items-center mx-6"
+                        >
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                person
+                            </span>
+                            <span> Dashboard </span>
+                        </div>
                     </button>
                 </template>
 
@@ -186,12 +185,13 @@ onMounted(() => {
                     <button
                         @click="handleNotificationsSlideOver"
                         type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0 text-myPrimaryDarkGrayColor"
+                        class="myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <span class="sr-only">View notifications</span>
                         <span class="myMediumIcon material-symbols-outlined">
                             notifications
                         </span>
+                        <span> Notifications </span>
                     </button>
                 </template>
 

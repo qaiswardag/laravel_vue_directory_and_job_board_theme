@@ -26,35 +26,6 @@ const primaryMenuSlideOverButton = function () {
     emit("primaryMenuSlideOverButton");
 };
 
-const navigation = [
-    {
-        label: "Resources",
-        route: {
-            name: null,
-            parameters: [],
-        },
-        active: route().current("terms.show") || route().current("policy.show"),
-        children: [
-            {
-                label: "Terms of Service",
-                route: {
-                    name: "terms.show",
-                    parameters: [],
-                },
-                active: route().current("terms.show"),
-            },
-            {
-                label: "Privacy Policy",
-                route: {
-                    name: "policy.show",
-                    parameters: [],
-                },
-                active: route().current("policy.show"),
-            },
-        ],
-    },
-];
-
 const appFrontendUrl = ref(null);
 
 const goToStores = function () {
@@ -77,6 +48,41 @@ const goProfessional = function () {
         window.location.href = appFrontendUrl.value + "/professional";
     }
 };
+
+const navigation = [
+    {
+        label: "Resources",
+        route: {
+            name: null,
+            parameters: [],
+        },
+        active: route().current("terms.show") || route().current("policy.show"),
+        children: [
+            {
+                label: "Professional",
+                route: null, // No route since it's handled by @click
+                active: false, // Set to false since it's not tied to a route
+                onClick: goProfessional, // Add the click handler
+            },
+            {
+                label: "Terms of Service",
+                route: {
+                    name: "terms.show",
+                    parameters: [],
+                },
+                active: route().current("terms.show"),
+            },
+            {
+                label: "Privacy Policy",
+                route: {
+                    name: "policy.show",
+                    parameters: [],
+                },
+                active: route().current("policy.show"),
+            },
+        ],
+    },
+];
 
 onMounted(() => {
     appFrontendUrl.value = import.meta.env.VITE_FRONTEND_APP_URL;
@@ -301,10 +307,33 @@ onMounted(() => {
                                                                             :key="
                                                                                 subItem
                                                                                     .route
-                                                                                    .name
+                                                                                    ?.name ||
+                                                                                subItem.label
                                                                             "
                                                                         >
+                                                                            <!-- If subItem has an onClick handler -->
+                                                                            <button
+                                                                                v-if="
+                                                                                    subItem.onClick
+                                                                                "
+                                                                                @click="
+                                                                                    subItem.onClick
+                                                                                "
+                                                                                class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                                                :class="[
+                                                                                    subItem.active
+                                                                                        ? 'text-myPrimaryLinkColor'
+                                                                                        : '',
+                                                                                ]"
+                                                                            >
+                                                                                {{
+                                                                                    subItem.label
+                                                                                }}
+                                                                            </button>
+
+                                                                            <!-- Else, fallback to Link for route navigation -->
                                                                             <DisclosureButton
+                                                                                v-else
                                                                                 class="block w-full hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                                                 :class="[
                                                                                     subItem.active
@@ -318,13 +347,12 @@ onMounted(() => {
                                                                                             ? 'text-myPrimaryLinkColor'
                                                                                             : '',
                                                                                     ]"
-                                                                                    class="block py-3 pl-3 pr-1 text-myPrimaryDarkGrayColor text-myPrimaryDarkGrayColor"
+                                                                                    class="block py-3 pl-3 pr-1 text-myPrimaryDarkGrayColor"
                                                                                     :href="
                                                                                         route(
                                                                                             subItem
                                                                                                 .route
                                                                                                 .name,
-
                                                                                             subItem
                                                                                                 .route
                                                                                                 .parameters

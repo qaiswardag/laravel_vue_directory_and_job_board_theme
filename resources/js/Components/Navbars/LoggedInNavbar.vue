@@ -185,7 +185,7 @@ onMounted(() => {
                 class="flex justify-center items-center py-0.5 border-2 border-myPrimaryLinkColor hover:bg-myPrimaryLinkColor hover:bg-opacity-10 myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3"
             >
                 <div
-                    class="h-10 min-h-10 max-h-10 w-10 min-w-10 max-w-10 flex justify-center items-center mx-4"
+                    class="h-10 min-h-10 max-h-10 w-10 min-w-10 max-w-10 flex justify-center items-center mx-6"
                 >
                     <span class="myMediumIcon material-symbols-outlined">
                         person
