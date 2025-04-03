@@ -185,7 +185,7 @@ onMounted(() => {
                     <button
                         @click="handleNotificationsSlideOver"
                         type="button"
-                        class="myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3 w-full h-10 cursor-pointer rounded-full lg:flex hidden items-center border-none justify-center bg-gray-50 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <span class="sr-only">View notifications</span>
                         <span class="myMediumIcon material-symbols-outlined">
