@@ -137,7 +137,7 @@ onMounted(() => {
         </div>
     </div>
     <!-- search anything - end -->
-    <header class="w-6/1 text-sm flex justify-between overflow-x-auto">
+    <header class="text-sm flex justify-between overflow-x-auto">
         <nav
             class="mx-auto flex gap-4 max-w-7xl items-center justify-end px-6 lg:px-8 mt-2"
             aria-label="Global"
@@ -161,7 +161,7 @@ onMounted(() => {
                 "
                 type="button"
                 @click="handleMenuUserTeamModal"
-                class="flex justify-center items-center py-0.5 border-2 border-myPrimaryLinkColor hover:bg-myPrimaryLinkColor hover:bg-opacity-10 myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3"
+                class="myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap flex justify-center items-center py-0.5 border-2 border-myPrimaryLinkColor hover:bg-myPrimaryLinkColor hover:bg-opacity-10 pl-2 pr-3"
             >
                 <div class="h-10 w-10 flex-shrink-0">
                     <ThumbnailSmallImageSlider
@@ -182,7 +182,7 @@ onMounted(() => {
                 "
                 @click="handleMenuUserTeamModal"
                 type="button"
-                class="flex justify-center items-center py-0.5 border-2 border-myPrimaryLinkColor hover:bg-myPrimaryLinkColor hover:bg-opacity-10 myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap pl-2 pr-3"
+                class="myPrimaryMenuTextButton text-[12.5px] gap-2 text-nowrap flex justify-center items-center py-0.5 border-2 border-myPrimaryLinkColor hover:bg-myPrimaryLinkColor hover:bg-opacity-10 pl-2 pr-3"
             >
                 <div
                     class="h-10 min-h-10 max-h-10 w-10 min-w-10 max-w-10 flex justify-center items-center mx-6"
