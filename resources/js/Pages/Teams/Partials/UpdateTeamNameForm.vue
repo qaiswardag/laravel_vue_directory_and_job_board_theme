@@ -510,8 +510,8 @@ onBeforeMount(() => {
                         <span>
                             {{
                                 postForm.logo && postForm.logo?.length === 0
-                                    ? "Select Cover image"
-                                    : "Add Additional Cover Images"
+                                    ? "Select Logo"
+                                    : "Add Additional Logos"
                             }}
                         </span>
                     </div>
