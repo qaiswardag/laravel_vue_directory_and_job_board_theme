@@ -126,8 +126,9 @@ const closingHours = [
     { id: 44, clock: "21:30:00", value: "21:30:00" },
     { id: 45, clock: "22:00:00", value: "22:00:00" },
     { id: 46, clock: "22:30:00", value: "22:30:00" },
-    { id: 47, clock: "23:00:00", value: "23:30:00" },
-    { id: 48, clock: "00:00:00", value: "00:00:00" },
+    { id: 47, clock: "23:00:00", value: "23:00:00" },
+    { id: 48, clock: "23:30:00", value: "23:30:00" },
+    { id: 49, clock: "00:00:00", value: "00:00:00" },
 ];
 
 const selectedOpeningHours = ref(null);
