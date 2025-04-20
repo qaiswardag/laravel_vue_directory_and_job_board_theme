@@ -20,7 +20,7 @@ const props = defineProps({
 const notifications = [
     {
         title: "New platform",
-        image: "/app-images/pages/home/frequently_asked_questions.jpg",
+        image: "/app-images/pages/home/frequently_asked_questions_2.jpg",
         description:
             "We're thrilled to announce the launch of our new platform, complete with exciting features.",
     },
