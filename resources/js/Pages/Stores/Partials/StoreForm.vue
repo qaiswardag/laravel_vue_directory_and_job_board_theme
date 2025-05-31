@@ -1830,14 +1830,17 @@ const pageBuilder = new PageBuilder(store);
                     </div>
 
                     <div class="myInputGroup md:w-1/3">
-                        <InputLabel for="floor" value="Store floor" />
+                        <InputLabel
+                            for="floor"
+                            value="Floor of the Store in the Mall"
+                        />
                         <!-- Input Number -->
                         <div class="myPrimaryInput p-0">
                             <div
                                 class="w-full flex gap-2 justify-between items-center"
                             >
                                 <input
-                                    placeholder="Enter store floor.."
+                                    placeholder="Enter floor of the Store.."
                                     id="floor"
                                     v-model="postForm.floor"
                                     class="myPrimaryInputNoBorder mt-0"
@@ -1869,6 +1872,9 @@ const pageBuilder = new PageBuilder(store);
                                 </div>
                             </div>
                         </div>
+                        <p class="myPrimaryParagraph italic">
+                            Enter 0 for Ground Floor
+                        </p>
                         <!-- End Input Number -->
                         <InputError :message="postForm.errors.floor" />
                     </div>
