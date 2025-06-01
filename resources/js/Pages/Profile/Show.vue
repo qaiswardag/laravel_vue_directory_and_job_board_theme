@@ -5,6 +5,7 @@ import { router } from "@inertiajs/vue3";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SelectPaymentMethod from "@/Pages/Stripe/SelectPaymentMethod.vue";
+import TestPageBuilderPackage from "@/Components//TestPageBuilderPackage.vue";
 
 import {
     ArrowPathIcon,
@@ -75,7 +76,6 @@ const updatePaymentMethod = function () {
 
 <template>
     <Head title="Your Profile" />
-
     <DynamicModal
         v-if="modalShowUpdatePaymentMethod"
         :show="modalShowUpdatePaymentMethod"
@@ -102,6 +102,7 @@ const updatePaymentMethod = function () {
     </DynamicModal>
     <MainLayout>
         <LoggedInLayout>
+            <TestPageBuilderPackage></TestPageBuilderPackage>
             <template #header> Your Profile </template>
             <template #description> Profile Settings </template>
             <template #breadcrumbs>
