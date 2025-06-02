@@ -54,11 +54,24 @@ const handleImageClick = (image) => {
         pageBuilder.mediaLibraryStore &&
         pageBuilder.mediaLibraryStore.setCurrentImage
     ) {
-        pageBuilder.mediaLibraryStore.setCurrentImage({ file: imageFile });
-        pageBuilder.updateBasePrimaryImage();
-
-        // Close modal since image is applied immediately
-        closeMediaLibraryModal();
+        // Structure the data to match what updateBasePrimaryImage expects
+        pageBuilder.mediaLibraryStore.setCurrentImage({
+            currentImage: {
+                mediaLibrary: {
+                    path: image.path,
+                    large_path: image.large_path,
+                    // Include other properties that might be needed
+                    id: image.id,
+                    name: image.name,
+                    medium_path: image.medium_path,
+                    thumbnail_path: image.thumbnail_path,
+                    width: image.width,
+                    height: image.height,
+                    size: image.size,
+                    extension: image.extension,
+                },
+            },
+        });
     }
 
     if (
@@ -92,13 +105,30 @@ const applySelectedImage = async () => {
     }
 
     try {
-        // Ensure the current image is set in the store before applying
-        const imageFile = `/${selectedImage.value.large_path}`;
-        pageBuilder.mediaLibraryStore.setCurrentImage({ file: imageFile });
+        // Ensure the current image is set in the store with proper structure
+        pageBuilder.mediaLibraryStore.setCurrentImage({
+            currentImage: {
+                mediaLibrary: {
+                    path: selectedImage.value.path,
+                    large_path: selectedImage.value.large_path,
+                    id: selectedImage.value.id,
+                    name: selectedImage.value.name,
+                    medium_path: selectedImage.value.medium_path,
+                    thumbnail_path: selectedImage.value.thumbnail_path,
+                    width: selectedImage.value.width,
+                    height: selectedImage.value.height,
+                    size: selectedImage.value.size,
+                    extension: selectedImage.value.extension,
+                },
+            },
+        });
 
-        // Use PageBuilder's built-in method - same as other components
+        // Use PageBuilder's built-in method to apply the image
         await pageBuilder.updateBasePrimaryImage();
-        console.log("Image applied to element successfully");
+        console.log(
+            "Image applied to element successfully",
+            selectedImage.value
+        );
 
         // Close modal using professional pattern
         closeMediaLibraryModal();
