@@ -1,4 +1,7 @@
 <script setup>
+import MediaLibraryComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/CustomMediaLibraryComponent.vue";
+import SearchComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/CustomSearchComponent.vue";
+// Import external package CSS
 import { PageBuilder } from "vue-website-page-builder";
 // Import external package CSS
 import "vue-website-page-builder/style.css";
@@ -22,6 +25,9 @@ const testResource = {
         <h1 class="text-2xl font-bold mb-4">
             Testing External Page Builder Package
         </h1>
-        <PageBuilder />
+        <PageBuilder
+            :CustomMediaLibraryComponent="MediaLibraryComponent"
+            :CustomSearchComponent="SearchComponent"
+        />
     </div>
 </template>
