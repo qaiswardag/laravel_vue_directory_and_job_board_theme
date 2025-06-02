@@ -69,38 +69,6 @@ const handleImageClick = (image) => {
     }
 };
 
-// Apply selected image to the current element in page builder
-const applyImageToElement = async () => {
-    if (!selectedImage.value) {
-        alert("Please select an image first");
-        return;
-    }
-
-    try {
-        // Simple approach: just set the base primary image in the state store
-        if (
-            pageBuilderStateStore &&
-            pageBuilderStateStore.setBasePrimaryImage
-        ) {
-            pageBuilderStateStore.setBasePrimaryImage(
-                `/${selectedImage.value.large_path}`
-            );
-            console.log("Image applied to element successfully");
-        } else {
-            console.warn("Page builder state store not available");
-        }
-    } catch (error) {
-        console.error("Error applying image to element:", error);
-    }
-};
-
-// Handle image load errors
-const handleImageError = (event, image) => {
-    console.warn(`Failed to load image: ${image.path}`);
-    event.target.src =
-        "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZTwvdGV4dD48L3N2Zz4=";
-};
-
 onMounted(() => {
     fetchImages();
 });
@@ -112,15 +80,6 @@ onMounted(() => {
 
 <template>
     <div>
-        <div class="mb-4">
-            <h2 class="text-xl font-semibold text-gray-800 mb-2">
-                Media Library Custom Component
-            </h2>
-            <p class="text-sm text-gray-600">
-                Select an image from your media library
-            </p>
-        </div>
-
         <div class="flex gap-6">
             <!-- Left side: Image grid and states -->
             <div class="flex-1">
@@ -158,7 +117,6 @@ onMounted(() => {
                                 :src="`/${image.thumbnail_path}`"
                                 :alt="image.name || `Image ${image.id}`"
                                 class="w-full h-full object-cover"
-                                @error="handleImageError($event, image)"
                             />
                         </div>
 
@@ -264,16 +222,6 @@ onMounted(() => {
                                 <strong>File Size:</strong>
                                 {{ selectedImage.size }}kb
                             </div>
-                        </div>
-
-                        <!-- Apply button -->
-                        <div class="mt-4">
-                            <button
-                                @click="applyImageToElement"
-                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
-                            >
-                                Apply to Current Element
-                            </button>
                         </div>
                     </div>
                 </div>
