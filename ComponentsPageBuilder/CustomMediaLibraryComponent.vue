@@ -1,11 +1,308 @@
+<script setup>
+import { ref, onMounted, inject } from "vue";
+
+const loading = ref(false);
+const error = ref(null);
+const images = ref([]);
+const selectedImage = ref(null);
+
+// Inject the stores provided by the PageBuilder component
+const pageBuilderStateStore = inject("pageBuilderStateStore", null);
+const mediaLibraryStore = inject("mediaLibraryStore", null);
+
+// Simple reactive ref for current image instead of computed
+const currentPageBuilderImage = ref(null);
+
+// Fetch images from JSON file
+const fetchImages = async () => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+        const response = await fetch("/media-library.json");
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        images.value = data;
+    } catch (err) {
+        console.error("Error fetching media library:", err);
+        error.value = "Failed to load media library. Please try again.";
+    } finally {
+        loading.value = false;
+    }
+};
+
+// Handle image click - integrate with page builder media store
+const handleImageClick = (image) => {
+    selectedImage.value = image;
+
+    // Set the image in the page builder's media library store
+    const imageData = {
+        file: `/${image.large_path}`, // Use large_path for the main image
+        id: image.id,
+        name: image.name,
+        path: image.path,
+        thumbnail_path: image.thumbnail_path,
+        medium_path: image.medium_path,
+        large_path: image.large_path,
+        width: image.width,
+        height: image.height,
+        size: image.size,
+        extension: image.extension,
+    };
+
+    // Set current image in the stores
+    if (mediaLibraryStore && mediaLibraryStore.setCurrentImage) {
+        mediaLibraryStore.setCurrentImage(imageData);
+        // Update our local reactive ref
+        currentPageBuilderImage.value = imageData;
+    }
+
+    if (mediaLibraryStore && mediaLibraryStore.setCurrentPreviewImage) {
+        mediaLibraryStore.setCurrentPreviewImage(null);
+    }
+
+    // Also set in page builder state store
+    if (pageBuilderStateStore && pageBuilderStateStore.setBasePrimaryImage) {
+        pageBuilderStateStore.setBasePrimaryImage(`/${image.large_path}`);
+    }
+};
+
+// Apply selected image to the current element in page builder
+const applyImageToElement = async () => {
+    if (!selectedImage.value) {
+        alert("Please select an image first");
+        return;
+    }
+
+    try {
+        // Simple approach: just set the base primary image in the state store
+        if (
+            pageBuilderStateStore &&
+            pageBuilderStateStore.setBasePrimaryImage
+        ) {
+            pageBuilderStateStore.setBasePrimaryImage(
+                `/${selectedImage.value.large_path}`
+            );
+            console.log("Image applied to element successfully");
+        } else {
+            console.warn("Page builder state store not available");
+        }
+    } catch (error) {
+        console.error("Error applying image to element:", error);
+    }
+};
+
+// Handle image load errors
+const handleImageError = (event, image) => {
+    console.warn(`Failed to load image: ${image.path}`);
+    event.target.src =
+        "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZTwvdGV4dD48L3N2Zz4=";
+};
+
+onMounted(() => {
+    fetchImages();
+});
+</script>
+
+<style scoped>
+/* Custom styles for the media library component */
+</style>
+
 <template>
     <div>
-        <h2 class="text-xl font-semibold text-gray-800">
-            Media Library Custom Component
-        </h2>
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">
+                Media Library Custom Component
+            </h2>
+            <p class="text-sm text-gray-600">
+                Select an image from your media library
+            </p>
+        </div>
+
+        <div class="flex gap-6">
+            <!-- Left side: Image grid and states -->
+            <div class="flex-1">
+                <!-- Loading state -->
+                <div v-if="loading" class="text-center py-8">
+                    <div
+                        class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
+                    ></div>
+                    <p class="mt-2 text-gray-600">Loading images...</p>
+                </div>
+
+                <!-- Error state -->
+                <div v-else-if="error" class="text-center py-8">
+                    <p class="text-red-600">{{ error }}</p>
+                </div>
+
+                <!-- Images grid -->
+                <div
+                    v-else
+                    class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+                >
+                    <div
+                        v-for="image in images"
+                        :key="image.id"
+                        @click="handleImageClick(image)"
+                        class="relative cursor-pointer group rounded-lg overflow-hidden border-2 transition-all duration-200"
+                        :class="
+                            selectedImage && selectedImage.id === image.id
+                                ? 'border-blue-500 ring-2 ring-blue-200'
+                                : 'border-gray-200 hover:border-gray-300'
+                        "
+                    >
+                        <div class="aspect-square">
+                            <img
+                                :src="`/${image.thumbnail_path}`"
+                                :alt="image.name || `Image ${image.id}`"
+                                class="w-full h-full object-cover"
+                                @error="handleImageError($event, image)"
+                            />
+                        </div>
+
+                        <!-- Overlay on hover -->
+                        <div
+                            class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center"
+                        >
+                            <div
+                                class="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                            >
+                                <span class="text-white text-sm font-medium"
+                                    >Select</span
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Selected indicator -->
+                        <div
+                            v-if="
+                                selectedImage && selectedImage.id === image.id
+                            "
+                            class="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1"
+                        >
+                            <svg
+                                class="w-4 h-4"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No images message -->
+                <div
+                    v-if="!loading && !error && images.length === 0"
+                    class="text-center py-8"
+                >
+                    <p class="text-gray-500">
+                        No images found in your media library.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right side: Preview panels -->
+            <div class="w-80 space-y-4">
+                <!-- Current Page Builder Image Preview -->
+                <div
+                    v-if="
+                        currentPageBuilderImage && currentPageBuilderImage.file
+                    "
+                    class="p-4 bg-blue-50 border border-blue-200 rounded-lg"
+                >
+                    <h3 class="font-medium text-blue-900 mb-3">
+                        Ready to Apply
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-center">
+                            <img
+                                :src="currentPageBuilderImage.file"
+                                :alt="
+                                    currentPageBuilderImage.name ||
+                                    'Selected image'
+                                "
+                                class="mx-auto block w-full object-cover object-center cursor-pointer"
+                            />
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm text-blue-800 font-medium mb-1">
+                                {{
+                                    currentPageBuilderImage.name ||
+                                    "Selected Image"
+                                }}
+                            </p>
+                        </div>
+                        <div
+                            class="grid grid-cols-1 gap-2 text-sm text-gray-600"
+                        >
+                            <div>
+                                <strong>Status:</strong>
+                                Ready to apply to current element
+                            </div>
+                            <div>
+                                <strong>Name:</strong>
+                                {{ selectedImage.name || "Untitled" }}
+                            </div>
+                            <div>
+                                <strong>Size:</strong>
+                                {{ selectedImage.width }}x{{
+                                    selectedImage.height
+                                }}
+                            </div>
+                            <div>
+                                <strong>Extension:</strong>
+                                {{ selectedImage.extension?.toUpperCase() }}
+                            </div>
+                            <div>
+                                <strong>File Size:</strong>
+                                {{ selectedImage.size }}kb
+                            </div>
+                        </div>
+
+                        <!-- Apply button -->
+                        <div class="mt-4">
+                            <button
+                                @click="applyImageToElement"
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                            >
+                                Apply to Current Element
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Placeholder when nothing is selected -->
+                <div
+                    v-if="!selectedImage && !currentPageBuilderImage?.file"
+                    class="p-4 bg-gray-50 rounded-lg text-center"
+                >
+                    <div class="text-gray-400 mb-2">
+                        <svg
+                            class="w-12 h-12 mx-auto"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                        </svg>
+                    </div>
+                    <p class="text-sm text-gray-500">
+                        Click an image to preview
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
-
-<script setup>
-// Add your custom media library logic here
-</script>
