@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 // Professional static imports - everything from one package!
 import {
     PageBuilder,
@@ -12,6 +12,7 @@ import {
 import "vue-website-page-builder/style.css";
 
 // Component refs
+const isSetupComplete = ref(false);
 const pageBuilderStateStore = ref(null);
 const mediaLibraryStore = ref(null);
 const pageBuilderComposable = ref(null);
@@ -31,9 +32,6 @@ const testResource = ref({
 
 onMounted(async () => {
     try {
-        // Wait for next tick to ensure Vue app is fully mounted
-        await nextTick();
-
         // Create separate Pinia instance for external package
         const externalPinia = createPinia();
 
@@ -49,14 +47,13 @@ onMounted(async () => {
 
         pageBuilderComposable.value = myPageBuilder;
 
-        console.log("✅ External page builder package loaded successfully!");
-        console.log("PageBuilder Component:", PageBuilder);
-        console.log("PageBuilder State Store:", pageBuilderStateStore.value);
-        console.log("Media Library Store:", mediaLibraryStore.value);
-        console.log("PageBuilder instance:", myPageBuilder);
+        // Mark setup as complete so PageBuilder can render
+        isSetupComplete.value = true;
+
+        console.log("✅ External page builder package setup complete!");
     } catch (error) {
         console.error(
-            "❌ Failed to load external page builder package:",
+            "❌ Failed to setup external page builder package:",
             error
         );
     }
@@ -66,16 +63,20 @@ onMounted(async () => {
 <template>
     <div class="p-8">
         <h1 class="text-2xl font-bold mb-4">
-            Testing External Page Builder Package (Professional Import)
+            Testing External Page Builder Package
         </h1>
 
-        <!-- Page Builder Component - Always Visible -->
+        <!-- Page Builder Component - Renders after setup -->
         <div class="border-2 border-gray-300 rounded-lg p-4">
             <h3 class="text-lg font-semibold mb-4">
-                External Page Builder Component (Static Import)
+                External Page Builder Component
             </h3>
 
-            <component :is="PageBuilder" />
+            <div v-if="!isSetupComplete" class="text-blue-600">
+                Setting up external package...
+            </div>
+
+            <component :is="PageBuilder" v-else />
         </div>
 
         <!-- Test Store Integration -->
@@ -97,7 +98,7 @@ onMounted(async () => {
             </div>
         </div>
 
-        <!-- Components List -->
+        <!-- Components Count -->
         <div class="mt-6" v-if="pageBuilderStateStore">
             <h3 class="text-lg font-semibold mb-2">Components Count</h3>
             <p>
