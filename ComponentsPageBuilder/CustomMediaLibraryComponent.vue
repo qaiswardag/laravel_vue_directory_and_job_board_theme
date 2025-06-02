@@ -9,5 +9,3 @@
 <script setup>
 // Add your custom media library logic here
 </script>
-
-<style scoped></style>

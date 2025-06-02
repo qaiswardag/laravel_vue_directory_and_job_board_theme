@@ -1,9 +1,12 @@
 <script setup>
-import { ref, computed, onMounted, nextTick, inject } from "vue";
+import { ref, onMounted } from "vue";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 
-// Import PageBuilder composable - now with auto-injection capability!
-import { PageBuilderComposable } from "vue-website-page-builder";
+// Import PageBuilder and modal control - professional way!
+import {
+    PageBuilderComposable,
+    usePageBuilderModal,
+} from "vue-website-page-builder";
 
 const search_query = ref("");
 const categorySelected = ref({ name: "Components", id: null });
@@ -11,84 +14,30 @@ const isLoading = ref(false);
 const error = ref(null);
 const components = ref([]);
 
-// Initialize PageBuilder - it will automatically inject stores!
+// Initialize PageBuilder - it handles everything automatically!
 const pageBuilder = new PageBuilderComposable();
 
-// We still need to inject pageBuilderStateStore for the computed property
-const pageBuilderStateStore = inject("pageBuilderStateStore");
+// Get helper components from PageBuilder (no need to define manually)
+const componentHelpers = pageBuilder.getDefaultHelperComponents();
 
-// Inject the modal close function
-const closeAddComponentModal = inject("closeAddComponentModal");
-
-const getComponentArrayAddMethod = computed(() => {
-    return pageBuilderStateStore.getComponentArrayAddMethod;
-});
+// Get modal control functions - professional import pattern!
+const { closeAddComponentModal } = usePageBuilderModal();
 
 const handlecategorySelected = function (category) {
     categorySelected.value = category;
 };
 
-const handleDropComponent = async function (componentObject) {
-    if (!pageBuilder || !pageBuilderStateStore) {
-        console.error("PageBuilder or store not available");
-        return;
-    }
-
-    await nextTick();
-    const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
-        html_code: componentObject.html_code,
-        id: componentObject.id,
-    });
-
-    await nextTick();
-
-    pageBuilderStateStore.setPushComponents({
-        component: clonedComponent,
-        componentArrayAddMethod: getComponentArrayAddMethod.value,
-    });
-
-    await nextTick();
-    pageBuilder.setEventListenersForElements();
-
-    console.log("Component added to page builder:", componentObject);
-
-    // Auto-close the modal after successfully adding the component
-    if (closeAddComponentModal) {
-        closeAddComponentModal();
-    }
+// Super simple component addition with professional modal closing!
+const handleDropComponent = function (componentObject) {
+    pageBuilder.addComponent(componentObject, closeAddComponentModal);
 };
 
-const handleAddHelperComponent = async function (helperComponentObject) {
-    if (!pageBuilder || !pageBuilderStateStore) {
-        console.error("PageBuilder or store not available");
-        return;
-    }
-
-    await nextTick();
-    const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
-        html_code: helperComponentObject.html_code,
-        id: helperComponentObject.id,
-    });
-
-    await nextTick();
-
-    pageBuilderStateStore.setPushComponents({
-        component: clonedComponent,
-        componentArrayAddMethod: getComponentArrayAddMethod.value,
-    });
-
-    await nextTick();
-    pageBuilder.setEventListenersForElements();
-
-    console.log(
-        "Helper component added to page builder:",
-        helperComponentObject
+// Super simple helper component addition with professional modal closing!
+const handleAddHelperComponent = function (helperComponentObject) {
+    pageBuilder.addHelperComponent(
+        helperComponentObject,
+        closeAddComponentModal
     );
-
-    // Auto-close the modal after successfully adding the helper component
-    if (closeAddComponentModal) {
-        closeAddComponentModal();
-    }
 };
 
 const fetchComponents = async function () {
@@ -102,27 +51,13 @@ const fetchComponents = async function () {
         }
         const data = await response.json();
 
-        // Debug logging
-        console.log("Raw JSON data:", data);
-        console.log("Components object:", data.components);
-        console.log("Components data array:", data.components?.data);
-        console.log(
-            "Number of components:",
-            data.components?.data
-                ? data.components.data.length
-                : "No components.data property"
-        );
-
-        // Fix: Access the nested data array and add id fields
+        // Process components from JSON
         const rawComponents = data.components?.data || [];
         components.value = rawComponents.map((component, index) => ({
             ...component,
-            id: component.id || index + 1, // Add id if missing, using index + 1
-            name: component.title || component.name || `Component ${index + 1}`, // Use title as name
+            id: component.id || index + 1,
+            name: component.title || component.name || `Component ${index + 1}`,
         }));
-
-        console.log("Final components.value:", components.value);
-        console.log("Number of processed components:", components.value.length);
     } catch (err) {
         error.value = `Failed to fetch components: ${err.message}`;
         console.error("Error fetching components:", err);
@@ -131,99 +66,6 @@ const fetchComponents = async function () {
     }
 };
 
-// Simple HTML elements for the helper components
-const componentHelpers = [
-    {
-        html_code: `
-        <section>
-        <div class="relative py-4">
-        <div class="mx-auto max-w-7xl lg:px-4 px-2">
-        <div>
-        <p><strong>Text</strong></p><p>Tempus imperdiet nulla malesuada pellentesque elit eget gravida cum sociis. Erat nam at lectus urna duis convallis convallis. Congue mauris rhoncus aenean vel elit scelerisque. 
-        Turpis tincidunt id aliquet risus feugiat in ante. Tincidunt dui ut ornare lectus sit. Ipsum dolor sit amet consectetur. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque convallis.<br><br>Dignissim sodales ut eu sem integer vitae justo eget magna. 
-        Ac turpis egestas maecenas pharetra convallis. Mauris sit amet massa vitae. Ut tellus elementum sagittis vitae et. Sed risus ultricies tristique nulla aliquet enim tortor. Nunc mattis enim ut tellus elementum sagittis vitae et leo. Quis vel eros donec ac odio tempor. 
-        Faucibus scelerisque eleifend donec pretium. <br><br>Adipiscing bibendum est ultricies integer quis auctor elit. Vestibulum morbi blandit cursus risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget. Gravida dictum fusce ut placerat orci nulla. 
-        Consequat mauris nunc congue nisi vitae suscipit tellus mauris. <br><br></p><p><strong>List</strong></p><ul><li><p>Integer enim neque volutpat ac tincidunt vitae semper quis. Sit amet consectetur adipiscing elit pellentesque.</p></li><li><p>Urna cursus eget nunc scelerisque viverra. 
-        Cursus metus aliquam eleifend mi in nulla posuere. Lobortis elementum nibh tellus molestie nunc non blandit massa.</p></li><li><p>Sodales ut eu sem integer vitae justo eget magna. Scelerisque felis imperdiet proin fermentum leo vel orci. Nunc id cursus metus aliquam eleifend.</p></li></ul>
-        </div>
-        </div>
-        </div>
-        </section>`,
-        id: null,
-        title: "Text",
-        icon: `
-        <span class="material-symbols-outlined">
-        text_fields
-        </span>
-        `,
-    },
-    {
-        html_code: `<section><div class="relative py-4"><div class="mx-auto max-w-7xl lg:px-4 px-2"><div class="break-words"><h2>Consequat mauris nunc congue</h2></div></div></div></section>`,
-        id: null,
-        title: "Header H2",
-        icon: `
-        <span class="material-symbols-outlined">
-        format_h2
-        </span>
-        `,
-    },
-    {
-        html_code: `<section><div class="relative py-4"><div class="mx-auto max-w-7xl lg:px-4 px-2"><div class="break-words"><h3>Consequat mauris nunc congue</h3></div></div></div></section>`,
-        id: null,
-        title: "Header H3",
-        icon: `
-        <span class="material-symbols-outlined">
-        format_h3
-        </span>
-        `,
-    },
-    {
-        html_code: `
-        <section>
-        <div class="py-4">
-        <div class="mx-auto max-w-7xl lg:px-4 px-2">
-        <div  id="youtube-video" class="w-full aspect-video bg-slate-100 border border-slate-200 rounded-xl lg:p-8 md:p-6 p-4">
-     
-        <iframe
-        frameborder="0" 
-        allowfullscreen
-        class="w-full aspect-video bg-gray-600 border border-slate-800 rounded-xl"
-        src="" 
-        allow="accelerometer; autoplay; clipboard-write;" allowfullscreen>
-        </iframe>
-        </div>
-        </div>
-        </div>
-        </section>`,
-        id: null,
-        title: "YouTube Video",
-        icon: `
-        <span class="material-symbols-outlined">
-        play_circle
-        </span>
-        `,
-    },
-    {
-        html_code: `<section><div class="relative py-8"><div class="absolute inset-0 flex items-center" aria-hidden="true"><div class="w-full border-4 border-gray-800 leading-none"></div></div><div class="relative flex justify-start"></div></div></section>`,
-        id: null,
-        title: "Break Divider",
-        icon: `
-        <span class="material-symbols-outlined">
-        horizontal_rule
-        </span>
-        `,
-    },
-    {
-        html_code: `<section>\n<div class=\"w-full md:pt-2 md:pb-2 pt-4 pb-4 lg:px-4 px-2\">\n<div class=\"mx-auto max-w-7xl\">\n<div id=\"linktree\"\nclass=\"border-2 border-gray-600 flex items-centre justify-start rounded-md font-medium text-black\">\n<p>\n<a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.google.com\">Link to landing page</a>\n</p>\n</div>\n</div>\n</div>\n</section>`,
-        id: null,
-        title: "Link",
-        icon: `
-            <span class="material-symbols-outlined">
-            horizontal_rule
-            </span>
-            `,
-    },
-];
 onMounted(async () => {
     await fetchComponents();
 });
@@ -296,7 +138,7 @@ onMounted(async () => {
                     </button>
                 </div>
 
-                <div class="h-full flex md:flex-row flex-col gap-4">
+                <div class="h-full flex md:flex-row gap-4">
                     <section class="md:w-4/6">
                         <!-- Components Tab -->
                         <template
@@ -377,9 +219,9 @@ onMounted(async () => {
                                                     )
                                                 "
                                                 type="button"
-                                                class="mySecondaryButton"
+                                                class="flex items-center gap-2 px-3 py-2 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-colors"
                                             >
-                                                <span class="text-sm">+</span>
+                                                <span>+</span>
                                                 <span>{{
                                                     helperComponent.title
                                                 }}</span>
