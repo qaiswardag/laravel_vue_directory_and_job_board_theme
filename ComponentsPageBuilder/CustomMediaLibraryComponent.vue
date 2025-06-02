@@ -1,14 +1,22 @@
 <script setup>
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted } from "vue";
+
+// Import PageBuilder and modal control - professional way!
+import {
+    PageBuilderComposable,
+    usePageBuilderModal,
+} from "vue-website-page-builder";
 
 const loading = ref(false);
 const error = ref(null);
 const images = ref([]);
 const selectedImage = ref(null);
 
-// Inject the stores provided by the PageBuilder component
-const pageBuilderStateStore = inject("pageBuilderStateStore", null);
-const mediaLibraryStore = inject("mediaLibraryStore", null);
+// Initialize PageBuilder - it handles everything automatically!
+const pageBuilder = new PageBuilderComposable();
+
+// Get modal control functions - professional import pattern!
+const { closeMediaLibraryModal } = usePageBuilderModal();
 
 // Simple reactive ref for current image instead of computed
 const currentPageBuilderImage = ref(null);
@@ -37,9 +45,32 @@ const fetchImages = async () => {
 const handleImageClick = (image) => {
     selectedImage.value = image;
 
-    // Set the image in the page builder's media library store
-    const imageData = {
-        file: `/${image.large_path}`, // Use large_path for the main image
+    // Follow the exact same pattern as built-in Unsplash component
+    // They only set { file } - that's it!
+    const imageFile = `/${image.large_path}`;
+
+    // Set current image using PageBuilder methods (if available)
+    if (
+        pageBuilder.mediaLibraryStore &&
+        pageBuilder.mediaLibraryStore.setCurrentImage
+    ) {
+        pageBuilder.mediaLibraryStore.setCurrentImage({ file: imageFile });
+        pageBuilder.updateBasePrimaryImage();
+
+        // Close modal since image is applied immediately
+        closeMediaLibraryModal();
+    }
+
+    if (
+        pageBuilder.mediaLibraryStore &&
+        pageBuilder.mediaLibraryStore.setCurrentPreviewImage
+    ) {
+        pageBuilder.mediaLibraryStore.setCurrentPreviewImage(null);
+    }
+
+    // Update our local reactive ref for the preview
+    currentPageBuilderImage.value = {
+        file: imageFile,
         id: image.id,
         name: image.name,
         path: image.path,
@@ -51,21 +82,28 @@ const handleImageClick = (image) => {
         size: image.size,
         extension: image.extension,
     };
+};
 
-    // Set current image in the stores
-    if (mediaLibraryStore && mediaLibraryStore.setCurrentImage) {
-        mediaLibraryStore.setCurrentImage(imageData);
-        // Update our local reactive ref
-        currentPageBuilderImage.value = imageData;
+// Apply selected image using PageBuilder's built-in method
+const applySelectedImage = async () => {
+    if (!selectedImage.value) {
+        console.warn("No image selected to apply");
+        return;
     }
 
-    if (mediaLibraryStore && mediaLibraryStore.setCurrentPreviewImage) {
-        mediaLibraryStore.setCurrentPreviewImage(null);
-    }
+    try {
+        // Ensure the current image is set in the store before applying
+        const imageFile = `/${selectedImage.value.large_path}`;
+        pageBuilder.mediaLibraryStore.setCurrentImage({ file: imageFile });
 
-    // Also set in page builder state store
-    if (pageBuilderStateStore && pageBuilderStateStore.setBasePrimaryImage) {
-        pageBuilderStateStore.setBasePrimaryImage(`/${image.large_path}`);
+        // Use PageBuilder's built-in method - same as other components
+        await pageBuilder.updateBasePrimaryImage();
+        console.log("Image applied to element successfully");
+
+        // Close modal using professional pattern
+        closeMediaLibraryModal();
+    } catch (error) {
+        console.error("Error applying image to element:", error);
     }
 };
 
@@ -222,6 +260,17 @@ onMounted(() => {
                                 <strong>File Size:</strong>
                                 {{ selectedImage.size }}kb
                             </div>
+                        </div>
+
+                        <!-- Apply button -->
+                        <div class="mt-4">
+                            <button
+                                @click="applySelectedImage"
+                                :disabled="!selectedImage"
+                                class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                            >
+                                Apply to Current Element
+                            </button>
                         </div>
                     </div>
                 </div>
