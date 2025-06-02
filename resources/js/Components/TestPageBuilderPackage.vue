@@ -28,6 +28,7 @@ const testResource = {
         <PageBuilder
             :CustomMediaLibraryComponent="MediaLibraryComponent"
             :CustomSearchComponent="SearchComponent"
+            updateOrCreate="create"
         />
     </div>
 </template>
