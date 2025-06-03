@@ -33,7 +33,7 @@ const togglePageBuilder = function (e) {
 
     // handle click
     firstModalButtonFunction.value = function () {
-        openPageBuilder.value = false;
+        // openPageBuilder.value = false;
     };
     secondModalButtonFunction.value = function () {
         openPageBuilder.value = false;
