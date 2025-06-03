@@ -124,13 +124,6 @@ const applySelectedImage = async () => {
         return;
     }
 
-    await pageBuilderClass.pageBuilderStateStore.setBasePrimaryImage(
-        `/${selectedImage.value.large_path}`
-    );
-    closeMediaLibraryModal();
-
-    return;
-
     try {
         // Ensure the current image is set in the store with proper structure
         pageBuilderClass.mediaLibraryStore.setCurrentImage({
@@ -152,15 +145,14 @@ const applySelectedImage = async () => {
 
         // Use PageBuilder's built-in method to apply the image
         await pageBuilderClass.updateBasePrimaryImage();
-        console.log(
-            "Image applied to element successfully",
-            selectedImage.value
-        );
+
+        console.log("Image applied successfully:", selectedImage.value.name);
 
         // Close modal using professional pattern
         closeMediaLibraryModal();
     } catch (error) {
         console.error("Error applying image to element:", error);
+        // Don't close modal on error, let user try again
     }
 };
 
