@@ -95,6 +95,14 @@ onMounted(async () => {
                 <p class="text-red-600 bg-red-50 p-3 rounded">
                     {{ error }}
                 </p>
+                <!-- Always provide a focusable element during error -->
+                <button
+                    type="button"
+                    @click="fetchComponents"
+                    class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    Try Again
+                </button>
             </template>
 
             <!-- Loading spinner -->
@@ -105,19 +113,28 @@ onMounted(async () => {
                     height="h-6"
                     border="border-4"
                 />
+                <!-- Always provide a focusable element during loading -->
+                <button
+                    type="button"
+                    @click="closeAddComponentModal"
+                    class="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                >
+                    Cancel
+                </button>
             </template>
 
             <!-- Content -->
             <template v-if="!error && !isLoading">
                 <div class="flex gap-2 flex-wrap mb-4">
                     <button
+                        type="button"
                         @click="
                             handlecategorySelected({
                                 name: 'Components',
                                 id: null,
                             })
                         "
-                        class="myPrimaryTag font-medium"
+                        class="myPrimaryTag font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
                         :class="[
                             {
                                 'bg-myPrimaryLinkColor text-white':
@@ -128,13 +145,14 @@ onMounted(async () => {
                         Components
                     </button>
                     <button
+                        type="button"
                         @click="
                             handlecategorySelected({
                                 name: 'HTML Elements',
                                 id: null,
                             })
                         "
-                        class="myPrimaryTag font-medium"
+                        class="myPrimaryTag font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
                         :class="[
                             {
                                 'bg-myPrimaryLinkColor text-white':
@@ -158,11 +176,15 @@ onMounted(async () => {
                             <div
                                 class="overflow-auto min-h-[25rem] max-h-[25rem] grid gap-4 md:grid-cols-2 grid-cols-2 w-full p-4 border border-gray-300 rounded-lg"
                             >
-                                <div
-                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded-lg border border-gray-200 lg:py-10 py-8 px-2 hover:shadow-md transition-shadow cursor-pointer relative z-50"
+                                <button
+                                    type="button"
+                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded-lg border border-gray-200 lg:py-10 py-8 px-2 hover:shadow-md transition-shadow cursor-pointer relative z-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                     v-for="component in components"
                                     :key="component.id"
                                     @click="handleDropComponent(component)"
+                                    :aria-label="`Add component ${
+                                        component.name || 'Component'
+                                    }`"
                                 >
                                     <div class="relative">
                                         <template
@@ -173,7 +195,10 @@ onMounted(async () => {
                                         >
                                             <img
                                                 :src="component.cover_image"
-                                                alt="Component preview"
+                                                :alt="`Preview of ${
+                                                    component.name ||
+                                                    'Component'
+                                                }`"
                                                 class="max-h-72 object-contain bg-white mx-auto"
                                             />
                                         </template>
@@ -188,16 +213,26 @@ onMounted(async () => {
                                             </div>
                                         </template>
                                     </div>
-                                </div>
+                                </button>
 
                                 <!-- Show message if no components -->
                                 <div
                                     v-if="components.length === 0"
                                     class="col-span-full text-center py-8 text-gray-500"
                                 >
-                                    No components found. Make sure
-                                    components.json exists and contains
-                                    component data.
+                                    <p>
+                                        No components found. Make sure
+                                        components.json exists and contains
+                                        component data.
+                                    </p>
+                                    <!-- Provide a focusable element when no components -->
+                                    <button
+                                        type="button"
+                                        @click="fetchComponents"
+                                        class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    >
+                                        Refresh Components
+                                    </button>
                                 </div>
                             </div>
                         </template>
@@ -221,13 +256,14 @@ onMounted(async () => {
                                             class="flex justify-left items-center gap-4 text-xs font-medium"
                                         >
                                             <button
+                                                type="button"
                                                 @click="
                                                     handleAddHelperComponent(
                                                         helperComponent
                                                     )
                                                 "
-                                                type="button"
-                                                class="flex items-center gap-2 px-3 py-2 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-colors"
+                                                class="flex items-center gap-2 px-3 py-2 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                :aria-label="`Add ${helperComponent.title} element`"
                                             >
                                                 <span>+</span>
                                                 <span>{{
@@ -254,13 +290,14 @@ onMounted(async () => {
                                 :key="helperComponent.title + '_sidebar'"
                             >
                                 <button
+                                    type="button"
                                     @click="
                                         handleAddHelperComponent(
                                             helperComponent
                                         )
                                     "
-                                    type="button"
-                                    class="mySecondaryButton"
+                                    class="mySecondaryButton focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    :aria-label="`Quick add ${helperComponent.title} element`"
                                 >
                                     <span>+</span>
                                     <span>{{ helperComponent.title }}</span>
