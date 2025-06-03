@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 // Import PageBuilder and modal control - professional way!
 import {
@@ -20,6 +20,17 @@ const { closeMediaLibraryModal } = usePageBuilderModal();
 
 // Simple reactive ref for current image instead of computed
 const currentPageBuilderImage = ref(null);
+
+// Computed properties for pageBuilder state
+const currentElement = computed(
+    () => pageBuilder.pageBuilderStateStore.getElement
+);
+const currentComponent = computed(
+    () => pageBuilder.pageBuilderStateStore.getComponent
+);
+const allComponents = computed(
+    () => pageBuilder.pageBuilderStateStore.getComponents
+);
 
 // Fetch images from JSON file
 const fetchImages = async () => {
@@ -48,12 +59,6 @@ const handleImageClick = async (image) => {
     // Follow the exact same pattern as built-in Unsplash component
     // They only set { file } - that's it!
     const imageFile = `/${image.large_path}`;
-
-    // Test: Try calling setBasePrimaryImage directly
-    await pageBuilder.pageBuilderStateStore.setBasePrimaryImage(imageFile);
-    console.log("Called setBasePrimaryImage directly with:", imageFile);
-
-    return;
 
     // Set current image using PageBuilder methods (if available)
     if (
@@ -109,6 +114,17 @@ const applySelectedImage = async () => {
         console.warn("No image selected to apply");
         return;
     }
+
+    // Test: Try calling setBasePrimaryImage directly
+    await pageBuilder.pageBuilderStateStore.setBasePrimaryImage(imageFile);
+    console.log("Called setBasePrimaryImage directly with:", imageFile);
+
+    // Debug: Check pageBuilder state store values
+    console.log("getElement:", currentElement.value);
+    console.log("getComponent:", currentComponent.value);
+    console.log("getComponents:", allComponents.value);
+
+    return;
 
     try {
         // Ensure the current image is set in the store with proper structure
