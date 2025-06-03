@@ -1,1 +1,0 @@
-expose share http://localhost:11001 --subdomain=qais-wardag
