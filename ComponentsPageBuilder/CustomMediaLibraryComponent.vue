@@ -129,6 +129,8 @@ const applySelectedImage = async () => {
     console.log("getComponent:", currentComponent.value);
     console.log("getComponents:", allComponents.value);
 
+    closeMediaLibraryModal();
+
     return;
 
     try {
