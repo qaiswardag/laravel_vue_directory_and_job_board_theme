@@ -1,5 +1,4 @@
 <script setup>
-import Modal from "@/Components/Modals/Modal.vue";
 import {
     CheckIcon,
     BellIcon,
