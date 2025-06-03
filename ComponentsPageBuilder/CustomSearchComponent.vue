@@ -4,7 +4,7 @@ import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vu
 
 // Import PageBuilder and modal control - professional way!
 import {
-    PageBuilderComposable,
+    PageBuilderClass,
     usePageBuilderModal,
 } from "vue-website-page-builder";
 
@@ -15,10 +15,10 @@ const error = ref(null);
 const components = ref([]);
 
 // Initialize PageBuilder - it handles everything automatically!
-const pageBuilder = new PageBuilderComposable();
+const pageBuilderClass = new PageBuilderClass();
 
 // Get helper components from PageBuilder (no need to define manually)
-const componentHelpers = pageBuilder.getDefaultHelperComponents();
+const componentHelpers = pageBuilderClass.getDefaultHelperComponents();
 
 // Get modal control functions - professional import pattern!
 const { closeAddComponentModal } = usePageBuilderModal();
@@ -29,18 +29,13 @@ const handlecategorySelected = function (category) {
 
 // Super simple component addition with professional modal closing!
 const handleDropComponent = function (componentObject) {
-    pageBuilder.addComponent(componentObject, closeAddComponentModal);
-    pageBuilder.setEventListenersForElements();
+    pageBuilderClass.addComponent(componentObject);
     closeAddComponentModal();
 };
 
 // Super simple helper component addition with professional modal closing!
 const handleAddHelperComponent = function (helperComponentObject) {
-    pageBuilder.addHelperComponent(
-        helperComponentObject,
-        closeAddComponentModal
-    );
-    pageBuilder.setEventListenersForElements();
+    pageBuilderClass.addHelperComponent(helperComponentObject);
     closeAddComponentModal();
 };
 
@@ -76,7 +71,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="w-full">
+    <div class="w-full relative z-[9999]">
         <div class="flex items-center border-b border-gray-200 p-4 mb-2">
             <div class="flex-1">
                 <h3 class="text-lg font-semibold my-0 py-0">
@@ -155,7 +150,7 @@ onMounted(async () => {
                                 class="overflow-auto min-h-[25rem] max-h-[25rem] grid gap-4 md:grid-cols-2 grid-cols-2 w-full p-4 border border-gray-300 rounded-lg"
                             >
                                 <div
-                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded-lg border border-gray-200 lg:py-10 py-8 px-2 hover:shadow-md transition-shadow cursor-pointer"
+                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded-lg border border-gray-200 lg:py-10 py-8 px-2 hover:shadow-md transition-shadow cursor-pointer relative z-50"
                                     v-for="component in components"
                                     :key="component.id"
                                     @click="handleDropComponent(component)"

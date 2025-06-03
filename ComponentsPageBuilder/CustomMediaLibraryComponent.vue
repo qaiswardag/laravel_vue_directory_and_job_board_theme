@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from "vue";
 
 // Import PageBuilder and modal control - professional way!
 import {
-    PageBuilderComposable,
+    PageBuilderClass,
     usePageBuilderModal,
 } from "vue-website-page-builder";
 
@@ -13,7 +13,7 @@ const images = ref([]);
 const selectedImage = ref(null);
 
 // Initialize PageBuilder - it handles everything automatically!
-const pageBuilder = new PageBuilderComposable();
+const pageBuilderClass = new PageBuilderClass();
 
 // Get modal control functions - professional import pattern!
 const { closeMediaLibraryModal } = usePageBuilderModal();
@@ -21,15 +21,15 @@ const { closeMediaLibraryModal } = usePageBuilderModal();
 // Simple reactive ref for current image instead of computed
 const currentPageBuilderImage = ref(null);
 
-// Computed properties for pageBuilder state
+// Computed properties for pageBuilderClass state
 const currentElement = computed(
-    () => pageBuilder.pageBuilderStateStore.getElement
+    () => pageBuilderClass.pageBuilderStateStore.getElement
 );
 const currentComponent = computed(
-    () => pageBuilder.pageBuilderStateStore.getComponent
+    () => pageBuilderClass.pageBuilderStateStore.getComponent
 );
 const allComponents = computed(
-    () => pageBuilder.pageBuilderStateStore.getComponents
+    () => pageBuilderClass.pageBuilderStateStore.getComponents
 );
 
 // Fetch images from JSON file
@@ -62,11 +62,11 @@ const handleImageClick = async (image) => {
 
     // Set current image using PageBuilder methods (if available)
     if (
-        pageBuilder.mediaLibraryStore &&
-        pageBuilder.mediaLibraryStore.setCurrentImage
+        pageBuilderClass.mediaLibraryStore &&
+        pageBuilderClass.mediaLibraryStore.setCurrentImage
     ) {
         // Structure the data to match what updateBasePrimaryImage expects
-        pageBuilder.mediaLibraryStore.setCurrentImage({
+        pageBuilderClass.mediaLibraryStore.setCurrentImage({
             currentImage: {
                 mediaLibrary: {
                     path: image.path,
@@ -86,10 +86,10 @@ const handleImageClick = async (image) => {
     }
 
     if (
-        pageBuilder.mediaLibraryStore &&
-        pageBuilder.mediaLibraryStore.setCurrentPreviewImage
+        pageBuilderClass.mediaLibraryStore &&
+        pageBuilderClass.mediaLibraryStore.setCurrentPreviewImage
     ) {
-        pageBuilder.mediaLibraryStore.setCurrentPreviewImage(null);
+        pageBuilderClass.mediaLibraryStore.setCurrentPreviewImage(null);
     }
 
     // Update our local reactive ref for the preview
@@ -115,7 +115,7 @@ const applySelectedImage = async () => {
         return;
     }
 
-    await pageBuilder.pageBuilderStateStore.setBasePrimaryImage(
+    await pageBuilderClass.pageBuilderStateStore.setBasePrimaryImage(
         `/${selectedImage.value.large_path}`
     );
     closeMediaLibraryModal();
@@ -124,7 +124,7 @@ const applySelectedImage = async () => {
 
     try {
         // Ensure the current image is set in the store with proper structure
-        pageBuilder.mediaLibraryStore.setCurrentImage({
+        pageBuilderClass.mediaLibraryStore.setCurrentImage({
             currentImage: {
                 mediaLibrary: {
                     path: selectedImage.value.path,
@@ -142,7 +142,7 @@ const applySelectedImage = async () => {
         });
 
         // Use PageBuilder's built-in method to apply the image
-        await pageBuilder.updateBasePrimaryImage();
+        await pageBuilderClass.updateBasePrimaryImage();
         console.log(
             "Image applied to element successfully",
             selectedImage.value
