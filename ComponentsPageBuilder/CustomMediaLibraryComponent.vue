@@ -118,6 +118,7 @@ const applySelectedImage = async () => {
     await pageBuilder.pageBuilderStateStore.setBasePrimaryImage(
         `/${selectedImage.value.large_path}`
     );
+    pageBuilder.setEventListenersForElements();
 
     // Debug: Check pageBuilder state store values
     console.log("getElement:", currentElement.value);

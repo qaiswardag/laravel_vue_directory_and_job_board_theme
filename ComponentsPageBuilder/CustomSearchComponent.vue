@@ -30,6 +30,7 @@ const handlecategorySelected = function (category) {
 // Super simple component addition with professional modal closing!
 const handleDropComponent = function (componentObject) {
     pageBuilder.addComponent(componentObject, closeAddComponentModal);
+    pageBuilder.setEventListenersForElements();
 };
 
 // Super simple helper component addition with professional modal closing!
@@ -38,6 +39,7 @@ const handleAddHelperComponent = function (helperComponentObject) {
         helperComponentObject,
         closeAddComponentModal
     );
+    pageBuilder.setEventListenersForElements();
 };
 
 const fetchComponents = async function () {
