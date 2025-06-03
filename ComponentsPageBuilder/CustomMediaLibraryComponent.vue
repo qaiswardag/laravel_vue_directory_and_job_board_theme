@@ -42,12 +42,18 @@ const fetchImages = async () => {
 };
 
 // Handle image click - integrate with page builder media store
-const handleImageClick = (image) => {
+const handleImageClick = async (image) => {
     selectedImage.value = image;
 
     // Follow the exact same pattern as built-in Unsplash component
     // They only set { file } - that's it!
     const imageFile = `/${image.large_path}`;
+
+    // Test: Try calling setBasePrimaryImage directly
+    await pageBuilder.pageBuilderStateStore.setBasePrimaryImage(imageFile);
+    console.log("Called setBasePrimaryImage directly with:", imageFile);
+
+    return;
 
     // Set current image using PageBuilder methods (if available)
     if (
