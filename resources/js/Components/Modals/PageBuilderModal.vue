@@ -202,21 +202,29 @@ onMounted(() => {
                                 <header></header>
                                 <main></main>
                             </DynamicModal>
+                            <!-- Save or draft logic # start -->
                             <div
                                 @click="
-                                    store.commit(
-                                        'pageBuilderState/setComponent',
-                                        null
-                                    )
+                                    pageBuilderStateStore.setComponent(null)
                                 "
-                                class="px-4 h-[10vh] flex items-center justify-between border-b border-gray-200 bg-white"
+                                class="px-4 lg:h-[10vh] h-[16vh] flex items-center justify-between border-b border-gray-200 bg-white"
                             >
                                 <div
-                                    class="flex justify-start divide-x divide-gray-200 myPrimaryGap"
+                                    class="flex items-center justify-start divide-x divide-gray-200"
                                 >
-                                    <ApplicationLogo></ApplicationLogo>
                                     <button
-                                        class="myPrimaryButton lg:text-sm text-[12px] lg:py-3 py-3 min-h-2"
+                                        type="button"
+                                        @click="firstButton"
+                                        class="border-r border-gray-200 pr-6"
+                                    >
+                                        <img
+                                            class="h-6"
+                                            src="/logo/logo.svg"
+                                            alt="Logo"
+                                        />
+                                    </button>
+                                    <button
+                                        class="myPrimaryButton lg:text-sm text-[10px] lg:py-2 py-2 min-h-2 ml-4"
                                         @click="secondButton"
                                         type="button"
                                     >
@@ -232,7 +240,7 @@ onMounted(() => {
                                             updateOrCreate === 'update' &&
                                             hideDraftButton
                                         "
-                                        class="mySecondaryButton lg:text-sm text-[12px] lg:py-3 py-3 min-h-2"
+                                        class="mySecondaryButton lg:text-sm text-[10px] lg:py-2 py-2 min-h-2 ml-2"
                                         @click="handleDraftForUpdate"
                                         type="button"
                                     >
@@ -263,6 +271,7 @@ onMounted(() => {
                                     </div>
                                 </button>
                             </div>
+                            <!-- Save or draft logic # end -->
                             <slot></slot>
                         </div>
                     </TransitionChild>
