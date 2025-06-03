@@ -6,6 +6,8 @@ import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vu
 import {
     PageBuilderClass,
     usePageBuilderModal,
+    usePageBuilderStateStore,
+    useMediaLibraryStore,
 } from "vue-website-page-builder";
 
 const search_query = ref("");
@@ -14,8 +16,15 @@ const isLoading = ref(false);
 const error = ref(null);
 const components = ref([]);
 
-// Initialize PageBuilder - it handles everything automatically!
-const pageBuilderClass = new PageBuilderClass();
+// Initialize stores explicitly
+const pageBuilderStateStore = usePageBuilderStateStore();
+const mediaLibraryStore = useMediaLibraryStore();
+
+// Initialize PageBuilder with explicit store passing - professional way!
+const pageBuilderClass = new PageBuilderClass(
+    pageBuilderStateStore,
+    mediaLibraryStore
+);
 
 // Get helper components from PageBuilder (no need to define manually)
 const componentHelpers = pageBuilderClass.getDefaultHelperComponents();

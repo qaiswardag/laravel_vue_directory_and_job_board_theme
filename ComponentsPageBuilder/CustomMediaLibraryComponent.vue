@@ -5,6 +5,8 @@ import { ref, onMounted, computed } from "vue";
 import {
     PageBuilderClass,
     usePageBuilderModal,
+    usePageBuilderStateStore,
+    useMediaLibraryStore,
 } from "vue-website-page-builder";
 
 const loading = ref(false);
@@ -12,8 +14,15 @@ const error = ref(null);
 const images = ref([]);
 const selectedImage = ref(null);
 
-// Initialize PageBuilder - it handles everything automatically!
-const pageBuilderClass = new PageBuilderClass();
+// Initialize stores explicitly
+const pageBuilderStateStore = usePageBuilderStateStore();
+const mediaLibraryStore = useMediaLibraryStore();
+
+// Initialize PageBuilder with explicit store passing - professional way!
+const pageBuilderClass = new PageBuilderClass(
+    pageBuilderStateStore,
+    mediaLibraryStore
+);
 
 // Get modal control functions - professional import pattern!
 const { closeMediaLibraryModal } = usePageBuilderModal();
