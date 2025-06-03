@@ -124,36 +124,26 @@ const applySelectedImage = async () => {
         return;
     }
 
-    try {
-        // Ensure the current image is set in the store with proper structure
-        pageBuilderClass.mediaLibraryStore.setCurrentImage({
-            currentImage: {
-                mediaLibrary: {
-                    path: selectedImage.value.path,
-                    large_path: selectedImage.value.large_path,
-                    id: selectedImage.value.id,
-                    name: selectedImage.value.name,
-                    medium_path: selectedImage.value.medium_path,
-                    thumbnail_path: selectedImage.value.thumbnail_path,
-                    width: selectedImage.value.width,
-                    height: selectedImage.value.height,
-                    size: selectedImage.value.size,
-                    extension: selectedImage.value.extension,
-                },
+    // Ensure the current image is set in the store with proper structure
+    pageBuilderClass.mediaLibraryStore.setCurrentImage({
+        currentImage: {
+            mediaLibrary: {
+                path: selectedImage.value.path,
+                large_path: selectedImage.value.large_path,
+                id: selectedImage.value.id,
+                name: selectedImage.value.name,
+                medium_path: selectedImage.value.medium_path,
+                thumbnail_path: selectedImage.value.thumbnail_path,
+                width: selectedImage.value.width,
+                height: selectedImage.value.height,
+                size: selectedImage.value.size,
+                extension: selectedImage.value.extension,
             },
-        });
+        },
+    });
 
-        // Use PageBuilder's built-in method to apply the image
-        await pageBuilderClass.updateBasePrimaryImage();
-
-        console.log("Image applied successfully:", selectedImage.value.name);
-
-        // Close modal using professional pattern
-        closeMediaLibraryModal();
-    } catch (error) {
-        console.error("Error applying image to element:", error);
-        // Don't close modal on error, let user try again
-    }
+    // Use PageBuilder's built-in method to apply the image
+    await pageBuilderClass.updateBasePrimaryImage();
 };
 
 onMounted(() => {
