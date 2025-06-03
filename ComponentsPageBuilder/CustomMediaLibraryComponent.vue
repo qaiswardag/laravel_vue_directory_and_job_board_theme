@@ -118,12 +118,6 @@ const applySelectedImage = async () => {
     await pageBuilder.pageBuilderStateStore.setBasePrimaryImage(
         `/${selectedImage.value.large_path}`
     );
-
-    // Debug: Check pageBuilder state store values
-    console.log("getElement:", currentElement.value);
-    console.log("getComponent:", currentComponent.value);
-    console.log("getComponents:", allComponents.value);
-
     closeMediaLibraryModal();
 
     return;
