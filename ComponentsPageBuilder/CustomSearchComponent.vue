@@ -71,7 +71,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="w-full relative z-[9999]">
+    <div class="w-full relative">
         <div class="flex items-center border-b border-gray-200 p-4 mb-2">
             <div class="flex-1">
                 <h3 class="text-lg font-semibold my-0 py-0">
