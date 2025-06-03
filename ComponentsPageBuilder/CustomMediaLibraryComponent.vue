@@ -120,7 +120,9 @@ const applySelectedImage = async () => {
         "Called setBasePrimaryImage directly with:",
         selectedImage.value
     );
-    await pageBuilder.pageBuilderStateStore.setBasePrimaryImage(imageFile);
+    await pageBuilder.pageBuilderStateStore.setBasePrimaryImage(
+        selectedImage.value
+    );
 
     // Debug: Check pageBuilder state store values
     console.log("getElement:", currentElement.value);
