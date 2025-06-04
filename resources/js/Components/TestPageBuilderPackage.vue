@@ -101,6 +101,7 @@ const testResource = {
                     :CustomSearchComponent="CustomSearchComponent"
                     updateOrCreate="update"
                     :user="pageBuilderUser"
+                    :resourceData="{ title: 'My Blog', id: 1 }"
                 />
             </div>
         </div>
