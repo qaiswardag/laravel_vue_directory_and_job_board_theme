@@ -1,6 +1,6 @@
 <script setup>
-import MediaLibraryComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/CustomMediaLibraryComponent.vue";
-import SearchComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/CustomSearchComponent.vue";
+import CustomMediaLibraryComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/CustomMediaLibraryComponent.vue";
+import CustomSearchComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/CustomSearchComponent.vue";
 // Import external package CSS
 import { PageBuilder } from "vue-website-page-builder";
 // Import external package CSS
@@ -77,12 +77,7 @@ const testResource = {
         >
             <header></header>
             <main>
-                <PageBuilder
-                    :CustomMediaLibraryComponent="MediaLibraryComponent"
-                    :CustomSearchComponent="SearchComponent"
-                    updateOrCreate="create"
-                    :user="pageBuilderUser"
-                />
+                <PageBuilder />
             </main>
         </DynamicModal>
 
@@ -102,9 +97,9 @@ const testResource = {
             </div>
             <div class="m-10 bg-green-100 p-4 mt-40">
                 <PageBuilder
-                    :CustomMediaLibraryComponent="MediaLibraryComponent"
-                    :CustomSearchComponent="SearchComponent"
-                    updateOrCreate="create"
+                    :CustomMediaLibraryComponent="CustomMediaLibraryComponent"
+                    :CustomSearchComponent="CustomSearchComponent"
+                    updateOrCreate="update"
                     :user="pageBuilderUser"
                 />
             </div>
