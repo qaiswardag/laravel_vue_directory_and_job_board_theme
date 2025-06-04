@@ -48,6 +48,11 @@ const testUser = {
     email: "test@example.com",
 };
 
+// User object for PageBuilder (only name is used)
+const pageBuilderUser = {
+    name: "John Doe",
+};
+
 const testResource = {
     id: 1,
     name: "My Blog Post",
@@ -76,6 +81,7 @@ const testResource = {
                     :CustomMediaLibraryComponent="MediaLibraryComponent"
                     :CustomSearchComponent="SearchComponent"
                     updateOrCreate="create"
+                    :user="pageBuilderUser"
                 />
             </main>
         </DynamicModal>
@@ -99,6 +105,7 @@ const testResource = {
                     :CustomMediaLibraryComponent="MediaLibraryComponent"
                     :CustomSearchComponent="SearchComponent"
                     updateOrCreate="create"
+                    :user="pageBuilderUser"
                 />
             </div>
         </div>
