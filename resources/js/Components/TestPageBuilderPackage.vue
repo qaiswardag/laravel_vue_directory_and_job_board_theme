@@ -39,24 +39,6 @@ const togglePageBuilder = function (e) {
         openPageBuilder.value = false;
     };
 };
-
-// Test data (optional - for future use)
-const testUser = {
-    id: 1,
-    first_name: "Test",
-    last_name: "User",
-    email: "test@example.com",
-};
-
-// User object for PageBuilder (only name is used)
-const userForPageBuilder = {
-    name: "John Doe",
-};
-
-const testResource = {
-    id: 1,
-    name: "My Blog Post",
-};
 </script>
 
 <template>
@@ -103,8 +85,8 @@ const testResource = {
                     :CustomMediaLibraryComponent="CustomMediaLibraryComponent"
                     :CustomSearchComponent="CustomSearchComponent"
                     updateOrCreate="update"
-                    :userForPageBuilder="userForPageBuilder"
-                    :resourceData="{ title: 'Demo Project Alpha', id: 1 }"
+                    :userForPageBuilder="{ name: 'John Doe' }"
+                    :resourceData="{ title: 'Demo Article', id: 1 }"
                 />
             </div>
         </div>
