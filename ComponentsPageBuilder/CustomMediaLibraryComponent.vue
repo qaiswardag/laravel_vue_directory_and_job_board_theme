@@ -74,23 +74,10 @@ const handleImageClick = async (image) => {
         pageBuilderClass.mediaLibraryStore &&
         pageBuilderClass.mediaLibraryStore.setCurrentImage
     ) {
-        // Structure the data to match what updateBasePrimaryImage expects
+        // Follow the exact same pattern as Unsplash component
+        // They only set { file } - that's it!
         pageBuilderClass.mediaLibraryStore.setCurrentImage({
-            currentImage: {
-                mediaLibrary: {
-                    path: image.path,
-                    large_path: image.large_path,
-                    // Include other properties that might be needed
-                    id: image.id,
-                    name: image.name,
-                    medium_path: image.medium_path,
-                    thumbnail_path: image.thumbnail_path,
-                    width: image.width,
-                    height: image.height,
-                    size: image.size,
-                    extension: image.extension,
-                },
-            },
+            file: imageFile,
         });
     }
 
@@ -126,20 +113,7 @@ const applySelectedImage = async () => {
 
     // Ensure the current image is set in the store with proper structure
     pageBuilderClass.mediaLibraryStore.setCurrentImage({
-        currentImage: {
-            mediaLibrary: {
-                path: selectedImage.value.path,
-                large_path: selectedImage.value.large_path,
-                id: selectedImage.value.id,
-                name: selectedImage.value.name,
-                medium_path: selectedImage.value.medium_path,
-                thumbnail_path: selectedImage.value.thumbnail_path,
-                width: selectedImage.value.width,
-                height: selectedImage.value.height,
-                size: selectedImage.value.size,
-                extension: selectedImage.value.extension,
-            },
-        },
+        file: `/${selectedImage.value.large_path}`,
     });
 
     // Use PageBuilder's built-in method to apply the image
