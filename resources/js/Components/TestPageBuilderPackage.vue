@@ -83,9 +83,9 @@ const testResource = {
 
         <div class="p-8">
             <h1 class="text-2xl font-bold mb-4">
-                Testing External Page Builder Package
+                Testing External Page Builder Package in Modal
             </h1>
-            <div class="m-10 bg-red-100 p-4">
+            <div class="bg-red-100 py-10">
                 <p>
                     <button
                         class="myPrimaryButton"
@@ -95,13 +95,16 @@ const testResource = {
                     </button>
                 </p>
             </div>
-            <div class="m-10 bg-green-100 p-4 mt-40">
+            <div class="bg-green-100 mt-40 py-10">
+                <h1 class="text-2xl font-bold mb-4">
+                    Testing External Page Builder Package
+                </h1>
                 <PageBuilder
                     :CustomMediaLibraryComponent="CustomMediaLibraryComponent"
                     :CustomSearchComponent="CustomSearchComponent"
                     updateOrCreate="update"
                     :userForPageBuilder="userForPageBuilder"
-                    :resourceData="{ title: 'My Blog', id: 1 }"
+                    :resourceData="{ title: 'Demo Project Alpha', id: 1 }"
                 />
             </div>
         </div>
