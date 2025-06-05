@@ -49,7 +49,7 @@ const testUser = {
 };
 
 // User object for PageBuilder (only name is used)
-const pageBuilderUser = {
+const userForPageBuilder = {
     name: "John Doe",
 };
 
@@ -100,7 +100,7 @@ const testResource = {
                     :CustomMediaLibraryComponent="CustomMediaLibraryComponent"
                     :CustomSearchComponent="CustomSearchComponent"
                     updateOrCreate="update"
-                    :user="pageBuilderUser"
+                    :userForPageBuilder="userForPageBuilder"
                     :resourceData="{ title: 'My Blog', id: 1 }"
                 />
             </div>
