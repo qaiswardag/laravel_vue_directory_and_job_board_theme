@@ -113,7 +113,7 @@ const applySelectedImage = async () => {
 
     // Ensure the current image is set in the store with proper structure
     pageBuilderClass.mediaLibraryStore.setCurrentImage({
-        file: `/${selectedImage.value.large_path}`,
+        src: `/${selectedImage.value.large_path}`,
     });
 
     // Use PageBuilder's built-in method to apply the image
