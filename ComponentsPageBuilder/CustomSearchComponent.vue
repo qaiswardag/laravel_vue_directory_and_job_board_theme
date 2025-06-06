@@ -41,7 +41,7 @@ const handleDropComponent = function (componentObject) {
 
 // Super simple helper component addition with professional modal closing!
 const handleAddHelperComponent = function (helperComponentObject) {
-    pageBuilderClass.addHelperComponent(helperComponentObject);
+    pageBuilderClass.addComponent(helperComponentObject);
     closeAddComponentModal();
 };
 
