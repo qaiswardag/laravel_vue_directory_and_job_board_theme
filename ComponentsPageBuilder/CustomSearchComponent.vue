@@ -81,14 +81,7 @@ onMounted(async () => {
 
 <template>
     <div class="w-full relative">
-        <div class="flex items-center border-b border-gray-200 p-4 mb-2">
-            <div class="flex-1">
-                <h3 class="text-lg font-semibold my-0 py-0">
-                    Search Custom Component
-                </h3>
-            </div>
-        </div>
-
+        <p class="myPrimaryParagraph">Custom Search Component</p>
         <div class="p-4">
             <!-- Error message -->
             <template v-if="!isLoading && error">
