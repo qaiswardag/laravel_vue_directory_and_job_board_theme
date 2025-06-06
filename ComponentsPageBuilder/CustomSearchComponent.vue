@@ -1,13 +1,11 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject } from "vue";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 
 // Import PageBuilder and modal control - professional way!
 import {
     PageBuilderClass,
     usePageBuilderModal,
-    usePageBuilderStateStore,
-    useMediaLibraryStore,
 } from "vue-website-page-builder";
 
 const search_query = ref("");
@@ -16,9 +14,8 @@ const isLoading = ref(false);
 const error = ref(null);
 const components = ref([]);
 
-// Initialize stores explicitly
-const pageBuilderStateStore = usePageBuilderStateStore();
-const mediaLibraryStore = useMediaLibraryStore();
+const pageBuilderStateStore = inject("pageBuilderStateStore");
+const mediaLibraryStore = inject("mediaLibraryStore");
 
 // Initialize PageBuilder with explicit store passing - professional way!
 const pageBuilderClass = new PageBuilderClass(
