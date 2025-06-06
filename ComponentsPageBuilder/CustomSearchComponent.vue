@@ -23,8 +23,20 @@ const pageBuilderClass = new PageBuilderClass(
     mediaLibraryStore
 );
 
-// Get helper components from PageBuilder (no need to define manually)
-const componentHelpers = pageBuilderClass.getDefaultHelperComponents();
+const componentHelpers = () => {
+    return [
+        {
+            html_code: `<section>...long HTML...</section>`,
+            id: null,
+            title: "Text",
+        },
+        {
+            html_code: `<section><div class="relative py-4">...</div></section>`,
+            id: null,
+            title: "Header H2",
+        },
+    ];
+};
 
 // Get modal control functions - professional import pattern!
 const { closeAddComponentModal } = usePageBuilderModal();
