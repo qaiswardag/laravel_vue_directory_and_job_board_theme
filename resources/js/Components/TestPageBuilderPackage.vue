@@ -59,7 +59,7 @@ const togglePageBuilder = function (e) {
         >
             <header></header>
             <main>
-                <PageBuilder />
+                <PageBuilder PageBuilderLogo="/logo/logo.svg" />
             </main>
         </DynamicModal>
 
@@ -82,6 +82,7 @@ const togglePageBuilder = function (e) {
                     Testing External Page Builder Package
                 </h1>
                 <PageBuilder
+                    PageBuilderLogo="/logo/logo.svg"
                     :CustomMediaLibraryComponent="CustomMediaLibraryComponent"
                     :CustomSearchComponent="CustomSearchComponent"
                     updateOrCreate="update"
