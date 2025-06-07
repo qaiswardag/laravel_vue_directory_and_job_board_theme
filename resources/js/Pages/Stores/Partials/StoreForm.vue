@@ -14,13 +14,10 @@ import { useStore } from "vuex";
 import slugify from "slugify";
 import config from "@/utils/config";
 import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
-import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
-import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
-import PageBuilder from "@/composables/PageBuilder";
 import OpeningClosingHours from "@/Components/OpeningClosingHours/OpeningClosingHours.vue";
-import { delay } from "@/helpers/delay";
+import { PageBuilder } from "vue-website-page-builder";
+import "vue-website-page-builder/style.css";
 
 import {
     Listbox,
@@ -964,11 +961,6 @@ const removeFromFloor = function () {
     postForm.floor--;
 };
 
-const clearPageBuilderOnSuccessUpdate = function () {
-    pageBuilder.removeItemComponentsLocalStorageUpdate();
-    store.commit("pageBuilderState/setComponents", []);
-};
-
 // Is form dirty? Returns true or false
 const formIsDirty = computed(() => {
     return postForm.isDirty;
@@ -984,52 +976,6 @@ const storeDirtyFormInLocalStorage = function () {
         localStorage.setItem(pathLocalStorage, formDataJson);
     }
 };
-
-// Will be executed when the user switch current route
-router.on = async () => {
-    storeDirtyFormInLocalStorage();
-
-    store.commit("user/setIsLoading", true);
-
-    if (formType.value === "update") {
-        if (
-            submittedOnUpdate.value &&
-            Array.isArray(getComponents.value) &&
-            getComponents.value.length !== 0
-        ) {
-            await nextTick();
-            pageBuilder.saveComponentsLocalStorageUpdate();
-        }
-    }
-
-    openPageBuilder.value = false;
-
-    await delay();
-    store.commit("user/setIsLoading", false);
-};
-
-// Will be executed when the user clicks refresh or closes the tab/window
-window.addEventListener("beforeunload", async function () {
-    storeDirtyFormInLocalStorage();
-
-    store.commit("user/setIsLoading", true);
-
-    if (formType.value === "update") {
-        if (
-            submittedOnUpdate.value &&
-            Array.isArray(getComponents.value) &&
-            getComponents.value.length !== 0
-        ) {
-            await nextTick();
-            pageBuilder.saveComponentsLocalStorageUpdate();
-        }
-    }
-
-    openPageBuilder.value = false;
-
-    await delay();
-    store.commit("user/setIsLoading", false);
-});
 
 const authorSorted = computed(() => {
     return postForm.author.sort((a, b) => {
@@ -1090,108 +1036,134 @@ const handleDraftForUpdate = async function () {
     store.commit("user/setIsLoading", true);
 
     if (formType.value === "update") {
-        await nextTick();
-        pageBuilder.areComponentsStoredInLocalStorageUpdate();
-        await nextTick();
-        pageBuilder.setEventListenersForElements();
-
-        await delay();
-        store.commit("user/setIsLoading", false);
     }
 };
 
-const handlePageBuilder = async function () {
-    store.commit("user/setIsLoading", true);
+// use media library
+const showPageBuilderModal = ref(false);
+// modal content
+const titlePageBuilder = ref("");
+const descriptionPageBuilder = ref("");
+const firstButtonPageBuilder = ref("");
+const secondButtonPageBuilder = ref(null);
+const thirdButtonPageBuilder = ref(null);
+// set dynamic modal handle functions
+const firstPageBuilderButtonFunction = ref(null);
+const secondPageBuilderButtonFunction = ref(null);
+const thirdPageBuilderButtonFunction = ref(null);
 
-    await delay();
-    await nextTick();
-    openPageBuilder.value = true;
-
-    if (formType.value === "create") {
-        store.commit("pageBuilderState/setComponents", []);
-
-        // local storage for page builder
-        if (pageBuilder.areComponentsStoredInLocalStorage()) {
-            postForm.content =
-                Array.isArray(getComponents.value) &&
-                getComponents.value
-                    .map((component) => {
-                        return component.html_code;
-                    })
-                    .join("");
-        }
-    }
-
+const handlePageBuilder = function () {
+    showPageBuilderModal.value = true;
+    titlePageBuilder.value = "Add Content";
+    descriptionPageBuilder.value = null;
+    firstButtonPageBuilder.value = "Close";
+    secondButtonPageBuilder.value = "Something here";
+    thirdButtonPageBuilder.value = null;
     // handle click
-    pageBuilderPrimaryHandler.value = async function () {
-        store.commit("user/setIsLoading", true);
-
-        if (formType.value === "update") {
-            await nextTick();
-            pageBuilder.saveComponentsLocalStorageUpdate();
-            await delay();
-        }
-
-        openPageBuilder.value = false;
-        store.commit("user/setIsLoading", false);
+    firstPageBuilderButtonFunction.value = function () {
+        showPageBuilderModal.value = false;
     };
 
-    // handle click
-    pageBuilderSecondaryHandler.value = async function () {
-        store.commit("user/setIsLoading", true);
-
-        // save to local storage if new resource
-        if (formType.value === "create") {
-            await nextTick();
-            pageBuilder.saveComponentsLocalStorage();
-
-            await nextTick();
-            postForm.content =
-                Array.isArray(getComponents.value) &&
-                getComponents.value
-                    .map((component) => {
-                        return component.html_code;
-                    })
-                    .join("");
-        }
-        // save to local storage if update
-        if (formType.value === "update") {
-            await nextTick();
-            pageBuilder.synchronizeDOMAndComponents();
-
-            await nextTick();
-            postForm.content =
-                Array.isArray(getComponents.value) &&
-                getComponents.value
-                    .map((component) => {
-                        return component.html_code;
-                    })
-                    .join("");
-        }
-
-        openPageBuilder.value = false;
-        await delay();
-        store.commit("user/setIsLoading", false);
+    secondPageBuilderButtonFunction.value = function () {
+        showPageBuilderModal.value = false;
     };
-
-    store.commit("user/setIsLoading", false);
-
     // end modal
 };
-// Builder # End
+
+// const handlePageBuilder = async function () {
+//     store.commit("user/setIsLoading", true);
+
+//     await delay();
+//     await nextTick();
+//     openPageBuilder.value = true;
+
+//     if (formType.value === "create") {
+//         store.commit("pageBuilderState/setComponents", []);
+
+//         // local storage for page builder
+//         if (pageBuilder.areComponentsStoredInLocalStorage()) {
+//             postForm.content =
+//                 Array.isArray(getComponents.value) &&
+//                 getComponents.value
+//                     .map((component) => {
+//                         return component.html_code;
+//                     })
+//                     .join("");
+//         }
+//     }
+
+//     // handle click
+//     pageBuilderPrimaryHandler.value = async function () {
+//         store.commit("user/setIsLoading", true);
+
+//         if (formType.value === "update") {
+//             await nextTick();
+//             pageBuilder.saveComponentsLocalStorageUpdate();
+//             await delay();
+//         }
+
+//         openPageBuilder.value = false;
+//         store.commit("user/setIsLoading", false);
+//     };
+
+//     // handle click
+//     pageBuilderSecondaryHandler.value = async function () {
+//         store.commit("user/setIsLoading", true);
+
+//         // save to local storage if new resource
+//         if (formType.value === "create") {
+//             await nextTick();
+//             pageBuilder.saveComponentsLocalStorage();
+
+//             await nextTick();
+//             postForm.content =
+//                 Array.isArray(getComponents.value) &&
+//                 getComponents.value
+//                     .map((component) => {
+//                         return component.html_code;
+//                     })
+//                     .join("");
+//         }
+//         // save to local storage if update
+//         if (formType.value === "update") {
+//             await nextTick();
+//             pageBuilder.synchronizeDOMAndComponents();
+
+//             await nextTick();
+//             postForm.content =
+//                 Array.isArray(getComponents.value) &&
+//                 getComponents.value
+//                     .map((component) => {
+//                         return component.html_code;
+//                     })
+//                     .join("");
+//         }
+
+//         openPageBuilder.value = false;
+//         await delay();
+//         store.commit("user/setIsLoading", false);
+//     };
+
+//     store.commit("user/setIsLoading", false);
+
+//     // end modal
+// };
+// // Builder # End
 
 // get unique post if needs to be updated
 onBeforeMount(async () => {
     if (!props.post) {
-        if (pageBuilder.areComponentsStoredInLocalStorage()) {
-            postForm.content =
-                Array.isArray(getComponents.value) &&
-                getComponents.value
-                    .map((component) => {
-                        return component.html_code;
-                    })
-                    .join("");
-        }
+        //
+        // User is creating a new Resource
+        // if (pageBuilder.areComponentsStoredInLocalStorage()) {
+        //     postForm.content =
+        //         Array.isArray(getComponents.value) &&
+        //         getComponents.value
+        //             .map((component) => {
+        //                 return component.html_code;
+        //             })
+        //             .join("");
+        // }
 
         // local storage for form
         if (localStorage.getItem(pathLocalStorage) === null) {
@@ -1717,1291 +1689,615 @@ onBeforeMount(async () => {
 onMounted(() => {
     submittedOnUpdate.value = true;
 });
-const pageBuilder = new PageBuilder(store);
 </script>
 <template>
-    <PageBuilderModal
-        :show="openPageBuilder"
-        :updateOrCreate="formType"
-        @pageBuilderPrimaryHandler="pageBuilderPrimaryHandler"
-        @pageBuilderSecondaryHandler="pageBuilderSecondaryHandler"
-        @handleDraftForUpdate="handleDraftForUpdate"
-    >
-        <PageBuilderView
-            :forUserNotTeam="false"
-            :user="user"
-            :team="postForm.team"
-        ></PageBuilderView>
-    </PageBuilderModal>
-
-    <FormSection @submitted="handleCreatePost">
-        <template #title> Listing details</template>
-        <template #description> Create a new Listing. </template>
-        <template #main>
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Listing name & description
-                    </div>
-                </div>
-                <!-- post title start -->
-                <div class="myInputGroup">
-                    <InputLabel for="title" value="Listing name" />
-                    <TextInput
-                        placeholder="Enter your title.."
-                        id="title"
-                        v-model="postForm.title"
-                        type="text"
-                        class="block w-full"
-                        autocomplete="off"
-                    />
-                    <InputError :message="postForm.errors.title" />
-                </div>
-                <!-- post title end -->
-                <!-- post slug start -->
-                <div class="myInputGroup">
-                    <div v-show="isSlugEditable === false">
-                        <InputLabel for="slug" value="Slug" />
-                        <div class="relative flex items-center">
-                            <TextInput
-                                placeholder="Post slug"
-                                id="slug"
-                                v-model="slugValueTitle"
-                                type="text"
-                                class="block w-full myPrimaryInputReadonly"
-                                readonly
-                                autocomplete="off"
-                            />
-                            <div
-                                @click="handleOpenLock"
-                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
-                            >
-                                <LockClosedIcon
-                                    class="w-5 h-5 text-myPrimaryErrorColor"
-                                >
-                                </LockClosedIcon>
-                            </div>
+    <div>
+        <FormSection @submitted="handleCreatePost">
+            <template #title> Listing details</template>
+            <template #description> Create a new Listing. </template>
+            <template #main>
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Listing name & description
                         </div>
                     </div>
-                    <div v-show="isSlugEditable === true">
-                        <InputLabel for="slug" value="Slug" />
-                        <div class="relative flex items-center">
-                            <TextInput
-                                placeholder="Post slug"
-                                id="slug"
-                                v-model="slugValueCustom"
-                                type="text"
-                                class="block w-full"
-                                autocomplete="off"
-                            />
-                            <div
-                                @click="handleCloseLock"
-                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
-                            >
-                                <LockOpenIcon
-                                    class="w-5 h-5 text-myPrimaryLinkColor"
-                                >
-                                </LockOpenIcon>
-                            </div>
-                        </div>
-                        <div class="myPrimaryTag italic">
-                            Slug: {{ postForm.slug }}
-                        </div>
-                    </div>
-                    <InputError :message="postForm.errors.slug" />
-                </div>
-                <!-- post slug end -->
-                <!-- post address and floor start -->
-                <div class="md:flex items-center justify-center myPrimaryGap">
-                    <div class="myInputGroup md:w-2/3">
-                        <InputLabel for="address" value="Listing address" />
-                        <input
-                            placeholder="Enter store address.."
-                            id="address"
-                            v-model="postForm.address"
+                    <!-- post title start -->
+                    <div class="myInputGroup">
+                        <InputLabel for="title" value="Listing name" />
+                        <TextInput
+                            placeholder="Enter your title.."
+                            id="title"
+                            v-model="postForm.title"
                             type="text"
-                            class="block w-full myPrimaryInput"
+                            class="block w-full"
                             autocomplete="off"
                         />
-                        <p class="myPrimaryParagraph italic">
-                            Example: Emaar Business Park 1
-                        </p>
-                        <InputError :message="postForm.errors.address" />
+                        <InputError :message="postForm.errors.title" />
                     </div>
-
-                    <div class="myInputGroup md:w-1/3">
-                        <InputLabel
-                            for="floor"
-                            value="Floor of the Store in the Mall"
-                        />
-                        <!-- Input Number -->
-                        <div class="myPrimaryInput p-0">
-                            <div
-                                class="w-full flex gap-2 justify-between items-center"
-                            >
-                                <input
-                                    placeholder="Enter floor of the Store.."
-                                    id="floor"
-                                    v-model="postForm.floor"
-                                    class="myPrimaryInputNoBorder mt-0"
+                    <!-- post title end -->
+                    <!-- post slug start -->
+                    <div class="myInputGroup">
+                        <div v-show="isSlugEditable === false">
+                            <InputLabel for="slug" value="Slug" />
+                            <div class="relative flex items-center">
+                                <TextInput
+                                    placeholder="Post slug"
+                                    id="slug"
+                                    v-model="slugValueTitle"
+                                    type="text"
+                                    class="block w-full myPrimaryInputReadonly"
+                                    readonly
                                     autocomplete="off"
                                 />
-                                <div class="flex items-center">
-                                    <button
-                                        @click="removeFromFloor"
-                                        type="button"
-                                        class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                <div
+                                    @click="handleOpenLock"
+                                    class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                                >
+                                    <LockClosedIcon
+                                        class="w-5 h-5 text-myPrimaryErrorColor"
                                     >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            remove
-                                        </span>
-                                    </button>
-                                    <button
-                                        @click="addToFloor"
-                                        type="button"
-                                        class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
-                                    >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            add
-                                        </span>
-                                    </button>
+                                    </LockClosedIcon>
                                 </div>
                             </div>
                         </div>
-                        <p class="myPrimaryParagraph italic">
-                            Enter 0 for Ground Floor
-                        </p>
-                        <!-- End Input Number -->
-                        <InputError :message="postForm.errors.floor" />
+                        <div v-show="isSlugEditable === true">
+                            <InputLabel for="slug" value="Slug" />
+                            <div class="relative flex items-center">
+                                <TextInput
+                                    placeholder="Post slug"
+                                    id="slug"
+                                    v-model="slugValueCustom"
+                                    type="text"
+                                    class="block w-full"
+                                    autocomplete="off"
+                                />
+                                <div
+                                    @click="handleCloseLock"
+                                    class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                                >
+                                    <LockOpenIcon
+                                        class="w-5 h-5 text-myPrimaryLinkColor"
+                                    >
+                                    </LockOpenIcon>
+                                </div>
+                            </div>
+                            <div class="myPrimaryTag italic">
+                                Slug: {{ postForm.slug }}
+                            </div>
+                        </div>
+                        <InputError :message="postForm.errors.slug" />
                     </div>
-                </div>
-                <!-- post address and floor end -->
-            </div>
+                    <!-- post slug end -->
+                    <!-- post address and floor start -->
+                    <div
+                        class="md:flex items-center justify-center myPrimaryGap"
+                    >
+                        <div class="myInputGroup md:w-2/3">
+                            <InputLabel for="address" value="Listing address" />
+                            <input
+                                placeholder="Enter store address.."
+                                id="address"
+                                v-model="postForm.address"
+                                type="text"
+                                class="block w-full myPrimaryInput"
+                                autocomplete="off"
+                            />
+                            <p class="myPrimaryParagraph italic">
+                                Example: Emaar Business Park 1
+                            </p>
+                            <InputError :message="postForm.errors.address" />
+                        </div>
 
-            <!-- Builder #start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeader">
-                    Manage Content
+                        <div class="myInputGroup md:w-1/3">
+                            <InputLabel
+                                for="floor"
+                                value="Floor of the Store in the Mall"
+                            />
+                            <!-- Input Number -->
+                            <div class="myPrimaryInput p-0">
+                                <div
+                                    class="w-full flex gap-2 justify-between items-center"
+                                >
+                                    <input
+                                        placeholder="Enter floor of the Store.."
+                                        id="floor"
+                                        v-model="postForm.floor"
+                                        class="myPrimaryInputNoBorder mt-0"
+                                        autocomplete="off"
+                                    />
+                                    <div class="flex items-center">
+                                        <button
+                                            @click="removeFromFloor"
+                                            type="button"
+                                            class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                        >
+                                            <span
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                remove
+                                            </span>
+                                        </button>
+                                        <button
+                                            @click="addToFloor"
+                                            type="button"
+                                            class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                        >
+                                            <span
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                add
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="myPrimaryParagraph italic">
+                                Enter 0 for Ground Floor
+                            </p>
+                            <!-- End Input Number -->
+                            <InputError :message="postForm.errors.floor" />
+                        </div>
+                    </div>
+                    <!-- post address and floor end -->
                 </div>
-                <!-- Add Content # start -->
-                <div
-                    class="rounded-lg mt-4 border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    <button type="button" @click="handlePageBuilder">
-                        <span class="myMediumIcon material-symbols-outlined">
-                            stacks
-                        </span>
-                    </button>
 
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">
-                        Build your Store by adding Components
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">
-                        Get started by adding components using the drag & drop
-                        Page Builder.
-                    </p>
-                    <div class="mt-6">
-                        <button
-                            @click="handlePageBuilder"
-                            type="button"
-                            class="myPrimaryButton"
-                        >
+                <!-- Builder #start -->
+                <div class="myInputsOrganization">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Manage Content
+                    </div>
+                    <!-- Add Content # start -->
+                    <div
+                        class="rounded-lg mt-4 border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                        <button type="button" @click="handlePageBuilder">
                             <span
                                 class="myMediumIcon material-symbols-outlined"
                             >
                                 stacks
                             </span>
-                            Add content
                         </button>
-                    </div>
-                </div>
-                <!-- Add Content # end -->
-                <InputError :message="postForm.errors.content" />
-            </div>
-            <!-- Builder #end -->
-        </template>
 
-        <template #sidebar>
-            <!-- post status - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Status</div>
-                    <p class="myPrimaryParagraph">
-                        {{
-                            postForm.published
-                                ? "Public and accessible for public viewing."
-                                : "Private and not accessible for public viewing."
-                        }}
-                    </p>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900">
+                            Build your Store by adding Components
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">
+                            Get started by adding components using the drag &
+                            drop Page Builder.
+                        </p>
+                        <div class="mt-6">
+                            <button
+                                @click="handlePageBuilder"
+                                type="button"
+                                class="myPrimaryButton"
+                            >
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    stacks
+                                </span>
+                                Add content
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Add Content # end -->
+                    <InputError :message="postForm.errors.content" />
                 </div>
-                <div
-                    class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
-                >
-                    <InputLabel
-                        :value="
-                            postForm.published ? 'Published' : 'Unpublished'
-                        "
-                        :class="{
-                            'text-myPrimaryLinkColor': postForm.published,
-                            'text-myPrimaryErrorColor': !postForm.published,
-                        }"
-                    />
-                    <Switch
-                        v-model="postForm.published"
-                        :class="[
-                            postForm.published
-                                ? 'bg-myPrimaryLinkColor'
-                                : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
-                        ]"
+                <!-- Builder #end -->
+            </template>
+
+            <template #sidebar>
+                <!-- post status - start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
                     >
-                        <span class="sr-only">Use setting</span>
-                        <span
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Status
+                        </div>
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.published
+                                    ? "Public and accessible for public viewing."
+                                    : "Private and not accessible for public viewing."
+                            }}
+                        </p>
+                    </div>
+                    <div
+                        class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
+                    >
+                        <InputLabel
+                            :value="
+                                postForm.published ? 'Published' : 'Unpublished'
+                            "
+                            :class="{
+                                'text-myPrimaryLinkColor': postForm.published,
+                                'text-myPrimaryErrorColor': !postForm.published,
+                            }"
+                        />
+                        <Switch
+                            v-model="postForm.published"
                             :class="[
                                 postForm.published
-                                    ? 'translate-x-5'
-                                    : 'translate-x-0',
-                                'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                                    ? 'bg-myPrimaryLinkColor'
+                                    : 'bg-gray-200',
+                                'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
                             ]"
                         >
+                            <span class="sr-only">Use setting</span>
                             <span
                                 :class="[
                                     postForm.published
-                                        ? 'opacity-0 ease-out duration-100'
-                                        : 'opacity-100 ease-in duration-200',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                        ? 'translate-x-5'
+                                        : 'translate-x-0',
+                                    'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
                                 ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-gray-400"
-                                    fill="none"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-                                        stroke="currentColor"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </span>
-                            <span
-                                :class="[
-                                    postForm.published
-                                        ? 'opacity-100 ease-in duration-200'
-                                        : 'opacity-0 ease-out duration-100',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-myPrimaryLinkColor"
-                                    fill="currentColor"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
-                                    />
-                                </svg>
-                            </span>
-                        </span>
-                    </Switch>
-                </div>
-                <InputError :message="postForm.errors.published" />
-            </div>
-            <!-- post status - end -->
-
-            <!-- post contact page url # start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Company or Mall website
-                    </div>
-                    <p class="myPrimaryParagraph text-xs italic">
-                        Company or mall website updated with these changes.
-                    </p>
-                </div>
-                <!-- post title start -->
-                <div class="myInputGroup">
-                    <InputLabel
-                        for="contact_page_url"
-                        value="Url for mall or company"
-                    />
-                    <TextInput
-                        placeholder="Company or Mall url.."
-                        id="contact_page_url"
-                        v-model="postForm.contact_page_url"
-                        type="text"
-                        class="block w-full"
-                        autocomplete="off"
-                    />
-                    <p class="myPrimaryParagraph italic">
-                        Example: www.thedubaimall.com
-                    </p>
-                    <InputError :message="postForm.errors.contact_page_url" />
-                </div>
-            </div>
-            <!-- post contact page url # end -->
-
-            <!-- Check box Opening hours # start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Opening hours
-                    </div>
-                </div>
-
-                <!-- Check box Team opening hours # start -->
-                <div class="myInputGroup">
-                    <div class="relative flex items-center">
-                        <div class="flex h-6 items-center">
-                            <input
-                                id="use_team_opening_hours"
-                                name="use_team_opening_hours"
-                                v-model="postForm.use_team_opening_hours"
-                                type="checkbox"
-                                class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
-                            />
-                        </div>
-                        <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
-                            <label
-                                for="use_team_opening_hours"
-                                class="select-none font-medium text-gray-900"
-                                >Use Mall or Company Opening Hours
-                            </label>
-                        </div>
-                    </div>
-                    <p class="myPrimaryParagraph mt-4">
-                        Recommended for malls. Set once and reuse when creating
-                        new listings.
-                    </p>
-
-                    <p class="myPrimaryParagraph text-xs italic">
-                        Company opening hours will be updated with these
-                        changes.
-                    </p>
-                    <InputError
-                        :message="postForm.errors.use_team_opening_hours"
-                    />
-                    <!-- Check box Team opening hours # end -->
-
-                    <div class="border-t border-gray-200 pt-6"></div>
-
-                    <!-- Check box Store Opening hours # start -->
-                    <div class="relative flex items-center">
-                        <div class="flex h-6 items-center">
-                            <input
-                                id="use_store_opening_hours"
-                                name="use_store_opening_hours"
-                                v-model="postForm.use_store_opening_hours"
-                                type="checkbox"
-                                class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
-                            />
-                        </div>
-                        <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
-                            <label
-                                for="use_store_opening_hours"
-                                class="select-none font-medium text-gray-900"
-                            >
-                                Use Store Opening Hours
-                            </label>
-                        </div>
-                    </div>
-                    <InputError
-                        :message="postForm.errors.use_store_opening_hours"
-                    />
-                </div>
-                <template
-                    v-if="
-                        postForm.use_team_opening_hours &&
-                        postForm.use_store_opening_hours
-                    "
-                >
-                    <p class="myPrimaryInputError mt-2 mb-0 py-0 self-start">
-                        Select only one option.
-                    </p>
-                </template>
-                <!-- Check box Store Opening hours # end -->
-
-                <template
-                    v-if="
-                        postForm.use_store_opening_hours &&
-                        !postForm.use_team_opening_hours
-                    "
-                >
-                    <div
-                        class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-4"
-                    >
-                        <OpeningClosingHours
-                            weekday="monday"
-                            resourceId="store"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.monday_opening_time_store
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.monday_closing_time_store
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="tuesday"
-                            resourceId="store"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.tuesday_opening_time_store
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.tuesday_closing_time_store
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="wednesday"
-                            resourceId="store"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.wednesday_opening_time_store
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.wednesday_closing_time_store
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="thursday"
-                            resourceId="store"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.thursday_opening_time_store
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.thursday_closing_time_store
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="friday"
-                            resourceId="store"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.friday_opening_time_store
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.friday_closing_time_store
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="saturday"
-                            resourceId="store"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.saturday_opening_time_store
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.saturday_closing_time_store
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="sunday"
-                            resourceId="store"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.sunday_opening_time_store
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.sunday_closing_time_store
-                            "
-                        ></OpeningClosingHours>
-                        <InputError
-                            :message="postForm.errors.store_opening_hours"
-                        />
-                    </div>
-                </template>
-                <template
-                    v-if="
-                        postForm.use_team_opening_hours &&
-                        !postForm.use_store_opening_hours
-                    "
-                >
-                    <div
-                        class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-4"
-                    >
-                        <OpeningClosingHours
-                            weekday="monday"
-                            resourceId="team"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.monday_opening_time_team
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.monday_closing_time_team
-                            "
-                        ></OpeningClosingHours>
-
-                        <OpeningClosingHours
-                            weekday="tuesday"
-                            resourceId="team"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.tuesday_opening_time_team
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.tuesday_closing_time_team
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="wednesday"
-                            resourceId="team"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.wednesday_opening_time_team
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.wednesday_closing_time_team
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="thursday"
-                            resourceId="team"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.thursday_opening_time_team
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.thursday_closing_time_team
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="friday"
-                            resourceId="team"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.friday_opening_time_team
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.friday_closing_time_team
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="saturday"
-                            resourceId="team"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.saturday_opening_time_team
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.saturday_closing_time_team
-                            "
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="sunday"
-                            resourceId="team"
-                            :openingClockFromDatabaseOrLocalStorage="
-                                postForm.sunday_opening_time_team
-                            "
-                            :closingClockFromDatabaseOrLocalStorage="
-                                postForm.sunday_closing_time_team
-                            "
-                        ></OpeningClosingHours>
-                        <InputError
-                            :message="postForm.errors.team_opening_hours"
-                        />
-                    </div>
-                </template>
-            </div>
-            <!--  Check box Opening hours # end -->
-
-            <!-- cover image - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Cover image
-                    </div>
-                </div>
-                <!-- select - start -->
-                <div
-                    @click="handleUploadCoverImage"
-                    class="myPrimaryFakeSelect"
-                >
-                    <div class="relative flex items-center w-full py-0 p-0">
-                        <span>
-                            {{
-                                postForm.cover_image &&
-                                postForm.cover_image?.length === 0
-                                    ? "Select Cover image"
-                                    : "Add Additional Cover Images"
-                            }}
-                        </span>
-                    </div>
-                    <div
-                        class="border-none rounded flex items-center justify-center h-full w-8"
-                    >
-                        <span class="material-symbols-outlined">
-                            unfold_more
-                        </span>
-                    </div>
-                </div>
-                <!-- select - end -->
-
-                <div
-                    v-if="
-                        postForm.cover_image &&
-                        postForm.cover_image?.length === 0
-                    "
-                    class="space-y-6 mt-2"
-                >
-                    <p class="myPrimaryParagraph">No items selected.</p>
-                </div>
-
-                <div>
-                    <p
-                        v-if="
-                            postForm.cover_image &&
-                            postForm.cover_image?.length !== 0
-                        "
-                        class="py-4"
-                    >
-                        Added
-                        {{
-                            postForm.cover_image && postForm.cover_image?.length
-                        }}
-                        {{
-                            postForm.cover_image &&
-                            postForm.cover_image?.length === 1
-                                ? "Item"
-                                : "Items"
-                        }}
-                    </p>
-                    <div
-                        v-if="
-                            postForm.cover_image &&
-                            Array.isArray(postForm?.cover_image) &&
-                            postForm.cover_image?.length !== 0
-                        "
-                        class="p-2 border border-myPrimaryLightGrayColor rounded-lg"
-                    >
-                        <div
-                            class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
-                        >
-                            <div
-                                v-for="image in postForm.cover_image !== null &&
-                                postForm.cover_image"
-                                :key="image?.id"
-                            >
-                                <div
-                                    class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
-                                >
-                                    <div
-                                        class="flex justify-left items-center gap-2"
-                                    >
-                                        <div class="flex-shrink-0">
-                                            <img
-                                                @click="handleUploadCoverImage"
-                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
-                                                alt="image"
-                                                class="myPrimarythumbnailInsertPreview"
-                                            />
-                                        </div>
-
-                                        <button
-                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white break-keep"
-                                            v-if="
-                                                image?.pivot?.primary &&
-                                                postForm.cover_image.length > 1
-                                            "
-                                            type="button"
-                                            @click="
-                                                removePrimaryImageBrandLogo(
-                                                    image?.id
-                                                )
-                                            "
-                                        >
-                                            <div
-                                                class="flex items-center justify-center gap-2"
-                                            >
-                                                <span> Primary </span>
-                                                <span
-                                                    class="myMediumIcon material-symbols-outlined"
-                                                >
-                                                    check
-                                                </span>
-                                            </div>
-                                        </button>
-                                        <button
-                                            class="myPrimaryTag transition bg-white break-keep"
-                                            v-if="
-                                                !image?.pivot?.primary &&
-                                                postForm.cover_image?.length > 1
-                                            "
-                                            type="button"
-                                            @click="
-                                                setAsPrimaryImage(image?.id)
-                                            "
-                                        >
-                                            <span> Set as Primary </span>
-                                        </button>
-                                    </div>
-
-                                    <button
-                                        type="button"
-                                        @click="
-                                            handleRemoveCoverImage(image?.id)
-                                        "
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                    >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            delete
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            v-if="
-                                postForm.cover_image &&
-                                postForm.cover_image?.length >= 1
-                            "
-                            class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
-                        >
-                            <p
-                                @click="handleUploadCoverImage"
-                                class="myPrimaryParagraph text-xs cursor-pointer font-medium"
-                            >
-                                Add Additional Images
-                            </p>
-                            <button
-                                type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                @click="handleUploadCoverImage"
                             >
                                 <span
-                                    class="myMediumIcon material-symbols-outlined"
+                                    :class="[
+                                        postForm.published
+                                            ? 'opacity-0 ease-out duration-100'
+                                            : 'opacity-100 ease-in duration-200',
+                                        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                    ]"
+                                    aria-hidden="true"
                                 >
-                                    add
+                                    <svg
+                                        class="h-3 w-3 text-gray-400"
+                                        fill="none"
+                                        viewBox="0 0 12 12"
+                                    >
+                                        <path
+                                            d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+                                            stroke="currentColor"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
                                 </span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <InputError :message="postForm.errors.cover_image" />
-            </div>
-            <!-- cover image - end -->
-            <!-- post states - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">State</div>
-                </div>
-                <!-- select - start -->
-                <div @click="handleAddStates" class="myPrimaryFakeSelect">
-                    <div class="relative flex items-center w-full py-0 p-0">
-                        <span>
-                            {{
-                                postForm.states && postForm.states?.length === 0
-                                    ? "Select State"
-                                    : "Update State"
-                            }}
-                        </span>
-                    </div>
-                    <div
-                        class="border-none rounded flex items-center justify-center h-full w-8"
-                    >
-                        <span class="material-symbols-outlined">
-                            unfold_more
-                        </span>
-                    </div>
-                </div>
-                <!-- select - end -->
-
-                <div
-                    v-if="postForm.states && postForm.states?.length === 0"
-                    class="space-y-6 mt-2"
-                >
-                    <p class="myPrimaryParagraph">No items selected.</p>
-                </div>
-
-                <div>
-                    <p
-                        v-if="postForm.states && postForm.states?.length !== 0"
-                        class="py-4"
-                    >
-                        Added
-                        {{ postForm.states && postForm.states?.length }}
-                        {{
-                            postForm.states && postForm.states?.length === 1
-                                ? "Item"
-                                : "Items"
-                        }}
-                    </p>
-
-                    <div
-                        v-if="postForm.states && postForm.states?.length !== 0"
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
-                    >
-                        <div
-                            v-for="state in Array.isArray(statesSorted) &&
-                            statesSorted"
-                            :key="state?.id"
-                        >
-                            <div
-                                class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
-                            >
-                                <div
-                                    @click="handleAddStates"
-                                    class="flex items-center gap-4 my-2 cursor-pointer font-medium"
-                                >
-                                    <button
-                                        type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                    >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            location_on
-                                        </span>
-                                    </button>
-                                    <div>
-                                        {{ state?.name }}
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    @click="
-                                        handleRemoveAttachedStates(state?.id)
-                                    "
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                >
-                                    <span
-                                        class="myMediumIcon material-symbols-outlined"
-                                    >
-                                        delete
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <InputError :message="postForm.errors.states" />
-            </div>
-            <!-- post states - end -->
-            <!-- post categories - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Categories
-                    </div>
-                </div>
-                <!-- select - start -->
-                <div @click="handleAddCategories" class="myPrimaryFakeSelect">
-                    <div class="relative flex items-center w-full py-0 p-0">
-                        <span>
-                            {{
-                                postForm.categories &&
-                                postForm.categories?.length === 0
-                                    ? "Select Category"
-                                    : "Update Category"
-                            }}
-                        </span>
-                    </div>
-                    <div
-                        class="border-none rounded flex items-center justify-center h-full w-8"
-                    >
-                        <span class="material-symbols-outlined">
-                            unfold_more
-                        </span>
-                    </div>
-                </div>
-                <!-- select - end -->
-
-                <div
-                    v-if="
-                        postForm.categories && postForm.categories?.length === 0
-                    "
-                    class="space-y-6 mt-2"
-                >
-                    <p class="myPrimaryParagraph">No items selected.</p>
-                </div>
-
-                <div>
-                    <p
-                        v-if="
-                            postForm.categories &&
-                            postForm.categories?.length !== 0
-                        "
-                        class="py-4"
-                    >
-                        Added
-                        {{ postForm.categories && postForm.categories?.length }}
-                        {{
-                            postForm.categories &&
-                            postForm.categories?.length === 1
-                                ? "Item"
-                                : "Items"
-                        }}
-                    </p>
-
-                    <div
-                        v-if="
-                            postForm.categories &&
-                            postForm.categories?.length !== 0
-                        "
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
-                    >
-                        <div
-                            v-for="category in Array.isArray(
-                                categoriesSorted
-                            ) && categoriesSorted"
-                            :key="category?.id"
-                        >
-                            <div
-                                class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
-                            >
-                                <div
-                                    @click="handleAddCategories"
-                                    class="flex items-center gap-4 my-2 cursor-pointer font-medium"
-                                >
-                                    <button
-                                        type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                    >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            interests
-                                        </span>
-                                    </button>
-                                    <div>
-                                        {{ category?.name }}
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    @click="
-                                        handleRemoveAttachedCategory(
-                                            category?.id
-                                        )
-                                    "
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                >
-                                    <span
-                                        class="myMediumIcon material-symbols-outlined"
-                                    >
-                                        delete
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <InputError :message="postForm.errors.categories" />
-            </div>
-            <!-- post categories - end -->
-
-            <!-- tags - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Tags</div>
-                </div>
-                <div class="myInputGroup">
-                    <Tags
-                        :clearTags="clearTags"
-                        :tagsOnLoad="postForm.tags"
-                        @handleTags="handleTags"
-                    ></Tags>
-                    <InputError :message="postForm.errors.tags" />
-                </div>
-            </div>
-            <!-- tags - end -->
-
-            <!-- post brand website url # start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Brand website
-                    </div>
-                </div>
-                <!-- post title start -->
-                <div class="myInputGroup">
-                    <InputLabel for="brand_website_url" value="Url for brand" />
-                    <TextInput
-                        placeholder="Brand url.."
-                        id="brand_website_url"
-                        v-model="postForm.brand_website_url"
-                        type="text"
-                        class="block w-full"
-                        autocomplete="off"
-                    />
-                    <p class="myPrimaryParagraph italic">
-                        Example: www.dior.com
-                    </p>
-                    <InputError :message="postForm.errors.brand_website_url" />
-                </div>
-            </div>
-            <!-- post brand website url # end -->
-
-            <!-- Brand logos - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Brand logo
-                    </div>
-                </div>
-                <!-- select - start -->
-                <div @click="handleUploadBrandLogo" class="myPrimaryFakeSelect">
-                    <div class="relative flex items-center w-full py-0 p-0">
-                        <span>
-                            {{
-                                postForm.brand_logo &&
-                                postForm.brand_logo?.length === 0
-                                    ? "Select Logo"
-                                    : "Add Additional Logos"
-                            }}
-                        </span>
-                    </div>
-                    <div
-                        class="border-none rounded flex items-center justify-center h-full w-8"
-                    >
-                        <span class="material-symbols-outlined">
-                            unfold_more
-                        </span>
-                    </div>
-                </div>
-                <!-- select - end -->
-
-                <div
-                    v-if="
-                        postForm.brand_logo && postForm.brand_logo?.length === 0
-                    "
-                    class="space-y-6 mt-2"
-                >
-                    <p class="myPrimaryParagraph">No items selected.</p>
-                </div>
-
-                <div>
-                    <p
-                        v-if="
-                            postForm.brand_logo &&
-                            postForm.brand_logo?.length !== 0
-                        "
-                        class="py-4"
-                    >
-                        Added
-                        {{ postForm.brand_logo && postForm.brand_logo?.length }}
-                        {{
-                            postForm.brand_logo &&
-                            postForm.brand_logo?.length === 1
-                                ? "Item"
-                                : "Items"
-                        }}
-                    </p>
-                    <div
-                        v-if="
-                            postForm.brand_logo &&
-                            Array.isArray(postForm?.brand_logo) &&
-                            postForm.brand_logo?.length !== 0
-                        "
-                        class="p-2 border border-myPrimaryLightGrayColor rounded-lg"
-                    >
-                        <div
-                            class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
-                        >
-                            <div
-                                v-for="image in postForm.brand_logo !== null &&
-                                postForm.brand_logo"
-                                :key="image?.id"
-                            >
-                                <div
-                                    class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
-                                >
-                                    <div
-                                        class="flex justify-left items-center gap-2"
-                                    >
-                                        <div class="flex-shrink-0">
-                                            <img
-                                                @click="handleUploadBrandLogo"
-                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
-                                                alt="image"
-                                                class="myPrimarythumbnailInsertPreview"
-                                            />
-                                        </div>
-
-                                        <button
-                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white break-keep"
-                                            v-if="
-                                                image?.pivot?.primary &&
-                                                postForm.brand_logo.length > 1
-                                            "
-                                            type="button"
-                                            @click="
-                                                removePrimaryImageBrandLogo(
-                                                    image?.id
-                                                )
-                                            "
-                                        >
-                                            <div
-                                                class="flex items-center justify-center gap-2"
-                                            >
-                                                <span> Primary </span>
-                                                <span
-                                                    class="myMediumIcon material-symbols-outlined"
-                                                >
-                                                    check
-                                                </span>
-                                            </div>
-                                        </button>
-                                        <button
-                                            class="myPrimaryTag transition bg-white break-keep"
-                                            v-if="
-                                                !image?.pivot?.primary &&
-                                                postForm.brand_logo?.length > 1
-                                            "
-                                            type="button"
-                                            @click="
-                                                setAsPrimaryImageBrandLogo(
-                                                    image?.id
-                                                )
-                                            "
-                                        >
-                                            <span> Set as Primary </span>
-                                        </button>
-                                    </div>
-
-                                    <button
-                                        type="button"
-                                        @click="
-                                            handleRemoveBrandLogo(image?.id)
-                                        "
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                    >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            delete
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            v-if="
-                                postForm.brand_logo &&
-                                postForm.brand_logo?.length >= 1
-                            "
-                            class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
-                        >
-                            <p
-                                @click="handleUploadBrandLogo"
-                                class="myPrimaryParagraph text-xs cursor-pointer font-medium"
-                            >
-                                Add Additional Images
-                            </p>
-                            <button
-                                type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                @click="handleUploadBrandLogo"
-                            >
                                 <span
-                                    class="myMediumIcon material-symbols-outlined"
+                                    :class="[
+                                        postForm.published
+                                            ? 'opacity-100 ease-in duration-200'
+                                            : 'opacity-0 ease-out duration-100',
+                                        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                    ]"
+                                    aria-hidden="true"
                                 >
-                                    add
+                                    <svg
+                                        class="h-3 w-3 text-myPrimaryLinkColor"
+                                        fill="currentColor"
+                                        viewBox="0 0 12 12"
+                                    >
+                                        <path
+                                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
+                                        />
+                                    </svg>
                                 </span>
-                            </button>
+                            </span>
+                        </Switch>
+                    </div>
+                    <InputError :message="postForm.errors.published" />
+                </div>
+                <!-- post status - end -->
+
+                <!-- post contact page url # start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Company or Mall website
+                        </div>
+                        <p class="myPrimaryParagraph text-xs italic">
+                            Company or mall website updated with these changes.
+                        </p>
+                    </div>
+                    <!-- post title start -->
+                    <div class="myInputGroup">
+                        <InputLabel
+                            for="contact_page_url"
+                            value="Url for mall or company"
+                        />
+                        <TextInput
+                            placeholder="Company or Mall url.."
+                            id="contact_page_url"
+                            v-model="postForm.contact_page_url"
+                            type="text"
+                            class="block w-full"
+                            autocomplete="off"
+                        />
+                        <p class="myPrimaryParagraph italic">
+                            Example: www.thedubaimall.com
+                        </p>
+                        <InputError
+                            :message="postForm.errors.contact_page_url"
+                        />
+                    </div>
+                </div>
+                <!-- post contact page url # end -->
+
+                <!-- Check box Opening hours # start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Opening hours
                         </div>
                     </div>
-                </div>
 
-                <InputError :message="postForm.errors.brand_logo" />
-            </div>
-            <!--Brand logos - end -->
+                    <!-- Check box Team opening hours # start -->
+                    <div class="myInputGroup">
+                        <div class="relative flex items-center">
+                            <div class="flex h-6 items-center">
+                                <input
+                                    id="use_team_opening_hours"
+                                    name="use_team_opening_hours"
+                                    v-model="postForm.use_team_opening_hours"
+                                    type="checkbox"
+                                    class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                                />
+                            </div>
+                            <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                                <label
+                                    for="use_team_opening_hours"
+                                    class="select-none font-medium text-gray-900"
+                                    >Use Mall or Company Opening Hours
+                                </label>
+                            </div>
+                        </div>
+                        <p class="myPrimaryParagraph mt-4">
+                            Recommended for malls. Set once and reuse when
+                            creating new listings.
+                        </p>
 
-            <!-- post author - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Show Store Staff Members
+                        <p class="myPrimaryParagraph text-xs italic">
+                            Company opening hours will be updated with these
+                            changes.
+                        </p>
+                        <InputError
+                            :message="postForm.errors.use_team_opening_hours"
+                        />
+                        <!-- Check box Team opening hours # end -->
+
+                        <div class="border-t border-gray-200 pt-6"></div>
+
+                        <!-- Check box Store Opening hours # start -->
+                        <div class="relative flex items-center">
+                            <div class="flex h-6 items-center">
+                                <input
+                                    id="use_store_opening_hours"
+                                    name="use_store_opening_hours"
+                                    v-model="postForm.use_store_opening_hours"
+                                    type="checkbox"
+                                    class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                                />
+                            </div>
+                            <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                                <label
+                                    for="use_store_opening_hours"
+                                    class="select-none font-medium text-gray-900"
+                                >
+                                    Use Store Opening Hours
+                                </label>
+                            </div>
+                        </div>
+                        <InputError
+                            :message="postForm.errors.use_store_opening_hours"
+                        />
                     </div>
-                </div>
-                <div
-                    class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
-                >
-                    <InputLabel
-                        :value="postForm.show_author ? 'Show' : 'Hide'"
-                        :class="{
-                            'text-myPrimaryLinkColor': postForm.show_author,
-                            'text-myPrimaryErrorColor': !postForm.show_author,
-                        }"
-                    />
-                    <Switch
-                        v-model="postForm.show_author"
-                        :class="[
-                            postForm.show_author
-                                ? 'bg-myPrimaryLinkColor'
-                                : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
-                        ]"
+                    <template
+                        v-if="
+                            postForm.use_team_opening_hours &&
+                            postForm.use_store_opening_hours
+                        "
                     >
-                        <span class="sr-only">Use setting</span>
-                        <span
-                            :class="[
-                                postForm.show_author
-                                    ? 'translate-x-5'
-                                    : 'translate-x-0',
-                                'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                            ]"
+                        <p
+                            class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
                         >
-                            <span
-                                :class="[
-                                    postForm.show_author
-                                        ? 'opacity-0 ease-out duration-100'
-                                        : 'opacity-100 ease-in duration-200',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-gray-400"
-                                    fill="none"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-                                        stroke="currentColor"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </span>
-                            <span
-                                :class="[
-                                    postForm.show_author
-                                        ? 'opacity-100 ease-in duration-200'
-                                        : 'opacity-0 ease-out duration-100',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-myPrimaryLinkColor"
-                                    fill="currentColor"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
-                                    />
-                                </svg>
-                            </span>
-                        </span>
-                    </Switch>
-                </div>
-                <InputError :message="postForm.errors.show_author" />
+                            Select only one option.
+                        </p>
+                    </template>
+                    <!-- Check box Store Opening hours # end -->
 
-                <!-- select - start -->
-                <div v-if="postForm.show_author === true">
-                    <div @click="handleAddAuthor" class="myPrimaryFakeSelect">
+                    <template
+                        v-if="
+                            postForm.use_store_opening_hours &&
+                            !postForm.use_team_opening_hours
+                        "
+                    >
+                        <div
+                            class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-4"
+                        >
+                            <OpeningClosingHours
+                                weekday="monday"
+                                resourceId="store"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.monday_opening_time_store
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.monday_closing_time_store
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="tuesday"
+                                resourceId="store"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.tuesday_opening_time_store
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.tuesday_closing_time_store
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="wednesday"
+                                resourceId="store"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.wednesday_opening_time_store
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.wednesday_closing_time_store
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="thursday"
+                                resourceId="store"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.thursday_opening_time_store
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.thursday_closing_time_store
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="friday"
+                                resourceId="store"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.friday_opening_time_store
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.friday_closing_time_store
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="saturday"
+                                resourceId="store"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.saturday_opening_time_store
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.saturday_closing_time_store
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="sunday"
+                                resourceId="store"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.sunday_opening_time_store
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.sunday_closing_time_store
+                                "
+                            ></OpeningClosingHours>
+                            <InputError
+                                :message="postForm.errors.store_opening_hours"
+                            />
+                        </div>
+                    </template>
+                    <template
+                        v-if="
+                            postForm.use_team_opening_hours &&
+                            !postForm.use_store_opening_hours
+                        "
+                    >
+                        <div
+                            class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-4"
+                        >
+                            <OpeningClosingHours
+                                weekday="monday"
+                                resourceId="team"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.monday_opening_time_team
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.monday_closing_time_team
+                                "
+                            ></OpeningClosingHours>
+
+                            <OpeningClosingHours
+                                weekday="tuesday"
+                                resourceId="team"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.tuesday_opening_time_team
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.tuesday_closing_time_team
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="wednesday"
+                                resourceId="team"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.wednesday_opening_time_team
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.wednesday_closing_time_team
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="thursday"
+                                resourceId="team"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.thursday_opening_time_team
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.thursday_closing_time_team
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="friday"
+                                resourceId="team"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.friday_opening_time_team
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.friday_closing_time_team
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="saturday"
+                                resourceId="team"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.saturday_opening_time_team
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.saturday_closing_time_team
+                                "
+                            ></OpeningClosingHours>
+                            <OpeningClosingHours
+                                weekday="sunday"
+                                resourceId="team"
+                                :openingClockFromDatabaseOrLocalStorage="
+                                    postForm.sunday_opening_time_team
+                                "
+                                :closingClockFromDatabaseOrLocalStorage="
+                                    postForm.sunday_closing_time_team
+                                "
+                            ></OpeningClosingHours>
+                            <InputError
+                                :message="postForm.errors.team_opening_hours"
+                            />
+                        </div>
+                    </template>
+                </div>
+                <!--  Check box Opening hours # end -->
+
+                <!-- cover image - start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Cover image
+                        </div>
+                    </div>
+                    <!-- select - start -->
+                    <div
+                        @click="handleUploadCoverImage"
+                        class="myPrimaryFakeSelect"
+                    >
                         <div class="relative flex items-center w-full py-0 p-0">
                             <span>
                                 {{
-                                    postForm.author &&
-                                    postForm.author.length === 0
-                                        ? "Select Staff Members"
-                                        : "Update Staff Members"
+                                    postForm.cover_image &&
+                                    postForm.cover_image?.length === 0
+                                        ? "Select Cover image"
+                                        : "Add Additional Cover Images"
                                 }}
                             </span>
                         </div>
@@ -3016,103 +2312,250 @@ const pageBuilder = new PageBuilder(store);
                     <!-- select - end -->
 
                     <div
-                        v-if="postForm.author && postForm.author.length === 0"
+                        v-if="
+                            postForm.cover_image &&
+                            postForm.cover_image?.length === 0
+                        "
                         class="space-y-6 mt-2"
                     >
-                        <p class="myPrimaryParagraph">
-                            No people have been selected.
-                        </p>
+                        <p class="myPrimaryParagraph">No items selected.</p>
                     </div>
 
                     <div>
                         <p
                             v-if="
-                                postForm.author && postForm.author.length !== 0
+                                postForm.cover_image &&
+                                postForm.cover_image?.length !== 0
                             "
                             class="py-4"
                         >
                             Added
-                            {{ postForm.author && postForm.author.length }}
                             {{
-                                postForm.author && postForm.author.length === 1
-                                    ? "person"
-                                    : "people"
+                                postForm.cover_image &&
+                                postForm.cover_image?.length
+                            }}
+                            {{
+                                postForm.cover_image &&
+                                postForm.cover_image?.length === 1
+                                    ? "Item"
+                                    : "Items"
+                            }}
+                        </p>
+                        <div
+                            v-if="
+                                postForm.cover_image &&
+                                Array.isArray(postForm?.cover_image) &&
+                                postForm.cover_image?.length !== 0
+                            "
+                            class="p-2 border border-myPrimaryLightGrayColor rounded-lg"
+                        >
+                            <div
+                                class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                            >
+                                <div
+                                    v-for="image in postForm.cover_image !==
+                                        null && postForm.cover_image"
+                                    :key="image?.id"
+                                >
+                                    <div
+                                        class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
+                                    >
+                                        <div
+                                            class="flex justify-left items-center gap-2"
+                                        >
+                                            <div class="flex-shrink-0">
+                                                <img
+                                                    @click="
+                                                        handleUploadCoverImage
+                                                    "
+                                                    :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                    alt="image"
+                                                    class="myPrimarythumbnailInsertPreview"
+                                                />
+                                            </div>
+
+                                            <button
+                                                class="myPrimaryTag bg-myPrimaryLinkColor text-white break-keep"
+                                                v-if="
+                                                    image?.pivot?.primary &&
+                                                    postForm.cover_image
+                                                        .length > 1
+                                                "
+                                                type="button"
+                                                @click="
+                                                    removePrimaryImageBrandLogo(
+                                                        image?.id
+                                                    )
+                                                "
+                                            >
+                                                <div
+                                                    class="flex items-center justify-center gap-2"
+                                                >
+                                                    <span> Primary </span>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
+                                                </div>
+                                            </button>
+                                            <button
+                                                class="myPrimaryTag transition bg-white break-keep"
+                                                v-if="
+                                                    !image?.pivot?.primary &&
+                                                    postForm.cover_image
+                                                        ?.length > 1
+                                                "
+                                                type="button"
+                                                @click="
+                                                    setAsPrimaryImage(image?.id)
+                                                "
+                                            >
+                                                <span> Set as Primary </span>
+                                            </button>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            @click="
+                                                handleRemoveCoverImage(
+                                                    image?.id
+                                                )
+                                            "
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        >
+                                            <span
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                delete
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                v-if="
+                                    postForm.cover_image &&
+                                    postForm.cover_image?.length >= 1
+                                "
+                                class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
+                            >
+                                <p
+                                    @click="handleUploadCoverImage"
+                                    class="myPrimaryParagraph text-xs cursor-pointer font-medium"
+                                >
+                                    Add Additional Images
+                                </p>
+                                <button
+                                    type="button"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    @click="handleUploadCoverImage"
+                                >
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        add
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <InputError :message="postForm.errors.cover_image" />
+                </div>
+                <!-- cover image - end -->
+                <!-- post states - start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">State</div>
+                    </div>
+                    <!-- select - start -->
+                    <div @click="handleAddStates" class="myPrimaryFakeSelect">
+                        <div class="relative flex items-center w-full py-0 p-0">
+                            <span>
+                                {{
+                                    postForm.states &&
+                                    postForm.states?.length === 0
+                                        ? "Select State"
+                                        : "Update State"
+                                }}
+                            </span>
+                        </div>
+                        <div
+                            class="border-none rounded flex items-center justify-center h-full w-8"
+                        >
+                            <span class="material-symbols-outlined">
+                                unfold_more
+                            </span>
+                        </div>
+                    </div>
+                    <!-- select - end -->
+
+                    <div
+                        v-if="postForm.states && postForm.states?.length === 0"
+                        class="space-y-6 mt-2"
+                    >
+                        <p class="myPrimaryParagraph">No items selected.</p>
+                    </div>
+
+                    <div>
+                        <p
+                            v-if="
+                                postForm.states && postForm.states?.length !== 0
+                            "
+                            class="py-4"
+                        >
+                            Added
+                            {{ postForm.states && postForm.states?.length }}
+                            {{
+                                postForm.states && postForm.states?.length === 1
+                                    ? "Item"
+                                    : "Items"
                             }}
                         </p>
 
                         <div
                             v-if="
-                                postForm.author && postForm.author.length !== 0
+                                postForm.states && postForm.states?.length !== 0
                             "
                             class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
                         >
                             <div
-                                v-for="user in Array.isArray(authorSorted) &&
-                                authorSorted"
-                                :key="user.id"
+                                v-for="state in Array.isArray(statesSorted) &&
+                                statesSorted"
+                                :key="state?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center rounded"
+                                    class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
                                 >
                                     <div
-                                        @click="handleAddAuthor"
-                                        class="flex items-center gap-2 my-4 cursor-pointer"
+                                        @click="handleAddStates"
+                                        class="flex items-center gap-4 my-2 cursor-pointer font-medium"
                                     >
-                                        <!-- start photo -->
-                                        <div
-                                            class="flex-shrink-0"
-                                            v-if="
-                                                user &&
-                                                user.profile_photo_path !== null
-                                            "
+                                        <button
+                                            type="button"
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                         >
-                                            <img
-                                                class="object-cover h-12 w-12 rounded-full"
-                                                :src="`/storage/${user.profile_photo_path}`"
-                                                :alt="
-                                                    user.first_name +
-                                                    user.last_name
-                                                "
-                                            />
+                                            <span
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                location_on
+                                            </span>
+                                        </button>
+                                        <div>
+                                            {{ state?.name }}
                                         </div>
-
-                                        <div
-                                            v-if="
-                                                user &&
-                                                user.profile_photo_path === null
-                                            "
-                                            class="flex-shrink-0 myPrimaryParagraph h-12 w-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                        >
-                                            <span>
-                                                {{
-                                                    user.first_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
-                                            </span>
-                                            <span>
-                                                {{
-                                                    user.last_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
-                                            </span>
-                                        </div>
-
-                                        <!-- end photo -->
-                                        <span
-                                            class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                        >
-                                            <span class="font-medium">
-                                                {{ user.first_name }}
-                                                {{ user.last_name }}
-                                            </span>
-                                        </span>
                                     </div>
+
                                     <button
                                         type="button"
                                         @click="
-                                            handleRemoveAttachedUser(user.id)
+                                            handleRemoveAttachedStates(
+                                                state?.id
+                                            )
                                         "
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
@@ -3126,204 +2569,830 @@ const pageBuilder = new PageBuilder(store);
                             </div>
                         </div>
                     </div>
-                    <InputError :message="postForm.errors.author" />
+                    <InputError :message="postForm.errors.states" />
                 </div>
-            </div>
-            <!-- post author - end -->
-        </template>
+                <!-- post states - end -->
+                <!-- post categories - start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Categories
+                        </div>
+                    </div>
+                    <!-- select - start -->
+                    <div
+                        @click="handleAddCategories"
+                        class="myPrimaryFakeSelect"
+                    >
+                        <div class="relative flex items-center w-full py-0 p-0">
+                            <span>
+                                {{
+                                    postForm.categories &&
+                                    postForm.categories?.length === 0
+                                        ? "Select Category"
+                                        : "Update Category"
+                                }}
+                            </span>
+                        </div>
+                        <div
+                            class="border-none rounded flex items-center justify-center h-full w-8"
+                        >
+                            <span class="material-symbols-outlined">
+                                unfold_more
+                            </span>
+                        </div>
+                    </div>
+                    <!-- select - end -->
 
-        <template #actions>
-            <div class="flex myPrimaryGap justify-end items-center">
-                <template v-if="formType === 'create'">
+                    <div
+                        v-if="
+                            postForm.categories &&
+                            postForm.categories?.length === 0
+                        "
+                        class="space-y-6 mt-2"
+                    >
+                        <p class="myPrimaryParagraph">No items selected.</p>
+                    </div>
+
+                    <div>
+                        <p
+                            v-if="
+                                postForm.categories &&
+                                postForm.categories?.length !== 0
+                            "
+                            class="py-4"
+                        >
+                            Added
+                            {{
+                                postForm.categories &&
+                                postForm.categories?.length
+                            }}
+                            {{
+                                postForm.categories &&
+                                postForm.categories?.length === 1
+                                    ? "Item"
+                                    : "Items"
+                            }}
+                        </p>
+
+                        <div
+                            v-if="
+                                postForm.categories &&
+                                postForm.categories?.length !== 0
+                            "
+                            class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
+                        >
+                            <div
+                                v-for="category in Array.isArray(
+                                    categoriesSorted
+                                ) && categoriesSorted"
+                                :key="category?.id"
+                            >
+                                <div
+                                    class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
+                                >
+                                    <div
+                                        @click="handleAddCategories"
+                                        class="flex items-center gap-4 my-2 cursor-pointer font-medium"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        >
+                                            <span
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                interests
+                                            </span>
+                                        </button>
+                                        <div>
+                                            {{ category?.name }}
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        @click="
+                                            handleRemoveAttachedCategory(
+                                                category?.id
+                                            )
+                                        "
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    >
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            delete
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <InputError :message="postForm.errors.categories" />
+                </div>
+                <!-- post categories - end -->
+
+                <!-- tags - start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">Tags</div>
+                    </div>
+                    <div class="myInputGroup">
+                        <Tags
+                            :clearTags="clearTags"
+                            :tagsOnLoad="postForm.tags"
+                            @handleTags="handleTags"
+                        ></Tags>
+                        <InputError :message="postForm.errors.tags" />
+                    </div>
+                </div>
+                <!-- tags - end -->
+
+                <!-- post brand website url # start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Brand website
+                        </div>
+                    </div>
+                    <!-- post title start -->
+                    <div class="myInputGroup">
+                        <InputLabel
+                            for="brand_website_url"
+                            value="Url for brand"
+                        />
+                        <TextInput
+                            placeholder="Brand url.."
+                            id="brand_website_url"
+                            v-model="postForm.brand_website_url"
+                            type="text"
+                            class="block w-full"
+                            autocomplete="off"
+                        />
+                        <p class="myPrimaryParagraph italic">
+                            Example: www.dior.com
+                        </p>
+                        <InputError
+                            :message="postForm.errors.brand_website_url"
+                        />
+                    </div>
+                </div>
+                <!-- post brand website url # end -->
+
+                <!-- Brand logos - start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Brand logo
+                        </div>
+                    </div>
+                    <!-- select - start -->
+                    <div
+                        @click="handleUploadBrandLogo"
+                        class="myPrimaryFakeSelect"
+                    >
+                        <div class="relative flex items-center w-full py-0 p-0">
+                            <span>
+                                {{
+                                    postForm.brand_logo &&
+                                    postForm.brand_logo?.length === 0
+                                        ? "Select Logo"
+                                        : "Add Additional Logos"
+                                }}
+                            </span>
+                        </div>
+                        <div
+                            class="border-none rounded flex items-center justify-center h-full w-8"
+                        >
+                            <span class="material-symbols-outlined">
+                                unfold_more
+                            </span>
+                        </div>
+                    </div>
+                    <!-- select - end -->
+
+                    <div
+                        v-if="
+                            postForm.brand_logo &&
+                            postForm.brand_logo?.length === 0
+                        "
+                        class="space-y-6 mt-2"
+                    >
+                        <p class="myPrimaryParagraph">No items selected.</p>
+                    </div>
+
+                    <div>
+                        <p
+                            v-if="
+                                postForm.brand_logo &&
+                                postForm.brand_logo?.length !== 0
+                            "
+                            class="py-4"
+                        >
+                            Added
+                            {{
+                                postForm.brand_logo &&
+                                postForm.brand_logo?.length
+                            }}
+                            {{
+                                postForm.brand_logo &&
+                                postForm.brand_logo?.length === 1
+                                    ? "Item"
+                                    : "Items"
+                            }}
+                        </p>
+                        <div
+                            v-if="
+                                postForm.brand_logo &&
+                                Array.isArray(postForm?.brand_logo) &&
+                                postForm.brand_logo?.length !== 0
+                            "
+                            class="p-2 border border-myPrimaryLightGrayColor rounded-lg"
+                        >
+                            <div
+                                class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                            >
+                                <div
+                                    v-for="image in postForm.brand_logo !==
+                                        null && postForm.brand_logo"
+                                    :key="image?.id"
+                                >
+                                    <div
+                                        class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
+                                    >
+                                        <div
+                                            class="flex justify-left items-center gap-2"
+                                        >
+                                            <div class="flex-shrink-0">
+                                                <img
+                                                    @click="
+                                                        handleUploadBrandLogo
+                                                    "
+                                                    :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                    alt="image"
+                                                    class="myPrimarythumbnailInsertPreview"
+                                                />
+                                            </div>
+
+                                            <button
+                                                class="myPrimaryTag bg-myPrimaryLinkColor text-white break-keep"
+                                                v-if="
+                                                    image?.pivot?.primary &&
+                                                    postForm.brand_logo.length >
+                                                        1
+                                                "
+                                                type="button"
+                                                @click="
+                                                    removePrimaryImageBrandLogo(
+                                                        image?.id
+                                                    )
+                                                "
+                                            >
+                                                <div
+                                                    class="flex items-center justify-center gap-2"
+                                                >
+                                                    <span> Primary </span>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
+                                                </div>
+                                            </button>
+                                            <button
+                                                class="myPrimaryTag transition bg-white break-keep"
+                                                v-if="
+                                                    !image?.pivot?.primary &&
+                                                    postForm.brand_logo
+                                                        ?.length > 1
+                                                "
+                                                type="button"
+                                                @click="
+                                                    setAsPrimaryImageBrandLogo(
+                                                        image?.id
+                                                    )
+                                                "
+                                            >
+                                                <span> Set as Primary </span>
+                                            </button>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            @click="
+                                                handleRemoveBrandLogo(image?.id)
+                                            "
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        >
+                                            <span
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                delete
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                v-if="
+                                    postForm.brand_logo &&
+                                    postForm.brand_logo?.length >= 1
+                                "
+                                class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
+                            >
+                                <p
+                                    @click="handleUploadBrandLogo"
+                                    class="myPrimaryParagraph text-xs cursor-pointer font-medium"
+                                >
+                                    Add Additional Images
+                                </p>
+                                <button
+                                    type="button"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    @click="handleUploadBrandLogo"
+                                >
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        add
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <InputError :message="postForm.errors.brand_logo" />
+                </div>
+                <!--Brand logos - end -->
+
+                <!-- post author - start -->
+                <div class="myInputsOrganization">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Show Store Staff Members
+                        </div>
+                    </div>
+                    <div
+                        class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
+                    >
+                        <InputLabel
+                            :value="postForm.show_author ? 'Show' : 'Hide'"
+                            :class="{
+                                'text-myPrimaryLinkColor': postForm.show_author,
+                                'text-myPrimaryErrorColor':
+                                    !postForm.show_author,
+                            }"
+                        />
+                        <Switch
+                            v-model="postForm.show_author"
+                            :class="[
+                                postForm.show_author
+                                    ? 'bg-myPrimaryLinkColor'
+                                    : 'bg-gray-200',
+                                'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
+                            ]"
+                        >
+                            <span class="sr-only">Use setting</span>
+                            <span
+                                :class="[
+                                    postForm.show_author
+                                        ? 'translate-x-5'
+                                        : 'translate-x-0',
+                                    'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                                ]"
+                            >
+                                <span
+                                    :class="[
+                                        postForm.show_author
+                                            ? 'opacity-0 ease-out duration-100'
+                                            : 'opacity-100 ease-in duration-200',
+                                        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                    ]"
+                                    aria-hidden="true"
+                                >
+                                    <svg
+                                        class="h-3 w-3 text-gray-400"
+                                        fill="none"
+                                        viewBox="0 0 12 12"
+                                    >
+                                        <path
+                                            d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+                                            stroke="currentColor"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <span
+                                    :class="[
+                                        postForm.show_author
+                                            ? 'opacity-100 ease-in duration-200'
+                                            : 'opacity-0 ease-out duration-100',
+                                        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                    ]"
+                                    aria-hidden="true"
+                                >
+                                    <svg
+                                        class="h-3 w-3 text-myPrimaryLinkColor"
+                                        fill="currentColor"
+                                        viewBox="0 0 12 12"
+                                    >
+                                        <path
+                                            d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
+                                        />
+                                    </svg>
+                                </span>
+                            </span>
+                        </Switch>
+                    </div>
+                    <InputError :message="postForm.errors.show_author" />
+
+                    <!-- select - start -->
+                    <div v-if="postForm.show_author === true">
+                        <div
+                            @click="handleAddAuthor"
+                            class="myPrimaryFakeSelect"
+                        >
+                            <div
+                                class="relative flex items-center w-full py-0 p-0"
+                            >
+                                <span>
+                                    {{
+                                        postForm.author &&
+                                        postForm.author.length === 0
+                                            ? "Select Staff Members"
+                                            : "Update Staff Members"
+                                    }}
+                                </span>
+                            </div>
+                            <div
+                                class="border-none rounded flex items-center justify-center h-full w-8"
+                            >
+                                <span class="material-symbols-outlined">
+                                    unfold_more
+                                </span>
+                            </div>
+                        </div>
+                        <!-- select - end -->
+
+                        <div
+                            v-if="
+                                postForm.author && postForm.author.length === 0
+                            "
+                            class="space-y-6 mt-2"
+                        >
+                            <p class="myPrimaryParagraph">
+                                No people have been selected.
+                            </p>
+                        </div>
+
+                        <div>
+                            <p
+                                v-if="
+                                    postForm.author &&
+                                    postForm.author.length !== 0
+                                "
+                                class="py-4"
+                            >
+                                Added
+                                {{ postForm.author && postForm.author.length }}
+                                {{
+                                    postForm.author &&
+                                    postForm.author.length === 1
+                                        ? "person"
+                                        : "people"
+                                }}
+                            </p>
+
+                            <div
+                                v-if="
+                                    postForm.author &&
+                                    postForm.author.length !== 0
+                                "
+                                class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 rounded-lg"
+                            >
+                                <div
+                                    v-for="user in Array.isArray(
+                                        authorSorted
+                                    ) && authorSorted"
+                                    :key="user.id"
+                                >
+                                    <div
+                                        class="flex justify-between items-center rounded"
+                                    >
+                                        <div
+                                            @click="handleAddAuthor"
+                                            class="flex items-center gap-2 my-4 cursor-pointer"
+                                        >
+                                            <!-- start photo -->
+                                            <div
+                                                class="flex-shrink-0"
+                                                v-if="
+                                                    user &&
+                                                    user.profile_photo_path !==
+                                                        null
+                                                "
+                                            >
+                                                <img
+                                                    class="object-cover h-12 w-12 rounded-full"
+                                                    :src="`/storage/${user.profile_photo_path}`"
+                                                    :alt="
+                                                        user.first_name +
+                                                        user.last_name
+                                                    "
+                                                />
+                                            </div>
+
+                                            <div
+                                                v-if="
+                                                    user &&
+                                                    user.profile_photo_path ===
+                                                        null
+                                                "
+                                                class="flex-shrink-0 myPrimaryParagraph h-12 w-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                            >
+                                                <span>
+                                                    {{
+                                                        user.first_name
+                                                            .charAt(0)
+                                                            .toUpperCase()
+                                                    }}
+                                                </span>
+                                                <span>
+                                                    {{
+                                                        user.last_name
+                                                            .charAt(0)
+                                                            .toUpperCase()
+                                                    }}
+                                                </span>
+                                            </div>
+
+                                            <!-- end photo -->
+                                            <span
+                                                class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                            >
+                                                <span class="font-medium">
+                                                    {{ user.first_name }}
+                                                    {{ user.last_name }}
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            @click="
+                                                handleRemoveAttachedUser(
+                                                    user.id
+                                                )
+                                            "
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        >
+                                            <span
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                delete
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <InputError :message="postForm.errors.author" />
+                    </div>
+                </div>
+                <!-- post author - end -->
+            </template>
+
+            <template #actions>
+                <div class="flex myPrimaryGap justify-end items-center">
+                    <template v-if="formType === 'create'">
+                        <button
+                            type="button"
+                            @click="handleClearForm"
+                            class="text-myPrimaryErrorColor italic text-xs"
+                        >
+                            Clear form
+                        </button>
+                    </template>
                     <button
                         type="button"
-                        @click="handleClearForm"
-                        class="text-myPrimaryErrorColor italic text-xs"
+                        @click="handlePageBuilder"
+                        class="mySecondaryButton"
                     >
-                        Clear form
+                        Manage Content
                     </button>
-                </template>
-                <button
-                    type="button"
-                    @click="handlePageBuilder"
-                    class="mySecondaryButton"
-                >
-                    Manage Content
-                </button>
-                <SubmitButton :disabled="postForm.processing" buttonText="Save">
-                </SubmitButton>
-            </div>
-            <div
-                class="flex justify-end mt-4"
-                v-if="Object.values(postForm.errors).length !== 0"
-            >
+                    <SubmitButton
+                        :disabled="postForm.processing"
+                        buttonText="Save"
+                    >
+                    </SubmitButton>
+                </div>
                 <div
-                    @click="showErrorNotifications = true"
-                    class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
+                    class="flex justify-end mt-4"
+                    v-if="Object.values(postForm.errors).length !== 0"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-4 h-4 text-myPrimaryErrorColor"
+                    <div
+                        @click="showErrorNotifications = true"
+                        class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
                     >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                        />
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                    </svg>
-                    <p
-                        class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
-                    >
-                        Show
-                        {{ Object.values(postForm.errors).length }}
-                        {{
-                            Object.values(postForm.errors).length === 1
-                                ? "error"
-                                : "errors"
-                        }}
-                    </p>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-4 h-4 text-myPrimaryErrorColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+                        <p
+                            class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
+                        >
+                            Show
+                            {{ Object.values(postForm.errors).length }}
+                            {{
+                                Object.values(postForm.errors).length === 1
+                                    ? "error"
+                                    : "errors"
+                            }}
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <DynamicModal
-                :show="modalShowClearForm"
-                :type="typeModal"
-                :gridColumnAmount="gridColumnModal"
-                :title="titleModal"
-                :description="descriptionModal"
-                :firstButtonText="firstButtonModal"
-                :secondButtonText="secondButtonModal"
-                :thirdButtonText="thirdButtonModal"
-                @firstModalButtonFunction="firstModalButtonFunction"
-                @secondModalButtonFunction="secondModalButtonFunction"
-                @thirdModalButtonFunction="thirdModalButtonFunction"
-            >
-                <header></header>
-                <main></main>
-            </DynamicModal>
-            <MediaLibraryModal
-                :forUserNotTeam="false"
-                :user="user"
-                :team="postForm.team"
-                :open="showMediaLibraryModal"
-                :title="titleMedia"
-                :description="descriptionMedia"
-                :firstButtonText="firstButtonMedia"
-                :secondButtonText="secondButtonMedia"
-                :thirdButtonText="thirdButtonMedia"
-                @firstMediaButtonFunction="firstMediaButtonFunction"
-                @secondMediaButtonFunction="secondMediaButtonFunction"
-                @thirdMediaButtonFunction="thirdMediaButtonFunction"
-            >
-            </MediaLibraryModal>
 
-            <SearchUsersOrItems
-                v-if="showSearchUserModal"
-                apiUrlRouteName="attach.user.index"
-                :existingItems="postForm.author"
-                vuexActionMethod="attachedUsersOrItems/fetchUsers"
-                vuexGetCurrentItems="attachedUsersOrItems/getCurrentUsers"
-                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedUsers"
-                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedUsers"
-                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedUser"
-                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedUsersToEmptyArray"
-                :user="user"
-                :team="postForm.team"
-                :title="titleModalSearchItems"
-                :description="descriptionModalSearchItems"
-                :firstButtonText="firstButtonModalSearchItems"
-                :secondButtonText="secondButtonModalSearchItems"
-                @firstModalButtonSearchItemsFunction="
-                    firstModalButtonSearchItemsFunction
-                "
-                @secondModalButtonSearchItemsFunction="
-                    secondModalButtonSearchItemsFunction
-                "
-                :displayIcon="false"
-                :show="showSearchUserModal"
-            >
-            </SearchUsersOrItems>
+                <DynamicModal
+                    :maxWidth="'full'"
+                    :show="showPageBuilderModal"
+                    :type="typeModal"
+                    :gridColumnAmount="gridColumnModal"
+                    :title="titleModal"
+                    :description="descriptionModal"
+                    :firstButtonText="firstButtonPageBuilder"
+                    :secondButtonText="secondButtonPageBuilder"
+                    :thirdButtonText="thirdButtonPageBuilder"
+                    @firstModalButtonFunction="firstPageBuilderButtonFunction"
+                    @secondModalButtonFunction="secondPageBuilderButtonFunction"
+                    @thirdModalButtonFunction="thirdPageBuilderButtonFunction"
+                >
+                    <header></header>
+                    <main>
+                        <PageBuilder PageBuilderLogo="/logo/logo.svg" />
+                    </main>
+                </DynamicModal>
 
-            <SearchUsersOrItems
-                v-if="showSearchStoreStatesModal"
-                apiUrlRouteName="attach.store.states.index"
-                :existingItems="postForm.states"
-                vuexActionMethod="attachedUsersOrItems/fetchStoreStates"
-                vuexGetCurrentItems="attachedUsersOrItems/getCurrentStoreStates"
-                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedStoreStates"
-                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedStoreStates"
-                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedStoreStates"
-                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedStoreStatesToEmptyArray"
-                :user="user"
-                :team="postForm.team"
-                :title="titleModalSearchItems"
-                :description="descriptionModalSearchItems"
-                :firstButtonText="firstButtonModalSearchItems"
-                :secondButtonText="secondButtonModalSearchItems"
-                @firstModalButtonSearchItemsFunction="
-                    firstModalButtonSearchItemsFunction
-                "
-                @secondModalButtonSearchItemsFunction="
-                    secondModalButtonSearchItemsFunction
-                "
-                :displayIcon="true"
-                icon="MapPinIcon"
-                :show="showSearchStoreStatesModal"
-            >
-            </SearchUsersOrItems>
+                <DynamicModal
+                    :show="modalShowClearForm"
+                    :type="typeModal"
+                    :gridColumnAmount="gridColumnModal"
+                    :title="titleModal"
+                    :description="descriptionModal"
+                    :firstButtonText="firstButtonModal"
+                    :secondButtonText="secondButtonModal"
+                    :thirdButtonText="thirdButtonModal"
+                    @firstModalButtonFunction="firstModalButtonFunction"
+                    @secondModalButtonFunction="secondModalButtonFunction"
+                    @thirdModalButtonFunction="thirdModalButtonFunction"
+                >
+                    <header></header>
+                    <main></main>
+                </DynamicModal>
 
-            <SearchUsersOrItems
-                v-if="showSearchStoreCategoriesModal"
-                apiUrlRouteName="attach.store.categories.index"
-                :existingItems="postForm.categories"
-                vuexActionMethod="attachedUsersOrItems/fetchStoreCategories"
-                vuexGetCurrentItems="attachedUsersOrItems/getCurrentStoreCategories"
-                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedStoreCategories"
-                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedStoreCategories"
-                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedStoreCategories"
-                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedStoreCategoriesToEmptyArray"
-                :user="user"
-                :team="postForm.team"
-                :title="titleModalSearchItems"
-                :description="descriptionModalSearchItems"
-                :firstButtonText="firstButtonModalSearchItems"
-                :secondButtonText="secondButtonModalSearchItems"
-                @firstModalButtonSearchItemsFunction="
-                    firstModalButtonSearchItemsFunction
-                "
-                @secondModalButtonSearchItemsFunction="
-                    secondModalButtonSearchItemsFunction
-                "
-                :displayIcon="true"
-                icon="interests"
-                :show="showSearchStoreCategoriesModal"
-            >
-            </SearchUsersOrItems>
+                <MediaLibraryModal
+                    :forUserNotTeam="false"
+                    :user="user"
+                    :team="postForm.team"
+                    :open="showMediaLibraryModal"
+                    :title="titleMedia"
+                    :description="descriptionMedia"
+                    :firstButtonText="firstButtonMedia"
+                    :secondButtonText="secondButtonMedia"
+                    :thirdButtonText="thirdButtonMedia"
+                    @firstMediaButtonFunction="firstMediaButtonFunction"
+                    @secondMediaButtonFunction="secondMediaButtonFunction"
+                    @thirdMediaButtonFunction="thirdMediaButtonFunction"
+                >
+                </MediaLibraryModal>
 
-            <NotificationsFixedBottom
-                :listOfMessages="Object.values(postForm.errors)"
-                :show="showErrorNotifications"
-                @notificationsModalButton="notificationsModalButton"
-            >
-                <div class="flex items-center justify-start gap-2">
-                    <p class="myPrimaryParagraphError">
-                        {{ Object.values(postForm.errors).length }}
-                        {{
-                            Object.values(postForm.errors).length === 1
-                                ? "error"
-                                : "errors"
-                        }}
-                    </p>
-                </div>
-            </NotificationsFixedBottom>
-        </template>
-    </FormSection>
+                <SearchUsersOrItems
+                    v-if="showSearchUserModal"
+                    apiUrlRouteName="attach.user.index"
+                    :existingItems="postForm.author"
+                    vuexActionMethod="attachedUsersOrItems/fetchUsers"
+                    vuexGetCurrentItems="attachedUsersOrItems/getCurrentUsers"
+                    vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedUsers"
+                    vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedUsers"
+                    vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedUser"
+                    vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedUsersToEmptyArray"
+                    :user="user"
+                    :team="postForm.team"
+                    :title="titleModalSearchItems"
+                    :description="descriptionModalSearchItems"
+                    :firstButtonText="firstButtonModalSearchItems"
+                    :secondButtonText="secondButtonModalSearchItems"
+                    @firstModalButtonSearchItemsFunction="
+                        firstModalButtonSearchItemsFunction
+                    "
+                    @secondModalButtonSearchItemsFunction="
+                        secondModalButtonSearchItemsFunction
+                    "
+                    :displayIcon="false"
+                    :show="showSearchUserModal"
+                >
+                </SearchUsersOrItems>
+
+                <SearchUsersOrItems
+                    v-if="showSearchStoreStatesModal"
+                    apiUrlRouteName="attach.store.states.index"
+                    :existingItems="postForm.states"
+                    vuexActionMethod="attachedUsersOrItems/fetchStoreStates"
+                    vuexGetCurrentItems="attachedUsersOrItems/getCurrentStoreStates"
+                    vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedStoreStates"
+                    vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedStoreStates"
+                    vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedStoreStates"
+                    vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedStoreStatesToEmptyArray"
+                    :user="user"
+                    :team="postForm.team"
+                    :title="titleModalSearchItems"
+                    :description="descriptionModalSearchItems"
+                    :firstButtonText="firstButtonModalSearchItems"
+                    :secondButtonText="secondButtonModalSearchItems"
+                    @firstModalButtonSearchItemsFunction="
+                        firstModalButtonSearchItemsFunction
+                    "
+                    @secondModalButtonSearchItemsFunction="
+                        secondModalButtonSearchItemsFunction
+                    "
+                    :displayIcon="true"
+                    icon="MapPinIcon"
+                    :show="showSearchStoreStatesModal"
+                >
+                </SearchUsersOrItems>
+
+                <SearchUsersOrItems
+                    v-if="showSearchStoreCategoriesModal"
+                    apiUrlRouteName="attach.store.categories.index"
+                    :existingItems="postForm.categories"
+                    vuexActionMethod="attachedUsersOrItems/fetchStoreCategories"
+                    vuexGetCurrentItems="attachedUsersOrItems/getCurrentStoreCategories"
+                    vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedStoreCategories"
+                    vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedStoreCategories"
+                    vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedStoreCategories"
+                    vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedStoreCategoriesToEmptyArray"
+                    :user="user"
+                    :team="postForm.team"
+                    :title="titleModalSearchItems"
+                    :description="descriptionModalSearchItems"
+                    :firstButtonText="firstButtonModalSearchItems"
+                    :secondButtonText="secondButtonModalSearchItems"
+                    @firstModalButtonSearchItemsFunction="
+                        firstModalButtonSearchItemsFunction
+                    "
+                    @secondModalButtonSearchItemsFunction="
+                        secondModalButtonSearchItemsFunction
+                    "
+                    :displayIcon="true"
+                    icon="interests"
+                    :show="showSearchStoreCategoriesModal"
+                >
+                </SearchUsersOrItems>
+
+                <NotificationsFixedBottom
+                    :listOfMessages="Object.values(postForm.errors)"
+                    :show="showErrorNotifications"
+                    @notificationsModalButton="notificationsModalButton"
+                >
+                    <div class="flex items-center justify-start gap-2">
+                        <p class="myPrimaryParagraphError">
+                            {{ Object.values(postForm.errors).length }}
+                            {{
+                                Object.values(postForm.errors).length === 1
+                                    ? "error"
+                                    : "errors"
+                            }}
+                        </p>
+                    </div>
+                </NotificationsFixedBottom>
+            </template>
+        </FormSection>
+    </div>
 </template>
