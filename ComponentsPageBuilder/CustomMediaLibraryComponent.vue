@@ -6,7 +6,6 @@ import {
     PageBuilderClass,
     usePageBuilderModal,
     usePageBuilderStateStore,
-    useMediaLibraryStore,
 } from "vue-website-page-builder";
 
 const loading = ref(false);
@@ -16,13 +15,9 @@ const selectedImage = ref(null);
 
 // Initialize stores explicitly
 const pageBuilderStateStore = usePageBuilderStateStore();
-const mediaLibraryStore = useMediaLibraryStore();
 
 // Initialize PageBuilder with explicit store passing - professional way!
-const pageBuilderClass = new PageBuilderClass(
-    pageBuilderStateStore,
-    mediaLibraryStore
-);
+const pageBuilderClass = new PageBuilderClass(pageBuilderStateStore);
 
 // Get modal control functions - professional import pattern!
 const { closeMediaLibraryModal } = usePageBuilderModal();
@@ -71,21 +66,21 @@ const handleImageClick = async (image) => {
 
     // Set current image using PageBuilder methods (if available)
     if (
-        pageBuilderClass.mediaLibraryStore &&
-        pageBuilderClass.mediaLibraryStore.setCurrentImage
+        pageBuilderClass.pageBuilderStateStore &&
+        pageBuilderClass.pageBuilderStateStore.setCurrentImage
     ) {
         // Follow the exact same pattern as Unsplash component
         // They only set { file } - that's it!
-        pageBuilderClass.mediaLibraryStore.setCurrentImage({
+        pageBuilderClass.pageBuilderStateStore.setCurrentImage({
             file: imageFile,
         });
     }
 
     if (
-        pageBuilderClass.mediaLibraryStore &&
-        pageBuilderClass.mediaLibraryStore.setCurrentPreviewImage
+        pageBuilderClass.pageBuilderStateStore &&
+        pageBuilderClass.pageBuilderStateStore.setCurrentPreviewImage
     ) {
-        pageBuilderClass.mediaLibraryStore.setCurrentPreviewImage(null);
+        pageBuilderClass.pageBuilderStateStore.setCurrentPreviewImage(null);
     }
 
     // Update our local reactive ref for the preview
@@ -112,7 +107,7 @@ const applySelectedImage = async () => {
     }
 
     // Ensure the current image is set in the store with proper structure
-    pageBuilderClass.mediaLibraryStore.setCurrentImage({
+    pageBuilderClass.pageBuilderStateStore.setCurrentImage({
         src: `/${selectedImage.value.large_path}`,
     });
 
