@@ -5,7 +5,7 @@ import { ref, onMounted, computed } from "vue";
 import {
     PageBuilderClass,
     usePageBuilderModal,
-    usePageBuilderStateStore,
+    sharedPageBuilderStore,
 } from "vue-website-page-builder";
 
 const loading = ref(false);
@@ -13,8 +13,8 @@ const error = ref(null);
 const images = ref([]);
 const selectedImage = ref(null);
 
-// Initialize stores explicitly
-const pageBuilderStateStore = usePageBuilderStateStore();
+// Use shared store instance (same as PageBuilder component)
+const pageBuilderStateStore = sharedPageBuilderStore;
 
 // Initialize PageBuilder with explicit store passing - professional way!
 const pageBuilderClass = new PageBuilderClass(pageBuilderStateStore);
