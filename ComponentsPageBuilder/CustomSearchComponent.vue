@@ -14,13 +14,9 @@ const error = ref(null);
 const components = ref([]);
 
 const pageBuilderStateStore = inject("pageBuilderStateStore");
-const mediaLibraryStore = inject("mediaLibraryStore");
 
 // Initialize PageBuilder with explicit store passing - professional way!
-const pageBuilderClass = new PageBuilderClass(
-    pageBuilderStateStore,
-    mediaLibraryStore
-);
+const pageBuilderClass = new PageBuilderClass(pageBuilderStateStore);
 
 const componentHelpers = ref([
     {
