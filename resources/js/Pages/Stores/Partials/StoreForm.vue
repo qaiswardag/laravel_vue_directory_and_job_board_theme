@@ -1061,7 +1061,8 @@ const handlePageBuilder = function () {
     thirdButtonPageBuilder.value = null;
     // handle click
     firstPageBuilderButtonFunction.value = function () {
-        showPageBuilderModal.value = false;
+        console.log("Laravel Dynamic Modal first button – Close FN ran..");
+        // showPageBuilderModal.value = false;
     };
 
     secondPageBuilderButtonFunction.value = function () {
