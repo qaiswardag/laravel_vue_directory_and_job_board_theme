@@ -11,7 +11,7 @@ import {
 // Import external package CSS
 import "vue-website-page-builder/style.css";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 // Create standalone PageBuilder instance
 const internalPinia = createPinia();
@@ -93,7 +93,9 @@ const postIs = `
 </section>
 `;
 
-pageBuilderClass.loadExistingContent(postIs);
+onMounted(() => {
+    pageBuilderClass.loadExistingContent(postIs);
+});
 </script>
 
 <template>
