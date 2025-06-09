@@ -83,15 +83,23 @@ const togglePageBuilder = function (e) {
                 </h1>
                 <PageBuilder
                     :configPageBuilder="{
-                        updateOrCreate: 'update',
-                        PageBuilderLogo: {
+                        updateOrCreate: {
+                            formType: 'create',
+                            createNewResourceFormName: 'post',
+                        },
+                        pageBuilderLogo: {
                             src: '/logo/logo.svg',
                         },
+                        userForPageBuilder: { name: 'John Doe' },
                         resourceData: {
                             title: 'Demo Article',
                             id: 1,
                         },
-                        userForPageBuilder: { name: 'John Doe' },
+                        userSettings: {
+                            theme: 'light',
+                            language: 'en',
+                            autoSave: true,
+                        },
                     }"
                     :CustomMediaLibraryComponent="CustomMediaLibraryComponent"
                     :CustomSearchComponent="CustomSearchComponent"
