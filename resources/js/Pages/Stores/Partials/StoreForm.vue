@@ -1481,6 +1481,27 @@ onBeforeMount(async () => {
     if (props.post) {
         formType.value = "update";
 
+        const configPageBuilder = {
+            updateOrCreate: {
+                formType: "update",
+                createNewResourceFormName: "store",
+            },
+            pageBuilderLogo: {
+                src: "/logo/logo.svg",
+            },
+            userForPageBuilder: { name: "John Doe" },
+            // resourceData: {
+            //     title: props.post.title,
+            // },
+            userSettings: {
+                theme: "light",
+                language: "en",
+                autoSave: true,
+            },
+        };
+
+        console.log("den er:", props.post.title);
+
         pageBuilderClass.setConfigPageBuilder(configPageBuilder);
         pageBuilderClass.loadExistingContent(props.post.content);
 
@@ -1592,25 +1613,6 @@ onBeforeMount(async () => {
         pathPageBuilderLocalStorageUpdateDraft.value
     );
 });
-
-const configPageBuilder = {
-    updateOrCreate: {
-        formType: "update",
-    },
-    pageBuilderLogo: {
-        src: "/logo/logo.svg",
-    },
-    userForPageBuilder: { name: "John Doe" },
-    resourceData: {
-        title: "Demo Article set in script",
-        id: 1,
-    },
-    userSettings: {
-        theme: "light",
-        language: "en",
-        autoSave: true,
-    },
-};
 
 onMounted(() => {
     submittedOnUpdate.value = true;
