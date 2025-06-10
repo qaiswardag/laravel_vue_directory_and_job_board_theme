@@ -1484,23 +1484,21 @@ onBeforeMount(async () => {
         const configPageBuilder = {
             updateOrCreate: {
                 formType: "update",
-                createNewResourceFormName: "store",
+                createNewResourceFormName: "",
             },
             pageBuilderLogo: {
                 src: "/logo/logo.svg",
             },
             userForPageBuilder: { name: "John Doe" },
-            // resourceData: {
-            //     title: props.post.title,
-            // },
+            resourceData: {
+                title: props.post.title,
+            },
             userSettings: {
                 theme: "light",
                 language: "en",
                 autoSave: true,
             },
         };
-
-        console.log("den er:", props.post.title);
 
         pageBuilderClass.setConfigPageBuilder(configPageBuilder);
         pageBuilderClass.loadExistingContent(props.post.content);
