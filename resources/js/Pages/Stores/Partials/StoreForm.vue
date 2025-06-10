@@ -1482,7 +1482,7 @@ onBeforeMount(async () => {
         formType.value = "update";
 
         // øøø
-        console.log("props.post content eeeeeer", props.post.content);
+        // console.log("props.post content eeeeeer", props.post.content);
         pageBuilderClass.loadExistingContent(props.post.content);
 
         // team opening hours team # start
@@ -3164,7 +3164,29 @@ onMounted(() => {
                 >
                     <header></header>
                     <main>
-                        <PageBuilder PageBuilderLogo="/logo/logo.svg" />
+                        <PageBuilder
+                            :configPageBuilder="{
+                                updateOrCreate: {
+                                    formType: formType,
+                                    createNewResourceFormName: 'store',
+                                },
+                                pageBuilderLogo: {
+                                    src: '/logo/logo.svg',
+                                },
+                                resourceData: {
+                                    title: postForm.title,
+                                },
+                                userForPageBuilder: {
+                                    name:
+                                        user.first_name + ' ' + user.last_name,
+                                },
+                                userSettings: {
+                                    theme: 'light',
+                                    language: 'en',
+                                    autoSave: true,
+                                },
+                            }"
+                        />
                     </main>
                 </DynamicModal>
 
