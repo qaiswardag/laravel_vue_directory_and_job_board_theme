@@ -16,7 +16,11 @@ import config from "@/utils/config";
 import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import OpeningClosingHours from "@/Components/OpeningClosingHours/OpeningClosingHours.vue";
-import { PageBuilder } from "vue-website-page-builder";
+import {
+    PageBuilder,
+    PageBuilderClass,
+    sharedPageBuilderStore,
+} from "vue-website-page-builder";
 import "vue-website-page-builder/style.css";
 
 import {
@@ -1071,85 +1075,8 @@ const handlePageBuilder = function () {
     // end modal
 };
 
-// const handlePageBuilder = async function () {
-//     store.commit("user/setIsLoading", true);
-
-//     await delay();
-//     await nextTick();
-//     openPageBuilder.value = true;
-
-//     if (formType.value === "create") {
-//         store.commit("pageBuilderState/setComponents", []);
-
-//         // local storage for page builder
-//         if (pageBuilder.areComponentsStoredInLocalStorage()) {
-//             postForm.content =
-//                 Array.isArray(getComponents.value) &&
-//                 getComponents.value
-//                     .map((component) => {
-//                         return component.html_code;
-//                     })
-//                     .join("");
-//         }
-//     }
-
-//     // handle click
-//     pageBuilderPrimaryHandler.value = async function () {
-//         store.commit("user/setIsLoading", true);
-
-//         if (formType.value === "update") {
-//             await nextTick();
-//             pageBuilder.saveComponentsLocalStorageUpdate();
-//             await delay();
-//         }
-
-//         openPageBuilder.value = false;
-//         store.commit("user/setIsLoading", false);
-//     };
-
-//     // handle click
-//     pageBuilderSecondaryHandler.value = async function () {
-//         store.commit("user/setIsLoading", true);
-
-//         // save to local storage if new resource
-//         if (formType.value === "create") {
-//             await nextTick();
-//             pageBuilder.saveComponentsLocalStorage();
-
-//             await nextTick();
-//             postForm.content =
-//                 Array.isArray(getComponents.value) &&
-//                 getComponents.value
-//                     .map((component) => {
-//                         return component.html_code;
-//                     })
-//                     .join("");
-//         }
-//         // save to local storage if update
-//         if (formType.value === "update") {
-//             await nextTick();
-//             pageBuilder.synchronizeDOMAndComponents();
-
-//             await nextTick();
-//             postForm.content =
-//                 Array.isArray(getComponents.value) &&
-//                 getComponents.value
-//                     .map((component) => {
-//                         return component.html_code;
-//                     })
-//                     .join("");
-//         }
-
-//         openPageBuilder.value = false;
-//         await delay();
-//         store.commit("user/setIsLoading", false);
-//     };
-
-//     store.commit("user/setIsLoading", false);
-
-//     // end modal
-// };
-// // Builder # End
+const pageBuilderStateStore = sharedPageBuilderStore;
+const pageBuilderClass = new PageBuilderClass(pageBuilderStateStore);
 
 // get unique post if needs to be updated
 onBeforeMount(async () => {
@@ -1554,29 +1481,9 @@ onBeforeMount(async () => {
     if (props.post) {
         formType.value = "update";
 
-        pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-draft-update-store-${
-            props.post.id ? props.post.id : null
-        }-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
-
-        // Parse the HTML content using DOMParser
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(props.post.content, "text/html");
-
-        // Select all <section> elements with data-componentid attribute
-        const sectionElements = doc.querySelectorAll(
-            "section[data-componentid]"
-        );
-
-        const extractedSections = [];
-        // Loop through the selected elements and extract outerHTML
-        sectionElements.forEach((section) => {
-            extractedSections.push({
-                html_code: section.outerHTML,
-                id: section.dataset.componentid,
-            });
-        });
-
-        store.commit("pageBuilderState/setComponents", extractedSections);
+        // øøø
+        console.log("props.post content eeeeeer", props.post.content);
+        pageBuilderClass.loadExistingContent(props.post.content);
 
         // team opening hours team # start
         postForm.monday_opening_time_team =
