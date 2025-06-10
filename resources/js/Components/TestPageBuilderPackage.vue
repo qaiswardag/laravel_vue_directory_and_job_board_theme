@@ -90,7 +90,28 @@ const postIs = `
 </section>
 `;
 
+const configPageBuilder = {
+    updateOrCreate: {
+        formType: "update",
+        createNewResourceFormName: "post",
+    },
+    pageBuilderLogo: {
+        src: "/logo/logo.svg",
+    },
+    userForPageBuilder: { name: "John Doe" },
+    resourceData: {
+        title: "Demo Article set in script",
+        id: 1,
+    },
+    userSettings: {
+        theme: "pink",
+        language: "sw",
+        autoSave: true,
+    },
+};
+
 onMounted(() => {
+    pageBuilderClass.setConfigPageBuilder(configPageBuilder);
     pageBuilderClass.loadExistingContent(postIs);
 });
 </script>
@@ -136,25 +157,6 @@ onMounted(() => {
                     Update existing Post with Page Builder
                 </h1>
                 <PageBuilder
-                    :configPageBuilder="{
-                        updateOrCreate: {
-                            formType: 'update',
-                            createNewResourceFormName: 'post',
-                        },
-                        pageBuilderLogo: {
-                            src: '/logo/logo.svg',
-                        },
-                        userForPageBuilder: { name: 'John Doe' },
-                        resourceData: {
-                            title: 'Demo Article',
-                            id: 1,
-                        },
-                        userSettings: {
-                            theme: 'pink',
-                            language: 'sw',
-                            autoSave: true,
-                        },
-                    }"
                     :CustomMediaLibraryComponent="CustomMediaLibraryComponent"
                     :CustomSearchComponent="CustomSearchComponent"
                 />

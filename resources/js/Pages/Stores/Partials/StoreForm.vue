@@ -1481,8 +1481,7 @@ onBeforeMount(async () => {
     if (props.post) {
         formType.value = "update";
 
-        // øøø
-        // console.log("props.post content eeeeeer", props.post.content);
+        pageBuilderClass.setConfigPageBuilder(configPageBuilder);
         pageBuilderClass.loadExistingContent(props.post.content);
 
         // team opening hours team # start
@@ -1593,6 +1592,25 @@ onBeforeMount(async () => {
         pathPageBuilderLocalStorageUpdateDraft.value
     );
 });
+
+const configPageBuilder = {
+    updateOrCreate: {
+        formType: "update",
+    },
+    pageBuilderLogo: {
+        src: "/logo/logo.svg",
+    },
+    userForPageBuilder: { name: "John Doe" },
+    resourceData: {
+        title: "Demo Article set in script",
+        id: 1,
+    },
+    userSettings: {
+        theme: "light",
+        language: "en",
+        autoSave: true,
+    },
+};
 
 onMounted(() => {
     submittedOnUpdate.value = true;
@@ -3164,29 +3182,7 @@ onMounted(() => {
                 >
                     <header></header>
                     <main>
-                        <PageBuilder
-                            :configPageBuilder="{
-                                updateOrCreate: {
-                                    formType: formType,
-                                    createNewResourceFormName: 'store',
-                                },
-                                pageBuilderLogo: {
-                                    src: '/logo/logo.svg',
-                                },
-                                resourceData: {
-                                    title: postForm.title,
-                                },
-                                userForPageBuilder: {
-                                    name:
-                                        user.first_name + ' ' + user.last_name,
-                                },
-                                userSettings: {
-                                    theme: 'light',
-                                    language: 'en',
-                                    autoSave: true,
-                                },
-                            }"
-                        />
+                        <PageBuilder />
                     </main>
                 </DynamicModal>
 
