@@ -67,6 +67,12 @@ pageBuilderClass.setConfigPageBuilder(configPageBuilder);
 
 <template>
     <div>
+        <section>
+            <div>
+                <h1>Article Title</h1>
+                <p>Article Content</p>
+            </div>
+        </section>
         <div class="p-6 bg-red-100">
             <h1 class="text-2xl font-bold mb-4">
                 Create New Post with Page Builder
