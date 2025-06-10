@@ -1081,18 +1081,6 @@ const pageBuilderClass = new PageBuilderClass(pageBuilderStateStore);
 // get unique post if needs to be updated
 onBeforeMount(async () => {
     if (!props.post) {
-        //
-        // User is creating a new Resource
-        // if (pageBuilder.areComponentsStoredInLocalStorage()) {
-        //     postForm.content =
-        //         Array.isArray(getComponents.value) &&
-        //         getComponents.value
-        //             .map((component) => {
-        //                 return component.html_code;
-        //             })
-        //             .join("");
-        // }
-
         // local storage for form
         if (localStorage.getItem(pathLocalStorage) === null) {
             if (props.currentUserTeam && props.currentUserTeam.address) {
@@ -1481,28 +1469,6 @@ onBeforeMount(async () => {
     if (props.post) {
         formType.value = "update";
 
-        const configPageBuilder = {
-            updateOrCreate: {
-                formType: "update",
-                createNewResourceFormName: "",
-            },
-            pageBuilderLogo: {
-                src: "/logo/logo.svg",
-            },
-            userForPageBuilder: { name: "John Doe" },
-            resourceData: {
-                title: props.post.title,
-            },
-            userSettings: {
-                theme: "light",
-                language: "en",
-                autoSave: true,
-            },
-        };
-
-        pageBuilderClass.setConfigPageBuilder(configPageBuilder);
-        pageBuilderClass.loadExistingContent(props.post.content);
-
         // team opening hours team # start
         postForm.monday_opening_time_team =
             props.currentUserTeam.monday_opening_time;
@@ -1600,6 +1566,33 @@ onBeforeMount(async () => {
         postForm.cover_image = props.coverImages;
         postForm.brand_logo = props.brandLogos;
     }
+
+    // page builder logic
+    const configPageBuilder = {
+        updateOrCreate: {
+            formType: formType.value,
+            createNewResourceFormName: "store",
+        },
+        pageBuilderLogo: {
+            src: "/logo/logo.svg",
+        },
+        resourceData: {
+            title: props.post && props.post.title ? props.post.title : null,
+        },
+        userForPageBuilder: {
+            name: props.user.first_name + " " + props.user.last_name,
+        },
+        userSettings: {
+            theme: "light",
+            language: "en",
+            autoSave: true,
+        },
+    };
+
+    pageBuilderClass.setConfigPageBuilder(configPageBuilder);
+    pageBuilderClass.loadExistingContent(
+        props.post && props.post.content ? props.post.content : null
+    );
 
     store.commit(
         "pageBuilderState/setLocalStorageItemName",
