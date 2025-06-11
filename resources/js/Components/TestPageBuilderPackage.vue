@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import MyCustomMediaLibraryComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/MyCustomMediaLibraryComponent.vue";
 import MyCustomSearchComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/MyCustomSearchComponent.vue";
 // Import external package CSS and SHARED STORE
