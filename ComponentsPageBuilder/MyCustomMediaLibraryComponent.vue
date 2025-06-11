@@ -126,6 +126,9 @@ onMounted(() => {
 
 <template>
     <div>
+        <h3 data-v-d260bab7="" class="myQuaternaryHeader mb-4">
+            Injected Media Library from Developer
+        </h3>
         <div class="flex gap-6">
             <!-- Left side: Image grid and states -->
             <div class="flex-1">

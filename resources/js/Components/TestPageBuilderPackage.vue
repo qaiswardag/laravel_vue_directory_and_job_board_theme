@@ -1,6 +1,6 @@
 <script setup>
-import CustomMediaLibraryComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/CustomMediaLibraryComponent.vue";
-import CustomSearchComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/CustomSearchComponent.vue";
+import MyCustomMediaLibraryComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/MyCustomMediaLibraryComponent.vue";
+import MyCustomSearchComponent from "../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/MyCustomSearchComponent.vue";
 // Import external package CSS and SHARED STORE
 import {
     PageBuilder,
@@ -26,7 +26,7 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-const togglePageBuilder = function (e) {
+const handlePageBuilder = function (e) {
     openPageBuilder.value = true;
     typeModal.value = "default";
     gridColumnModal.value = 2;
@@ -37,9 +37,11 @@ const togglePageBuilder = function (e) {
 
     // handle click
     firstModalButtonFunction.value = function () {
+        console.log("Laravel Dynamic Modal first button – Close FN ran...");
         // openPageBuilder.value = false;
     };
     secondModalButtonFunction.value = function () {
+        console.log("Laravel Dynamic Modal second button – Close FN ran...");
         openPageBuilder.value = false;
     };
 };
@@ -81,7 +83,7 @@ pageBuilderClass.setConfigPageBuilder(configPageBuilder);
                 <p>
                     <button
                         class="myPrimaryButton"
-                        @click="togglePageBuilder()"
+                        @click="handlePageBuilder()"
                     >
                         🚀 Open page builder (with shared store!)
                     </button>
@@ -103,7 +105,12 @@ pageBuilderClass.setConfigPageBuilder(configPageBuilder);
             >
                 <header></header>
                 <main>
-                    <PageBuilder />
+                    <PageBuilder
+                        :CustomMediaLibraryComponent="
+                            MyCustomMediaLibraryComponent
+                        "
+                        :CustomSearchComponent="MyCustomSearchComponent"
+                    />
                 </main>
             </DynamicModal>
 
@@ -112,8 +119,8 @@ pageBuilderClass.setConfigPageBuilder(configPageBuilder);
                     Update existing Post with Page Builder
                 </h1>
                 <PageBuilder
-                    :CustomMediaLibraryComponent="CustomMediaLibraryComponent"
-                    :CustomSearchComponent="CustomSearchComponent"
+                    :CustomMediaLibraryComponent="MyCustomMediaLibraryComponent"
+                    :CustomSearchComponent="MyCustomSearchComponent"
                 />
             </div>
         </div>

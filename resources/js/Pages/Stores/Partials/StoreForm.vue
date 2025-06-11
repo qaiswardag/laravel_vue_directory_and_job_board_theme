@@ -16,6 +16,8 @@ import config from "@/utils/config";
 import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import OpeningClosingHours from "@/Components/OpeningClosingHours/OpeningClosingHours.vue";
+import MyCustomMediaLibraryComponent from "../../../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/MyCustomMediaLibraryComponent.vue";
+import MyCustomSearchComponent from "../../../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/MyCustomSearchComponent.vue";
 import {
     PageBuilder,
     PageBuilderClass,
@@ -3175,7 +3177,12 @@ onMounted(() => {
                 >
                     <header></header>
                     <main>
-                        <PageBuilder />
+                        <PageBuilder
+                            :CustomMediaLibraryComponent="
+                                MyCustomMediaLibraryComponent
+                            "
+                            :CustomSearchComponent="MyCustomSearchComponent"
+                        />
                     </main>
                 </DynamicModal>
 
