@@ -67,15 +67,18 @@ const emit = defineEmits([
 
 // first button function
 const firstButton = function () {
+    console.log("Laravel DynamicModalBuilder — firstButtonBuilder raaan");
     emit("firstModalButtonFunction");
 };
 // second button  function
 const secondButton = function () {
+    console.log(" Laravel DynamicModalBuilder — secondButtonBuilder raaan");
     emit("secondModalButtonFunction");
 };
 
 // third button function
 const thirdButton = function () {
+    console.log(" Laravel DynamicModalBuilder — thirdButtonBuilder raaan");
     emit("thirdModalButtonFunction");
 };
 </script>
