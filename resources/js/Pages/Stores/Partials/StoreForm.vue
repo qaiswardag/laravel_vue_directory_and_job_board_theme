@@ -1585,7 +1585,7 @@ onBeforeMount(async () => {
             name: props.user.first_name + " " + props.user.last_name,
         },
         userSettings: {
-            theme: "light",
+            theme: "dark",
             language: "en",
             autoSave: true,
         },
