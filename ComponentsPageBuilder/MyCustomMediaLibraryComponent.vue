@@ -126,7 +126,7 @@ onMounted(() => {
 
 <template>
     <div>
-        <h3 data-v-d260bab7="" class="myQuaternaryHeader mb-4">
+        <h3 class="myQuaternaryHeader mb-4">
             Injected Media Library from Developer
         </h3>
         <div class="flex gap-6">

@@ -157,7 +157,7 @@ onMounted(async () => {
 
 <template>
     <div class="w-full relative">
-        <h3 data-v-d260bab7="" class="myQuaternaryHeader mb-4">
+        <h3 class="myQuaternaryHeader mb-4">
             Injected Search Components from Developer
         </h3>
         <p class="myPrimaryParagraph">Custom Search Component</p>
