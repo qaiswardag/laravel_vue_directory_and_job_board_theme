@@ -109,7 +109,7 @@ pageBuilderClass.setConfigPageBuilder(configPageBuilder);
                         :CustomMediaLibraryComponent="
                             MyCustomMediaLibraryComponent
                         "
-                        :CustomSearchComponent="MyCustomSearchComponent"
+                        :CustomBuilderComponents="MyCustomSearchComponent"
                     />
                 </main>
             </DynamicModal>
@@ -120,7 +120,7 @@ pageBuilderClass.setConfigPageBuilder(configPageBuilder);
                 </h1>
                 <PageBuilder
                     :CustomMediaLibraryComponent="MyCustomMediaLibraryComponent"
-                    :CustomSearchComponent="MyCustomSearchComponent"
+                    :CustomBuilderComponents="MyCustomSearchComponent"
                 />
             </div>
         </div>

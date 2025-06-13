@@ -1573,7 +1573,7 @@ onBeforeMount(async () => {
     const configPageBuilder = {
         updateOrCreate: {
             formType: formType.value,
-            createNewResourceFormName: "store",
+            formName: "store",
         },
         pageBuilderLogo: {
             src: "/logo/logo.svg",
@@ -3181,7 +3181,7 @@ onMounted(() => {
                             :CustomMediaLibraryComponent="
                                 MyCustomMediaLibraryComponent
                             "
-                            :CustomSearchComponent="MyCustomSearchComponent"
+                            :CustomBuilderComponents="MyCustomSearchComponent"
                         />
                     </main>
                 </DynamicModal>
