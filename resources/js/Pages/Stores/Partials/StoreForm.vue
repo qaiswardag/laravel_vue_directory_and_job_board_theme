@@ -851,9 +851,9 @@ const createPost = () => {
     if (formType.value === "update") {
         postForm.post(route("team.stores.update", props.post.id), {
             preserveScroll: true,
-            onSuccess: () => {
-                submittedOnUpdate.value = false;
-                clearPageBuilderOnSuccessUpdate();
+            onSuccess: async () => {
+                pageBuilderClass.deleteAllComponents();
+                await pageBuilderClass.removeItemComponentsLocalStorage();
             },
             onError: () => {},
             onFinish: () => {},
@@ -890,7 +890,7 @@ const handleClearForm = function () {
 const clearTags = ref(0);
 
 // clear form
-const clearForm = function () {
+const clearForm = async function () {
     postForm.title = "";
     // slug
     postForm.slug = "";
@@ -934,6 +934,9 @@ const clearForm = function () {
     localStorage.removeItem(pathLocalStorage);
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
     store.commit("pageBuilderState/setComponents", []);
+
+    pageBuilderClass.deleteAllComponents();
+    await pageBuilderClass.removeItemComponentsLocalStorage();
 };
 
 const addToFloor = function () {
@@ -1060,20 +1063,40 @@ const thirdPageBuilderButtonFunction = ref(null);
 
 const handlePageBuilder = function () {
     showPageBuilderModal.value = true;
-    titlePageBuilder.value = "Add Content";
+    titlePageBuilder.value = null;
     descriptionPageBuilder.value = null;
     firstButtonPageBuilder.value = "Close";
-    secondButtonPageBuilder.value = "Something here";
+    secondButtonPageBuilder.value = null;
     thirdButtonPageBuilder.value = null;
     // handle click
     firstPageBuilderButtonFunction.value = function () {
-        console.log("Laravel Dynamic Modal first button – Close FN ran..");
-        // showPageBuilderModal.value = false;
+        let storedComponents =
+            pageBuilderClass.loadStoredComponentsFromStorage();
+
+        let content = "";
+
+        try {
+            storedComponents = JSON.parse(storedComponents);
+            content =
+                storedComponents && Array.isArray(storedComponents.components)
+                    ? storedComponents.components
+                          .map((component) => component.html_code)
+                          .join("")
+                    : "";
+        } catch (e) {
+            console.error(
+                "Unable to parse storedComponents from localStorage:",
+                e
+            );
+            content = "";
+        } finally {
+            postForm.content = content;
+            showPageBuilderModal.value = false;
+        }
     };
 
-    secondPageBuilderButtonFunction.value = function () {
-        showPageBuilderModal.value = false;
-    };
+    secondPageBuilderButtonFunction.value = function () {};
+    thirdPageBuilderButtonFunction.value = function () {};
     // end modal
 };
 
@@ -1591,8 +1614,8 @@ onBeforeMount(async () => {
         },
     };
 
-    pageBuilderClass.setConfigPageBuilder(configPageBuilder);
-    pageBuilderClass.loadExistingContent(
+    pageBuilderClass.applyPageBuilderConfig(configPageBuilder);
+    pageBuilderClass.mountComponentsToDOM(
         props.post && props.post.content ? props.post.content : null
     );
 
