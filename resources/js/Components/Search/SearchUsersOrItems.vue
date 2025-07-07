@@ -260,7 +260,7 @@ onMounted(() => {
 
             <!-- content start -->
             <div
-                class="p-4 h-full flex md:flex-row flex-col myPrimaryGap overflow-y-scroll"
+                class="p-4 h-full flex flex-col md:flex-row myPrimaryGap overflow-y-scroll"
             >
                 <main class="overflow-y-auto relativ w-full">
                     <div>

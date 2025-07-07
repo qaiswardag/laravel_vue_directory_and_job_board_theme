@@ -18,12 +18,6 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import OpeningClosingHours from "@/Components/OpeningClosingHours/OpeningClosingHours.vue";
 import MyCustomMediaLibraryComponent from "../../../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/MyCustomMediaLibraryComponent.vue";
 import MyCustomSearchComponent from "../../../../../../laravel_vue_directory_and_job_board_theme/ComponentsPageBuilder/MyCustomSearchComponent.vue";
-import {
-    PageBuilder,
-    PageBuilderClass,
-    sharedPageBuilderStore,
-} from "vue-website-page-builder";
-import "vue-website-page-builder/style.css";
 
 import {
     Listbox,
@@ -50,6 +44,12 @@ import {
     FolderPlusIcon,
     MinusIcon,
 } from "@heroicons/vue/24/outline";
+
+import { htmlSectionsToComponentArray } from "../../../helpers/htmlSectionsToComponentArray";
+import { PageBuilder, getPageBuilder } from "vue-website-page-builder";
+
+// Retrieve Page Builder service instance
+const pageBuilderService = getPageBuilder();
 
 const props = defineProps({
     currentUserTeamRole: {
@@ -841,8 +841,9 @@ const createPost = () => {
     if (formType.value === "create") {
         postForm.post(route("team.stores.store"), {
             preserveScroll: true,
-            onSuccess: () => {
+            onSuccess: async () => {
                 clearForm();
+                await pageBuilderService.handleFormSubmission();
             },
             onError: () => {},
             onFinish: () => {},
@@ -852,8 +853,7 @@ const createPost = () => {
         postForm.post(route("team.stores.update", props.post.id), {
             preserveScroll: true,
             onSuccess: async () => {
-                pageBuilderClass.deleteAllComponents();
-                await pageBuilderClass.removeItemComponentsLocalStorage();
+                await pageBuilderService.handleFormSubmission();
             },
             onError: () => {},
             onFinish: () => {},
@@ -934,9 +934,6 @@ const clearForm = async function () {
     localStorage.removeItem(pathLocalStorage);
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
     store.commit("pageBuilderState/setComponents", []);
-
-    pageBuilderClass.deleteAllComponents();
-    await pageBuilderClass.removeItemComponentsLocalStorage();
 };
 
 const addToFloor = function () {
@@ -1047,61 +1044,6 @@ const handleDraftForUpdate = async function () {
     if (formType.value === "update") {
     }
 };
-
-// use media library
-const showPageBuilderModal = ref(false);
-// modal content
-const titlePageBuilder = ref("");
-const descriptionPageBuilder = ref("");
-const firstButtonPageBuilder = ref("");
-const secondButtonPageBuilder = ref(null);
-const thirdButtonPageBuilder = ref(null);
-// set dynamic modal handle functions
-const firstPageBuilderButtonFunction = ref(null);
-const secondPageBuilderButtonFunction = ref(null);
-const thirdPageBuilderButtonFunction = ref(null);
-
-const handlePageBuilder = function () {
-    showPageBuilderModal.value = true;
-    titlePageBuilder.value = null;
-    descriptionPageBuilder.value = null;
-    firstButtonPageBuilder.value = "Close";
-    secondButtonPageBuilder.value = null;
-    thirdButtonPageBuilder.value = null;
-    // handle click
-    firstPageBuilderButtonFunction.value = function () {
-        let storedComponents =
-            pageBuilderClass.loadStoredComponentsFromStorage();
-
-        let content = "";
-
-        try {
-            storedComponents = JSON.parse(storedComponents);
-            content =
-                storedComponents && Array.isArray(storedComponents.components)
-                    ? storedComponents.components
-                          .map((component) => component.html_code)
-                          .join("")
-                    : "";
-        } catch (e) {
-            console.error(
-                "Unable to parse storedComponents from localStorage:",
-                e
-            );
-            content = "";
-        } finally {
-            postForm.content = content;
-            showPageBuilderModal.value = false;
-        }
-    };
-
-    secondPageBuilderButtonFunction.value = function () {};
-    thirdPageBuilderButtonFunction.value = function () {};
-    // end modal
-};
-
-const pageBuilderStateStore = sharedPageBuilderStore;
-const pageBuilderClass = new PageBuilderClass(pageBuilderStateStore);
 
 // get unique post if needs to be updated
 onBeforeMount(async () => {
@@ -1592,6 +1534,69 @@ onBeforeMount(async () => {
         postForm.brand_logo = props.brandLogos;
     }
 
+    store.commit(
+        "pageBuilderState/setLocalStorageItemName",
+        pathPageBuilderLocalStorageCreate
+    );
+
+    store.commit(
+        "pageBuilderState/setLocalStorageItemNameUpdate",
+        pathPageBuilderLocalStorageUpdateDraft.value
+    );
+});
+
+// use media library
+const showPageBuilderModal = ref(false);
+// modal content
+const titlePageBuilder = ref("");
+const descriptionPageBuilder = ref("");
+const firstButtonPageBuilder = ref("");
+const secondButtonPageBuilder = ref(null);
+const thirdButtonPageBuilder = ref(null);
+// set dynamic modal handle functions
+const firstPageBuilderButtonFunction = ref(null);
+const secondPageBuilderButtonFunction = ref(null);
+const thirdPageBuilderButtonFunction = ref(null);
+
+const handlePageBuilder = function () {
+    showPageBuilderModal.value = true;
+    titlePageBuilder.value = null;
+    descriptionPageBuilder.value = null;
+    firstButtonPageBuilder.value = "Close";
+    secondButtonPageBuilder.value = null;
+    thirdButtonPageBuilder.value = null;
+    // handle click
+    firstPageBuilderButtonFunction.value = function () {
+        publishPageBuilder();
+    };
+    secondPageBuilderButtonFunction.value = function () {};
+    thirdPageBuilderButtonFunction.value = function () {};
+    // end modal
+};
+
+const closePageBuilder = function () {
+    showPageBuilderModal.value = false;
+};
+
+const publishPageBuilder = function () {
+    showPageBuilderModal.value = false;
+    const storedComponents = pageBuilderService.getSavedPageHtml();
+    postForm.content = storedComponents;
+};
+
+onMounted(async () => {
+    let components = [];
+    let pageSettings = null;
+
+    if (props.post) {
+        ({ components, pageSettings } = pageBuilderService.parsePageBuilderHTML(
+            props.post.content
+        ));
+    }
+
+    console.log("de er:", components);
+    console.log("components in storeform parsen er:", components);
+
     // page builder logic
     const configPageBuilder = {
         updateOrCreate: {
@@ -1612,25 +1617,17 @@ onBeforeMount(async () => {
             language: "en",
             autoSave: true,
         },
+        pageSettings: pageSettings,
+        imageUrlPrefix: `/storage/uploads/`,
     };
 
-    pageBuilderClass.applyPageBuilderConfig(configPageBuilder);
-    pageBuilderClass.mountComponentsToDOM(
-        props.post && props.post.content ? props.post.content : null
+    const result = await pageBuilderService.startBuilder(
+        configPageBuilder,
+        components
     );
 
-    store.commit(
-        "pageBuilderState/setLocalStorageItemName",
-        pathPageBuilderLocalStorageCreate
-    );
+    console.log("Returned Page Builder information:", result);
 
-    store.commit(
-        "pageBuilderState/setLocalStorageItemNameUpdate",
-        pathPageBuilderLocalStorageUpdateDraft.value
-    );
-});
-
-onMounted(() => {
     submittedOnUpdate.value = true;
 });
 </script>
@@ -3201,10 +3198,13 @@ onMounted(() => {
                     <header></header>
                     <main>
                         <PageBuilder
+                            :showPublishButton="true"
+                            @handlePublishPageBuilder="publishPageBuilder"
+                            :showCloseButton="true"
+                            @handleClosePageBuilder="closePageBuilder"
                             :CustomMediaLibraryComponent="
                                 MyCustomMediaLibraryComponent
                             "
-                            :CustomBuilderComponents="MyCustomSearchComponent"
                         />
                     </main>
                 </DynamicModal>

@@ -7,8 +7,6 @@ import {
     PageBuilderClass,
     sharedPageBuilderStore,
 } from "vue-website-page-builder";
-// Import external package CSS
-import "vue-website-page-builder/style.css";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import { ref, onMounted } from "vue";
 
@@ -51,9 +49,9 @@ const configPageBuilder = {
         src: "/logo/logo.svg",
     },
     userForPageBuilder: { name: "John Doe" },
-    resourceData: {
-        title: "Demo Article",
-        id: 1,
+    updateOrCreate: {
+        formType: "create",
+        formName: "store",
     },
     userSettings: {
         theme: "light",
@@ -64,7 +62,7 @@ const configPageBuilder = {
 
 const pageBuilderStateStore = sharedPageBuilderStore;
 const pageBuilderClass = new PageBuilderClass(pageBuilderStateStore);
-pageBuilderClass.setConfigPageBuilder(configPageBuilder);
+pageBuilderClass.applyPageBuilderConfig(configPageBuilder);
 </script>
 
 <template>

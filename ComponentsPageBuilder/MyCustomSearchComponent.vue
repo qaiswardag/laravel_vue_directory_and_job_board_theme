@@ -3,10 +3,10 @@ import { ref, onMounted, inject } from "vue";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 
 // Import PageBuilder and modal control - professional way!
-import {
-    PageBuilderClass,
-    usePageBuilderModal,
-} from "vue-website-page-builder";
+import { usePageBuilderModal, getPageBuilder } from "vue-website-page-builder";
+
+// Retrieve Page Builder service instance
+const pageBuilderService = getPageBuilder();
 
 const categorySelected = ref({ name: "Components", id: null });
 const isLoading = ref(false);

@@ -1,23 +1,14 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { usePageBuilderModal, getPageBuilder } from "vue-website-page-builder";
 
-// Import PageBuilder and modal control - professional way!
-import {
-    PageBuilderClass,
-    usePageBuilderModal,
-    sharedPageBuilderStore,
-} from "vue-website-page-builder";
+// Retrieve Page Builder service instance
+const pageBuilderService = getPageBuilder();
 
 const loading = ref(false);
 const error = ref(null);
 const images = ref([]);
 const selectedImage = ref(null);
-
-// Use shared store instance (same as PageBuilder component)
-const pageBuilderStateStore = sharedPageBuilderStore;
-
-// Initialize PageBuilder with explicit store passing - professional way!
-const pageBuilderClass = new PageBuilderClass(pageBuilderStateStore);
 
 // Get modal control functions - professional import pattern!
 const { closeMediaLibraryModal } = usePageBuilderModal();
@@ -25,15 +16,15 @@ const { closeMediaLibraryModal } = usePageBuilderModal();
 // Simple reactive ref for current image instead of computed
 const currentPageBuilderImage = ref(null);
 
-// Computed properties for pageBuilderClass state
+// Computed properties for pageBuilderService state
 const currentElement = computed(
-    () => pageBuilderClass.pageBuilderStateStore.getElement
+    () => pageBuilderService.pageBuilderStateStore.getElement
 );
 const currentComponent = computed(
-    () => pageBuilderClass.pageBuilderStateStore.getComponent
+    () => pageBuilderService.pageBuilderStateStore.getComponent
 );
 const allComponents = computed(
-    () => pageBuilderClass.pageBuilderStateStore.getComponents
+    () => pageBuilderService.pageBuilderStateStore.getComponents
 );
 
 // Fetch images from JSON file
@@ -66,21 +57,21 @@ const handleImageClick = async (image) => {
 
     // Set current image using PageBuilder methods (if available)
     if (
-        pageBuilderClass.pageBuilderStateStore &&
-        pageBuilderClass.pageBuilderStateStore.setCurrentImage
+        pageBuilderService.pageBuilderStateStore &&
+        pageBuilderService.pageBuilderStateStore.setCurrentImage
     ) {
         // Follow the exact same pattern as Unsplash component
         // They only set { file } - that's it!
-        pageBuilderClass.pageBuilderStateStore.setCurrentImage({
+        pageBuilderService.pageBuilderStateStore.setCurrentImage({
             file: imageFile,
         });
     }
 
     if (
-        pageBuilderClass.pageBuilderStateStore &&
-        pageBuilderClass.pageBuilderStateStore.setCurrentPreviewImage
+        pageBuilderService.pageBuilderStateStore &&
+        pageBuilderService.pageBuilderStateStore.setCurrentPreviewImage
     ) {
-        pageBuilderClass.pageBuilderStateStore.setCurrentPreviewImage(null);
+        pageBuilderService.pageBuilderStateStore.setCurrentPreviewImage(null);
     }
 
     // Update our local reactive ref for the preview
@@ -100,19 +91,15 @@ const handleImageClick = async (image) => {
 };
 
 // Apply selected image using PageBuilder's built-in method
-const applySelectedImage = async () => {
+const useImage = async () => {
     if (!selectedImage.value) {
         console.warn("No image selected to apply");
         return;
     }
 
-    // Ensure the current image is set in the store with proper structure
-    pageBuilderClass.pageBuilderStateStore.setCurrentImage({
+    pageBuilderService.applySelectedImage({
         src: `/${selectedImage.value.large_path}`,
     });
-
-    // Use PageBuilder's built-in method to apply the image
-    await pageBuilderClass.updateBasePrimaryImage();
 };
 
 onMounted(() => {
@@ -276,7 +263,7 @@ onMounted(() => {
                         <!-- Apply button -->
                         <div class="mt-4">
                             <button
-                                @click="applySelectedImage"
+                                @click="useImage"
                                 :disabled="!selectedImage"
                                 class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
                             >
