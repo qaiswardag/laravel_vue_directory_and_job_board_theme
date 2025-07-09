@@ -1594,7 +1594,6 @@ onMounted(async () => {
         ));
     }
 
-    console.log("de er:", components);
     console.log("components in storeform parsen er:", components);
 
     // page builder logic
