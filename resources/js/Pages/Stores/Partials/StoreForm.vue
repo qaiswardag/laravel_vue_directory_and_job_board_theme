@@ -1593,9 +1593,6 @@ onMounted(async () => {
             props.post.content
         ));
     }
-
-    console.log("components in storeform parsen er:", components);
-
     // page builder logic
     const configPageBuilder = {
         updateOrCreate: {
