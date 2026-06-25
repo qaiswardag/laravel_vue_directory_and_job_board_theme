@@ -55,9 +55,13 @@ const configPageBuilder = {
     },
     userSettings: {
         theme: "light",
-        language: "en",
+        language: {
+            default: "da",
+            enable: ["en", "zh-Hans", "fr"],
+        },
         autoSave: true,
     },
+    fontFamily: "raleway",
 };
 
 const pageBuilderStateStore = sharedPageBuilderStore;
